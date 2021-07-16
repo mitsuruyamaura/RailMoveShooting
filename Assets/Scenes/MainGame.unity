@@ -237,7 +237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   railMoveTarget: {fileID: 454872042}
-  currentRailPathData: {fileID: 1905706133}
+  currentRailPathData: {fileID: 0}
 --- !u!4 &560543693
 Transform:
   m_ObjectHideFlags: 0
@@ -321,6 +321,62 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88a210c838d0c514fa293d1e4d854015, type: 3}
+--- !u!1 &1550902660
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1550902662}
+  - component: {fileID: 1550902661}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1550902661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550902660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07fc12d348c3460498174c2cf262dead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventTriggerPoint: []
+  enemiesList: []
+  gimmicksList: []
+  pathDataSO: {fileID: 0}
+  fieldAutoScroller: {fileID: 0}
+  uiManager: {fileID: 0}
+  rootDatasList: []
+  playerController: {fileID: 0}
+  currentMissionDuration: 0
+  eventGenerator: {fileID: 0}
+  railMoveController: {fileID: 560543692}
+  originRailPathData: {fileID: 1905706133}
+  isMissionTriggers: 
+--- !u!4 &1550902662
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550902660}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1620429715
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,15 +499,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a81ca97deb22494190dd09c0d00c1cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  railMoveDurations:
-  - 2
-  - 2
-  - 2
-  pathTrans:
-  - {fileID: 4797316235829608066}
-  - {fileID: 6658517317052789990}
-  - {fileID: 8868797587644628315}
-  isMissionTriggers: 000100
+  pathDataDetails:
+  - railMoveDuration: 3
+    pathTran: {fileID: 4797316235829608066}
+    isMissionTrigger: 0
+  - railMoveDuration: 3
+    pathTran: {fileID: 6658517317052789990}
+    isMissionTrigger: 1
+  - railMoveDuration: 3
+    pathTran: {fileID: 8868797587644628315}
+    isMissionTrigger: 0
 --- !u!4 &1905706134
 Transform:
   m_ObjectHideFlags: 0
