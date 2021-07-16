@@ -50,13 +50,16 @@ public class GameManager : MonoBehaviour {
     private RailMoveController railMoveController;
 
     [SerializeField, Header("経路用のパス群の元データ")]
-    private RailPathData originRailPathData;
+    private RailPathData[] originRailPathDatas;
 
     [SerializeField, Header("パスにおけるミッションの発生有無")]  // Debug 用
     private bool[] isMissionTriggers;
 
 
     private void Start() {
+
+        originRailPathDatas = DataBaseManager.instance.GetRailPathDatasFromBranchNo(0);
+
         // RailMoveController の初期設定
         railMoveController.SetUpRailMoveController(this);
 
@@ -64,15 +67,19 @@ public class GameManager : MonoBehaviour {
         SetMissionTriggers();
 
         // 次に再生するレール移動の目的地と経路のパスを設定
-        railMoveController.SetNextRailPathData(originRailPathData);
+        railMoveController.SetNextRailPathData(originRailPathDatas[0]);
     }
 
     /// <summary>
     /// パスデータよりミッションの発生有無情報取得
     /// </summary>
     private void SetMissionTriggers() {
+
+        // 分岐がある場合には変更する
+        isMissionTriggers = new bool[originRailPathDatas[0].GetIsMissionTriggers().Length];
+
         // ミッション発生有無の情報を登録
-        isMissionTriggers = originRailPathData.GetIsMissionTriggers();
+        isMissionTriggers = originRailPathDatas[0].GetIsMissionTriggers();
     }
 
     /// <summary>
@@ -92,6 +99,33 @@ public class GameManager : MonoBehaviour {
             // ミッションなし。次のパスへ移動を再開
             railMoveController.ResumeMove();
         }
+    }
+
+
+    public void PreparateCheckNextBranch(int nextbranchNo) {
+
+        StartCoroutine(ChecNextBranch(nextbranchNo));
+
+    }
+
+    private IEnumerator ChecNextBranch(int nextbranchNo) {
+        if (nextbranchNo > originRailPathDatas.Length) {
+            // 終了
+            Debug.Log("ゲーム終了");
+
+            yield break;
+        }
+
+        // TODO 分岐の判定
+
+
+        // 分岐後、次の経路を登録
+        originRailPathDatas = DataBaseManager.instance.GetRailPathDatasFromBranchNo(nextbranchNo);
+
+        SetMissionTriggers();
+
+        // 経路を移動先に設定
+        railMoveController.SetNextRailPathData(originRailPathDatas[0]);
     }
 
 
