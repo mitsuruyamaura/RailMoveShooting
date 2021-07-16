@@ -16,6 +16,8 @@ public class RailMoveController : MonoBehaviour
 
     private GameManager gameManager;
 
+    private int moveCount;
+
 
     /// <summary>
     /// 次に再生するレール移動の目的地と経路のパスを取得して設定
@@ -100,6 +102,9 @@ public class RailMoveController : MonoBehaviour
             tween.Kill();
 
             // 移動先が残っていない場合には、ゲームマネージャー側で分岐の確認(次のルート選定、移動先の分岐、ボス、クリアのいずれか)
+            moveCount++;
+
+            gameManager.PreparateCheckNextBranch(moveCount);
 
             Debug.Log("分岐確認");
         }
