@@ -14,24 +14,26 @@ public class RailMoveController : MonoBehaviour
 
     private Tween tween;
 
-
-    ///// <summary>
-    ///// 次に再生するレール移動の目的地を取得して設定
-    ///// </summary>
-    ///// <param name="nextPathDataList"></param>
-    //public void SetNextPathData(List<PathData> nextPathDataList) {
-    //    // 目的地取得
-    //    pathDatasList = new List<PathData>(nextPathDataList);
-
-    //    // 移動開始
-    //    StartCoroutine(StartRailMove());
-    //}
+    private GameManager gameManager;
 
 
-    void Start() {
-        // Debug 用  レール移動の開始
+    /// <summary>
+    /// 次に再生するレール移動の目的地と経路のパスを取得して設定
+    /// </summary>
+    /// <param name="nextPathDataList"></param>
+    public void SetNextRailPathData(RailPathData nextRailPathData) {
+        // 目的地取得
+        currentRailPathData = nextRailPathData; ;
+
+        // 移動開始
         StartCoroutine(StartRailMove());
     }
+
+
+    //void Start() {
+    //    // Debug 用  レール移動の開始
+    //    StartCoroutine(StartRailMove());
+    //}
 
     /// <summary>
     /// レール移動の開始
@@ -74,6 +76,10 @@ public class RailMoveController : MonoBehaviour
         tween.Play();
     }
 
+    /// <summary>
+    /// パスの目標地点に到着するたびに実行される
+    /// </summary>
+    /// <param name="waypointIndex"></param>
     private void CheckArrivalDestination(int waypointIndex) {
 
         Debug.Log("目標地点 到着 : " + waypointIndex + " 番目");
@@ -84,9 +90,10 @@ public class RailMoveController : MonoBehaviour
         // 移動先のパスがまだ残っているか確認
         if (waypointIndex < currentRailPathData.GetPathTrans().Length) {
             // ミッションが発生するかゲームマネージャー側で確認
+            gameManager.CheckMissionTrigger(waypointIndex++);
 
             // Debug用  次のパスへの移動開始
-            ResumeMove();
+            //ResumeMove();
 
         } else {
             // DOTween を停止
@@ -96,5 +103,16 @@ public class RailMoveController : MonoBehaviour
 
             Debug.Log("分岐確認");
         }
+    }
+
+    /// <summary>
+    /// RailMoveController の初期設定
+    /// </summary>
+    /// <param name="gameManager"></param>
+    public void SetUpRailMoveController(GameManager gameManager) {
+        this.gameManager = gameManager;
+
+        // TODO 他にもある場合には追記。必要に応じて引数を通じて外部から情報をもらうようにする
+
     }
 }

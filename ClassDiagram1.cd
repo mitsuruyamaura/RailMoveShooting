@@ -1,0 +1,496 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SpawnEffect" Collapsed="true">
+    <Position X="17.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAgAAAABAAEAAAAAAgAAAAAAIAIAA=</HashCode>
+      <FileName>Assets\EffectExamples\Misc Effects\Scripts\SpawnEffect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AnchorCreator" Collapsed="true">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCAAAAAAIIBEAAAAAAAAAAAAAAAAgAIAAAABAAAEA=</HashCode>
+      <FileName>Assets\ExampleAssets\Scripts\AnchorCreator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ARFeatheredPlaneMeshVisualizer" Collapsed="true">
+    <Position X="8.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AUAACBABAAAAEAAAAAABAAEAAIAAAAAIAAAAAAAACEA=</HashCode>
+      <FileName>Assets\ExampleAssets\Scripts\ARFeatheredPlaneMeshVisualizer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CamCTRLDemo" Collapsed="true">
+    <Position X="7" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQACAAIACAAAAAAAAAAAAAAACAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Fantasy Monster(wizard) Demo\Environment\Scripts\CamCTRLDemo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MoveCTRLDemo" Collapsed="true">
+    <Position X="8.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAKgAAQCAAQAAAAgIQAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Fantasy Monster(wizard) Demo\Environment\Scripts\MoveCTRLDemo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CFX_AutoStopLoopedEffect" Collapsed="true">
+    <Position X="10.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAQAAAAAAAAAAAAAAAAAAAAEAAAAAAAACAA=</HashCode>
+      <FileName>Assets\JMO Assets\WarFX\Demo\Assets\CFX_AutoStopLoopedEffect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CFX_Demo_RandomDir" Collapsed="true">
+    <Position X="12.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\JMO Assets\WarFX\Demo\Assets\CFX_Demo_RandomDir.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CFX_Demo_RotateCamera" Collapsed="true">
+    <Position X="14" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQgAAAIAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\JMO Assets\WarFX\Demo\Assets\CFX_Demo_RotateCamera.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CFX_Demo_Translate" Collapsed="true">
+    <Position X="15.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAgAACAAAAAAAAGAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\JMO Assets\WarFX\Demo\Assets\CFX_Demo_Translate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WFX_Demo" Collapsed="true">
+    <Position X="14" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CQQASAAJAAACAClAACACCAQBIEBgAEZAJJCAgACRACA=</HashCode>
+      <FileName>Assets\JMO Assets\WarFX\Demo\Assets\WFX_Demo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WFX_Demo_DeleteAfterDelay" Collapsed="true">
+    <Position X="15.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\JMO Assets\WarFX\Demo\Assets\WFX_Demo_DeleteAfterDelay.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WFX_Demo_New" Collapsed="true">
+    <Position X="17.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CQQQiAABACgAiClQACgCCAwAIEBABEZAAJAIASiRKGA=</HashCode>
+      <FileName>Assets\JMO Assets\WarFX\Demo\Assets\WFX_Demo_New.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WFX_Demo_RandomDir" Collapsed="true">
+    <Position X="5.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\JMO Assets\WarFX\Demo\Assets\WFX_Demo_RandomDir.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WFX_Demo_Wall" Collapsed="true">
+    <Position X="7" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAIAAAAAAAAAA=</HashCode>
+      <FileName>Assets\JMO Assets\WarFX\Demo\Assets\WFX_Demo_Wall.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CFX_AutoDestructShuriken" Collapsed="true">
+    <Position X="8.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAAAAAAAAAAAAAAAAAAAACAAAAAAAAACAA=</HashCode>
+      <FileName>Assets\JMO Assets\WarFX\Scripts\CFX_AutoDestructShuriken.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CFX_LightIntensityFade" Collapsed="true">
+    <Position X="17.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAIAACAAAIAQABAAAAgAAAAAAAAAAAAAgAAACAA=</HashCode>
+      <FileName>Assets\JMO Assets\WarFX\Scripts\CFX_LightIntensityFade.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WFX_BulletHoleDecal" Collapsed="true">
+    <Position X="12.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAEAAAAAgAAAAAAIAAAAAAIAABACYAAAAAQBACEA=</HashCode>
+      <FileName>Assets\JMO Assets\WarFX\Scripts\WFX_BulletHoleDecal.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WFX_LightFlicker" Collapsed="true">
+    <Position X="8.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQBAAAAACAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\JMO Assets\WarFX\Scripts\WFX_LightFlicker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CFX_SpawnSystem" Collapsed="true">
+    <Position X="5.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQADIICAgAAAgAAEAAQAAAAFBACAACAAAEAAAAEQ=</HashCode>
+      <FileName>Assets\JMO Assets\WarFX\Spawn System\CFX_SpawnSystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ARManager" Collapsed="true">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEYAAAAAACAQIIEQAEAAAgAAAAAAAAAAAQAAAAAAAUA=</HashCode>
+      <FileName>Assets\Scripts\ARManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ARStateReactiveProperty" Collapsed="true">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\ARStateReactiveProperty.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BodyRegionPartsController" Collapsed="true">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAACAACAABAAAAAEAE=</HashCode>
+      <FileName>Assets\Scripts\BodyRegionPartsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BossAction" Collapsed="true">
+    <Position X="15.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAACBQAAAAAAEAAoAAQAAAABBAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\BossAction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Bullet" Collapsed="true">
+    <Position X="17.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAIAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Bullet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BulletGenerator" Collapsed="true">
+    <Position X="5.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQAAAAABCAAAAQAAAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\BulletGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataBaseManager" Collapsed="true">
+    <Position X="7" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAQAAIAAAAAAAAAABCAAAEAAAAAAQQEEA=</HashCode>
+      <FileName>Assets\Scripts\DataBaseManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemyController" Collapsed="true">
+    <Position X="2.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EERAAICBAQAAQRAAAAAAkBUBBJAAEIBBQQDACAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\EnemyController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemyData" Collapsed="true">
+    <Position X="8.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAACABAIAAAAAAAAAABAABAAAAAAAAABACAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\EnemyData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemyDataSO" Collapsed="true">
+    <Position X="10.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\EnemyDataSO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventBase&lt;T&gt;" Collapsed="true">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\EventBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventDataSO" Collapsed="true">
+    <Position X="12.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\EventDataSO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventGenerator" Collapsed="true">
+    <Position X="14" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAABAAAYEAQA=</HashCode>
+      <FileName>Assets\Scripts\EventGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FieldAutoScroller" Collapsed="true">
+    <Position X="15.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AkAAAAEAgACAABQAAAAAIgEAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\FieldAutoScroller.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameData" Collapsed="true">
+    <Position X="17.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAABAABAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\GameData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameManager">
+    <Position X="28" Y="0.5" Width="2.25" />
+    <Members>
+      <Method Name="AddEnemyList" Hidden="true" />
+      <Method Name="AddGimmickList" Hidden="true" />
+      <Method Name="CheckNextRootBranch" Hidden="true" />
+      <Method Name="ClearEnemiesList" Hidden="true" />
+      <Method Name="ClearGimmicksList" Hidden="true" />
+      <Field Name="currentMissionDuration" Hidden="true" />
+      <Field Name="currentRailCount" Hidden="true" />
+      <Method Name="EndMission" Hidden="true" />
+      <Field Name="enemiesList" Hidden="true" />
+      <Field Name="eventGenerator" Hidden="true" />
+      <Field Name="eventTriggerPoint" Hidden="true" />
+      <Field Name="fieldAutoScroller" Hidden="true" />
+      <Method Name="GetPathDatasList" Hidden="true" />
+      <Field Name="gimmicksList" Hidden="true" />
+      <Method Name="ObservateMission" Hidden="true" />
+      <Field Name="pathDataSO" Hidden="true" />
+      <Field Name="playerController" Hidden="true" />
+      <Method Name="PreparateGame" Hidden="true" />
+      <Method Name="PreparateMission" Hidden="true" />
+      <Method Name="RemoveEnemyList" Hidden="true" />
+      <Method Name="ResumeMoveAllEnemies" Hidden="true" />
+      <Field Name="rootDatasList" Hidden="true" />
+      <Method Name="SetStart" Hidden="true" />
+      <Method Name="StartMission" Hidden="true" />
+      <Method Name="StopMoveAllEnemies" Hidden="true" />
+      <Field Name="uiManager" Hidden="true" />
+    </Members>
+    <NestedTypes>
+      <Class Name="GameManager.RootEventData" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\GameManager.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <AssociationLine Name="originRailPathData" Type="RailPathData" ManuallyRouted="true">
+      <Path>
+        <Point X="28" Y="1.664" />
+        <Point X="25.375" Y="1.664" />
+        <Point X="25.375" Y="1.664" />
+        <Point X="22.75" Y="1.664" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AACgAAADACyQQCgABgAAAgCjIAABAABQCAJCQQCgAAA=</HashCode>
+      <FileName>Assets\Scripts\GameManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="originRailPathData" />
+      <Field Name="pathDataSO" />
+      <Field Name="playerController" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ItemController" Collapsed="true">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAQAAAAAAAAABAAAAAAAAAQBCAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\ItemController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MissionTriggerPoint" Collapsed="true">
+    <Position X="7" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAACACACAAQAAAACAIAAAAAAAAAAAAwAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\MissionTriggerPoint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PathData" Collapsed="true">
+    <Position X="10.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAAAAAAABAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\PathData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PathDataSO" Collapsed="true">
+    <Position X="12.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\PathDataSO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlaneDetection" Collapsed="true">
+    <Position X="14" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAACAAiBAAAAAAAAAAAAAAAAABEA=</HashCode>
+      <FileName>Assets\Scripts\PlaneDetection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerController" Collapsed="true">
+    <Position X="15.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>GAAAAAAACQAAAAAAAAgBgAAQAAAAECIAQABAAMAAUAA=</HashCode>
+      <FileName>Assets\Scripts\PlayerController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RailMoveController">
+    <Position X="28" Y="3.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAhAABAAAAAAAAAAEAEAgAAgEAACAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\RailMoveController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="currentRailPathData" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RayController" Collapsed="true">
+    <Position X="10.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAYAAgAACCAElAAAIgACAAAAAAAAAAAAgABEBAAAAAI=</HashCode>
+      <FileName>Assets\Scripts\RayController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SubmitBranchButton" Collapsed="true">
+    <Position X="5.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAgQAAEAAAAAACAAAAEAAAAA=</HashCode>
+      <FileName>Assets\Scripts\SubmitBranchButton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TargetGenerator" Collapsed="true">
+    <Position X="7" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAACAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\TargetGenerator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="test" Collapsed="true">
+    <Position X="8.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\test.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UIManager" Collapsed="true">
+    <Position X="10.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EgAKAAAEBCACGIAAAABKQAAAQBgBMAAoEwAQAAQAAag=</HashCode>
+      <FileName>Assets\Scripts\UIManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RampAsset" Collapsed="true">
+    <Position X="8.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQIAAAAAAAAAAAAAAAAAAAgAAAQA=</HashCode>
+      <FileName>Assets\Shared\Ramps\Runtime\RampAsset.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AdjustTimeScale" Collapsed="true">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAABAAACAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\AdjustTimeScale.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ProximityActivate" Collapsed="true">
+    <Position X="17.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQEIAAAQCAAAgAAIIAYAAAAAEEAAQBAAAAQABAAAAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\ProximityActivate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SimpleCharacterMotor" Collapsed="true">
+    <Position X="15.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQEAAggAAAEIAEAACQAAIAgAIAACQgAAEAACAAACEA=</HashCode>
+      <FileName>Assets\Shared\Scripts\SimpleCharacterMotor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Readme" Collapsed="true">
+    <Position X="12.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAQAAAAAAAAAAAAAAAAAAAQAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Assets\TutorialInfo\Scripts\Readme.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UnityTemplateProjects.SimpleCameraController" Collapsed="true">
+    <Position X="14" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAwgAAAAAAAAAIJAAAAAAAAAAAAAAAAAECAACAA=</HashCode>
+      <FileName>Assets\Shared\Scripts\SimpleCameraController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RailPathData">
+    <Position X="20.5" Y="0.5" Width="2.25" />
+    <NestedTypes>
+      <Class Name="RailPathData.PathDataDetail" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\RailPathData.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAACAAAAAAEAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\RailPathData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="ARState" Collapsed="true">
+    <Position X="5.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAIEAAAAAAAAAAAQAAAAAgAAAIAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\ARStateReactiveProperty.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="BodyRegionType" Collapsed="true">
+    <Position X="7" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAABAAAAAABAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Assets\Scripts\BodyRegionType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="BranchDirectionType" Collapsed="true">
+    <Position X="8.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACACAAAEIAAA=</HashCode>
+      <FileName>Assets\Scripts\BranchDirectionType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ClearConditionsType" Collapsed="true">
+    <Position X="10.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\ClearConditionsType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EnemyMoveType" Collapsed="true">
+    <Position X="12.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\EnemyController.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EventType" Collapsed="true">
+    <Position X="14" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAgAAEAAAAAAAQAAAAAAEAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\EventType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ItemType" Collapsed="true">
+    <Position X="15.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAACAAAAAAQAAA=</HashCode>
+      <FileName>Assets\Scripts\ItemController.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="RootType" Collapsed="true">
+    <Position X="17.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgCAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Assets\Scripts\RootType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Yu Gothic UI" Size="9" />
+</ClassDiagram>
