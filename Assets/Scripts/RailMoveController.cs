@@ -65,7 +65,7 @@ public class RailMoveController : MonoBehaviour
         yield return new WaitUntil(() => gameManager.currentGameState == GameState.Play_Move);
 
         // ˆÚ“®ŠJŽn
-        ResumeMove();
+        //ResumeMove();
     }
 
     /// <summary>

@@ -21,6 +21,7 @@ public class EnemyBase : MonoBehaviour  //  EventBase<int>
     protected Animator anim;
     protected Tween tween;
 
+    [SerializeField]
     protected GameObject lookTarget;
 
     [SerializeField]
@@ -57,7 +58,12 @@ public class EnemyBase : MonoBehaviour  //  EventBase<int>
     protected List<BodyRegionPartsController> partsControllersList = new List<BodyRegionPartsController>();
 
 
-    public virtual void SetUpEnemy(GameObject playerObj, GameManager gameManager) {
+    void Start() {
+        // デバッグ用
+        SetUpEnemy(lookTarget);
+    }
+
+    public virtual void SetUpEnemy(GameObject playerObj, GameManager gameManager = null) {
 
         lookTarget = playerObj;
         this.gameManager = gameManager;
@@ -72,9 +78,12 @@ public class EnemyBase : MonoBehaviour  //  EventBase<int>
 
             // 利用している場合には目標地点をセット
             agent.destination = lookTarget.transform.position;
-
-            // 移動速度を NavMesh に設定
+                  
+            // アニメがある場合には再生
             if (anim) {
+
+                // 移動速度を NavMesh に設定
+
                 anim.SetBool("Walk", true);
             }
         }
@@ -133,7 +142,7 @@ public class EnemyBase : MonoBehaviour  //  EventBase<int>
 
             // プレイヤーの情報がないなら
         } else {
-            if (other.gameObject.TryGetComponent(out player)) {
+            if (other.transform.parent.TryGetComponent(out player)) {
 
                 // 攻撃用のメソッドを登録
                 SetAttackCoroutine();
@@ -149,6 +158,8 @@ public class EnemyBase : MonoBehaviour  //  EventBase<int>
 
             // 登録したメソッドを実行
             StartCoroutine(attackCoroutine);
+
+            Debug.Log("攻撃開始");
         }
     }
 
@@ -163,6 +174,8 @@ public class EnemyBase : MonoBehaviour  //  EventBase<int>
             // 攻撃処理を止める
             isAttack = false;
             StopCoroutine(attackCoroutine);
+
+            Debug.Log("範囲外");
         }
     }
 
