@@ -6,11 +6,8 @@ using UnityEngine;
 /// </summary>
 public class RayController : MonoBehaviour
 {
+    [Header("発射口用のエフェクトのサイズ調整")]
     public Vector3 muzzleFlashScale;
-
-    public GameObject muzzleFlashPrefab;
-
-    public GameObject hitEffectPrefab;
 
     private bool isShooting;
 
@@ -18,7 +15,7 @@ public class RayController : MonoBehaviour
     private GameObject hitEffectObj;
 
     private GameObject target;
-    private EnemyController enemy;
+    private EnemyController_Normal enemy;
 
     [SerializeField, Header("Ray 用のレイヤー設定")]
     private int[] layerMasks;
@@ -26,7 +23,7 @@ public class RayController : MonoBehaviour
     //[SerializeField]  Debug用
     private string[] layerMasksStr;
 
-    private EventBase<int> eventBase;
+    private MissionBase<int> eventBase;
 
     [SerializeField]
     private PlayerController playerController;
@@ -45,7 +42,6 @@ public class RayController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         // ゲーム状態がプレイ中でない場合には処理を行わない制御をする
@@ -77,7 +73,7 @@ public class RayController : MonoBehaviour
             // 発射エフェクトの表示。初回のみ生成し、２回目はオンオフで切り替える
             if (muzzleFlashObj == null) {
                 // 発射口の位置に RayController ゲームオブジェクトを配置する
-                muzzleFlashObj = Instantiate(muzzleFlashPrefab, transform.position, transform.rotation);
+                muzzleFlashObj = Instantiate(EffectManager.instance.muzzleFlashPrefab, transform.position, transform.rotation);
                 muzzleFlashObj.transform.SetParent(gameObject.transform);
                 muzzleFlashObj.transform.localScale = muzzleFlashScale;
 
@@ -130,7 +126,7 @@ public class RayController : MonoBehaviour
                 //}
                 //else 
                 if (target.TryGetComponent(out eventBase)) {
-                    eventBase.TriggerEvent(playerController.bulletPower);
+                    eventBase.TriggerMission(playerController.bulletPower);
                 }
 
                 // 演出
@@ -149,7 +145,7 @@ public class RayController : MonoBehaviour
                 //    parts.CalcDamageParts(playerController.bulletPower);
                 //} else 
                 if (target.TryGetComponent(out eventBase)) {
-                    eventBase.TriggerEvent(playerController.bulletPower);                    
+                    eventBase.TriggerMission(playerController.bulletPower);                    
                 }
 
                 // 演出
@@ -174,7 +170,7 @@ public class RayController : MonoBehaviour
     /// <param name="surfacePos"></param>
     private void PlayHitEffect(Vector3 effectPos, Vector3 surfacePos) {
         if (hitEffectObj == null) {
-            hitEffectObj = Instantiate(hitEffectPrefab, effectPos, Quaternion.identity);
+            hitEffectObj = Instantiate(EffectManager.instance.hitEffectPrefab, effectPos, Quaternion.identity);
         } else {
             hitEffectObj.transform.position = effectPos;
             hitEffectObj.transform.rotation = Quaternion.FromToRotation(Vector3.forward, surfacePos);
