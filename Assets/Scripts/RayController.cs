@@ -15,7 +15,7 @@ public class RayController : MonoBehaviour
     private GameObject hitEffectObj;
 
     private GameObject target;
-    private EnemyController enemy;
+    private EnemyController_Normal enemy;
 
     [SerializeField, Header("Ray 用のレイヤー設定")]
     private int[] layerMasks;
@@ -23,7 +23,7 @@ public class RayController : MonoBehaviour
     //[SerializeField]  Debug用
     private string[] layerMasksStr;
 
-    private EventBase<int> eventBase;
+    private MissionBase<int> eventBase;
 
     [SerializeField]
     private PlayerController playerController;
@@ -126,7 +126,7 @@ public class RayController : MonoBehaviour
                 //}
                 //else 
                 if (target.TryGetComponent(out eventBase)) {
-                    eventBase.TriggerEvent(playerController.bulletPower);
+                    eventBase.TriggerMission(playerController.bulletPower);
                 }
 
                 // 演出
@@ -145,7 +145,7 @@ public class RayController : MonoBehaviour
                 //    parts.CalcDamageParts(playerController.bulletPower);
                 //} else 
                 if (target.TryGetComponent(out eventBase)) {
-                    eventBase.TriggerEvent(playerController.bulletPower);                    
+                    eventBase.TriggerMission(playerController.bulletPower);                    
                 }
 
                 // 演出

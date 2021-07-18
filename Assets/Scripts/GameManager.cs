@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour {
     private MissionTriggerPoint[] eventTriggerPoint;
 
     [SerializeField, HideInInspector]
-    private List<EnemyController> enemiesList = new List<EnemyController>();
+    private List<EnemyController_Normal> enemiesList = new List<EnemyController_Normal>();
 
     [SerializeField, HideInInspector]
     private List<GameObject> gimmicksList = new List<GameObject>();
@@ -55,8 +55,11 @@ public class GameManager : MonoBehaviour {
     [SerializeField, Header("パスにおけるミッションの発生有無")]  // Debug 用
     private bool[] isMissionTriggers;
 
+    [Header("現在のゲームの進行状態")]
+    public GameState currentGameState;
 
-    private void Start() {
+
+    private IEnumerator Start() {
 
         originRailPathDatas = DataBaseManager.instance.GetRailPathDatasFromBranchNo(0);
 
@@ -68,6 +71,12 @@ public class GameManager : MonoBehaviour {
 
         // 次に再生するレール移動の目的地と経路のパスを設定
         railMoveController.SetNextRailPathData(originRailPathDatas[0]);
+
+        // レール移動の経路と移動登録が完了するまで待機
+        yield return new WaitUntil(() => railMoveController.GetMoveSetting());
+
+        // ゲームの進行状態を移動中に変更する
+        currentGameState = GameState.Play_Move;
     }
 
     /// <summary>
@@ -163,7 +172,7 @@ public class GameManager : MonoBehaviour {
     /// 敵の情報を List に追加
     /// </summary>
     /// <param name="enemyController"></param>
-    public void AddEnemyList(EnemyController enemyController) {
+    public void AddEnemyList(EnemyController_Normal enemyController) {
         enemiesList.Add(enemyController);
     }
 
@@ -184,7 +193,7 @@ public class GameManager : MonoBehaviour {
         }
 
         for (int i = 0; i < enemiesList.Count; i++) {
-            enemiesList[i].GetComponent<EnemyController>().PauseMove();
+            enemiesList[i].GetComponent<EnemyController_Normal>().PauseMove();
         }
     }
 
@@ -197,7 +206,7 @@ public class GameManager : MonoBehaviour {
         }
 
         for (int i = 0; i < enemiesList.Count; i++) {
-            enemiesList[i].GetComponent<EnemyController>().ResumeMove();
+            enemiesList[i].GetComponent<EnemyController_Normal>().ResumeMove();
         }
     }
 
@@ -262,7 +271,7 @@ public class GameManager : MonoBehaviour {
     /// 敵の情報を List から削除し、ミッション内の敵の残数を減らす
     /// </summary>
     /// <param name="enemy"></param>
-    public void RemoveEnemyList(EnemyController enemy) {
+    public void RemoveEnemyList(EnemyController_Normal enemy) {
         enemiesList.Remove(enemy);
 
         currentMissionDuration--;

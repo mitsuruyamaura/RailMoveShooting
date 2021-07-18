@@ -58,6 +58,14 @@ public class RailMoveController : MonoBehaviour
 
         // TODO 他に必要な処理を追記
 
+        // 移動を一時停止
+        PauseMove();
+
+        // ゲームの進行状態が移動中になるまで待機
+        yield return new WaitUntil(() => gameManager.currentGameState == GameState.Play_Move);
+
+        // 移動開始
+        ResumeMove();
     }
 
     /// <summary>
@@ -119,5 +127,13 @@ public class RailMoveController : MonoBehaviour
 
         // TODO 他にもある場合には追記。必要に応じて引数を通じて外部から情報をもらうようにする
 
+    }
+
+    /// <summary>
+    /// 移動用の処理が登録されたか確認
+    /// </summary>
+    /// <returns></returns>
+    public bool GetMoveSetting() {
+        return tween != null ? true : false;
     }
 }

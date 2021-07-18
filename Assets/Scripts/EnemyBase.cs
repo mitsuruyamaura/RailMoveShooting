@@ -4,18 +4,27 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.AI;
 
+/// <summary>
+/// エネミーの移動方法の種類
+/// </summary>
 public enum EnemyMoveType {
     Agent,
     Boss_0,
     Boss_1
 }
 
+/// <summary>
+/// エネミーの基幹クラス
+/// </summary>
 public class EnemyBase : MonoBehaviour  //  EventBase<int>    
 {
     protected Animator anim;
     protected Tween tween;
 
     protected GameObject lookTarget;
+
+    [SerializeField]
+    protected int enemyNo;
 
     [SerializeField]
     protected int hp;
@@ -82,6 +91,13 @@ public class EnemyBase : MonoBehaviour  //  EventBase<int>
     protected virtual void GetEnemyData() {
 
         // データベースからデータを取得してセット
+        //enemyData = DataBaseManager.instance.GetEnemyData(enemyNo);
+
+        //hp = enemyData.hp;
+        //attackPower = enemyData.attackPower;
+        //attackInterval = enemyData.attackInterval;
+        //enemyMoveType = enemyData.enemyMoveType;
+        //point = enemyData.point;
 
     }
 
@@ -176,14 +192,14 @@ public class EnemyBase : MonoBehaviour  //  EventBase<int>
     //    CalcDamage(value);
     //}
 
-    ///// <summary>
-    ///// ダメージ計算
-    ///// </summary>
-    ///// <param name="damage"></param>
-    //public void CalcDamage(int damage, BodyRegionType bodyPartType = BodyRegionType.Boby) {
-    //    if (isDead) {
-    //        return;
-    //    }
+    /// <summary>
+    /// ダメージ計算
+    /// </summary>
+    /// <param name="damage"></param>
+    public virtual void CalcDamage(int damage, BodyRegionType bodyPartType = BodyRegionType.Boby) {
+        if (isDead) {
+            return;
+        }
 
-    //}
+    }
 }
