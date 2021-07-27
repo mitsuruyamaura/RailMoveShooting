@@ -19,6 +19,9 @@ public class RailPathData : MonoBehaviour
 
         [Tooltip("ミッションの発生有無。オンで発生")]
         public bool isMissionTrigger;
+
+        [Tooltip("ミッションで発生するイベント群の情報。isMissionTrigger がオンの時に登録する")]
+        public MissionEventDetail missionEventDetail;
     }
 
     [Header("経路用のパスデータ群")]
