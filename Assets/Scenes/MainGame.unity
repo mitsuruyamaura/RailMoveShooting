@@ -2027,7 +2027,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &894232176
 MonoBehaviour:
@@ -2047,7 +2047,7 @@ MonoBehaviour:
   itemDataSO: {fileID: 0}
   treasureDataSO: {fileID: 0}
   enemyDataSO: {fileID: 0}
-  branchDataSO: {fileID: 11400000, guid: eab1913d05ce1ee45bd95f50f8dc9324, type: 2}
+  stagePathDataSO: {fileID: 11400000, guid: eab1913d05ce1ee45bd95f50f8dc9324, type: 2}
 --- !u!1 &1198059925
 GameObject:
   m_ObjectHideFlags: 0
@@ -2091,7 +2091,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1359902572
 PrefabInstance:
@@ -2217,7 +2217,7 @@ MonoBehaviour:
   currentMissionDuration: 0
   eventGenerator: {fileID: 0}
   railMoveController: {fileID: 560543692}
-  originRailPathDatas: []
+  originRailPathData: {fileID: 0}
   isMissionTriggers: 
   currentGameState: 0
 --- !u!4 &1550902662
@@ -4426,7 +4426,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   muzzleFlashScale: {x: 0.5, y: 0.5, z: 0.5}
-  layerMasks: 07000000
+  layerMasks: 06000000
+  layerMasksStr: []
   playerController: {fileID: 454872043}
   arManager: {fileID: 0}
   parts: {fileID: 0}
@@ -4438,7 +4439,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8264416041433775774}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.54, y: -1, z: 1.31}
+  m_LocalPosition: {x: 0.54, y: -1, z: 1.3099995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 454872042}

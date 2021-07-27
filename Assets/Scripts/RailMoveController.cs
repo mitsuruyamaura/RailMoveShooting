@@ -18,6 +18,21 @@ public class RailMoveController : MonoBehaviour
 
     private int moveCount;
 
+    //void Start() {
+    //    // Debug 用  レール移動の開始
+    //    StartCoroutine(StartRailMove());
+    //}
+
+    /// <summary>
+    /// RailMoveController の初期設定
+    /// </summary>
+    /// <param name="gameManager"></param>
+    public void SetUpRailMoveController(GameManager gameManager) {
+        this.gameManager = gameManager;
+
+        // TODO 他にもある場合には追記。必要に応じて引数を通じて外部から情報をもらうようにする
+
+    }
 
     /// <summary>
     /// 次に再生するレール移動の目的地と経路のパスを取得して設定
@@ -30,12 +45,6 @@ public class RailMoveController : MonoBehaviour
         // 移動開始
         StartCoroutine(StartRailMove());
     }
-
-
-    //void Start() {
-    //    // Debug 用  レール移動の開始
-    //    StartCoroutine(StartRailMove());
-    //}
 
     /// <summary>
     /// レール移動の開始
@@ -65,7 +74,7 @@ public class RailMoveController : MonoBehaviour
         yield return new WaitUntil(() => gameManager.currentGameState == GameState.Play_Move);
 
         // 移動開始
-        //ResumeMove();
+        ResumeMove();
     }
 
     /// <summary>
@@ -116,17 +125,6 @@ public class RailMoveController : MonoBehaviour
 
             Debug.Log("分岐確認");
         }
-    }
-
-    /// <summary>
-    /// RailMoveController の初期設定
-    /// </summary>
-    /// <param name="gameManager"></param>
-    public void SetUpRailMoveController(GameManager gameManager) {
-        this.gameManager = gameManager;
-
-        // TODO 他にもある場合には追記。必要に応じて引数を通じて外部から情報をもらうようにする
-
     }
 
     /// <summary>

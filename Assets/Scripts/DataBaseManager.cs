@@ -28,7 +28,15 @@ public class DataBaseManager : MonoBehaviour
     private EnemyDataSO enemyDataSO;
 
     [SerializeField]
-    private BranchDataSO branchDataSO;
+    private StagePathDataSO stagePathDataSO;
+
+    /// <summary>
+    /// stagePathDatasList 変数の Count 用のプロパティ
+    /// </summary>
+    public int StagePathDataCount
+    {
+        get => stagePathDataSO.stagePathDatasList.Count;
+    }
 
 
     void Awake() {
@@ -41,12 +49,29 @@ public class DataBaseManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 分岐番号からパス情報を取得
+    /// ステージパス番号から分岐先の RailPathData 情報を取得
     /// </summary>
     /// <param name="searchStageNo"></param>
     /// <returns></returns>
-    public RailPathData[] GetRailPathDatasFromBranchNo(int searchBranchNo) {
-        return branchDataSO.branchDatasList.Find(x => x.branchNo == searchBranchNo).railPathDatas;
+    public RailPathData GetRailPathDatasFromBranchNo(int nextStagePathDataNo, BranchDirectionType searchBranchDirectionType) {
+        return stagePathDataSO.stagePathDatasList[nextStagePathDataNo].branchDatasList.Find(x => x.branchDirectionType == searchBranchDirectionType).railPathData;
+    }
+
+    /// <summary>
+    /// ステージ内のルートの数の取得
+    /// </summary>
+    /// <returns></returns>
+    public int GetStagePathDetasListCount() {
+        return stagePathDataSO.stagePathDatasList.Count;
+    }
+
+    /// <summary>
+    /// ブランチの管理している分岐数の取得
+    /// </summary>
+    /// <param name="branchNo"></param>
+    /// <returns></returns>
+    public int GetBranchDatasListCount(int branchNo) {
+        return stagePathDataSO.stagePathDatasList[branchNo].branchDatasList.Count;
     }
 
     //public RailPathData[] GetRailPathDatasFromBranchDirectionType(BranchDirectionType branchDirectionType, List<RailPathDataSO.StagePathData.RootData> rootDatas) {

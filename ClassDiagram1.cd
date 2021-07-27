@@ -178,12 +178,12 @@
   <Class Name="DataBaseManager" Collapsed="true">
     <Position X="7" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEAAAAAAAAQAAIAAAAAAAAAABCAAAEAAAAAAQQEEA=</HashCode>
+      <HashCode>AAAEAAAAQAAAQAAIAAAAAAAAAABCAAAEAAAAAAQQUEA=</HashCode>
       <FileName>Assets\Scripts\DataBaseManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="EnemyController" Collapsed="true">
-    <Position X="2.75" Y="2" Width="1.5" />
+    <Position X="6.5" Y="4.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>EERAAICBAQAAQRAAAAAAkBUBBJAAEIBBQQDACAAAAAA=</HashCode>
       <FileName>Assets\Scripts\EnemyController.cs</FileName>
@@ -201,13 +201,6 @@
     <TypeIdentifier>
       <HashCode>AAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\EnemyDataSO.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="EventBase&lt;T&gt;" Collapsed="true">
-    <Position X="1.75" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\EventBase.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="EventDataSO" Collapsed="true">
@@ -239,7 +232,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="GameManager">
-    <Position X="28" Y="0.5" Width="2.25" />
+    <Position X="31.75" Y="3.5" Width="2.25" />
     <Members>
       <Method Name="AddEnemyList" Hidden="true" />
       <Method Name="AddGimmickList" Hidden="true" />
@@ -275,26 +268,17 @@
         </TypeIdentifier>
       </Class>
     </NestedTypes>
-    <AssociationLine Name="originRailPathData" Type="RailPathData" ManuallyRouted="true">
-      <Path>
-        <Point X="28" Y="1.664" />
-        <Point X="25.375" Y="1.664" />
-        <Point X="25.375" Y="1.664" />
-        <Point X="22.75" Y="1.664" />
-      </Path>
-    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AACgAAADACyQQCgABgAAAgCjIAABAABQCAJCQQCgAAA=</HashCode>
+      <HashCode>ABigAAADACSQQChABgAAAgCnIAABAABQCAJCQQCgAAA=</HashCode>
       <FileName>Assets\Scripts\GameManager.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Field Name="originRailPathData" />
       <Field Name="pathDataSO" />
       <Field Name="playerController" />
     </ShowAsAssociation>
   </Class>
   <Class Name="ItemController" Collapsed="true">
-    <Position X="0.5" Y="2" Width="1.5" />
+    <Position X="0.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAgAAAAAAAQAAAAAAAAABAAAAAAAAAQBCAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\ItemController.cs</FileName>
@@ -331,14 +315,14 @@
   <Class Name="PlayerController" Collapsed="true">
     <Position X="15.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>GAAAAAAACQAAAAAAAAgBgAAQAAAAECIAQABAAMAAUAA=</HashCode>
+      <HashCode>GAAAAAAACSAAAAAAAAgBgAAQAAAAECIAQABAAMAAEAA=</HashCode>
       <FileName>Assets\Scripts\PlayerController.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="RailMoveController">
-    <Position X="28" Y="3.75" Width="2.25" />
+    <Position X="23.75" Y="3.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AEAAAAhAABAAAAAAAAAAEAEAgAAgEAACAAAAAAAAAAA=</HashCode>
+      <HashCode>IEAAAAhAABAAAAAAAAAAEAEAgAAgEAACAAAACAAAAAA=</HashCode>
       <FileName>Assets\Scripts\RailMoveController.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -348,7 +332,7 @@
   <Class Name="RayController" Collapsed="true">
     <Position X="10.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAYAAgAACCAElAAAIgACAAAAAAAAAAAAgABEBAAAAAI=</HashCode>
+      <HashCode>QAYAAgAACCAEFAAAIgACAAAAAAAAAAAAgABEBAAAAAI=</HashCode>
       <FileName>Assets\Scripts\RayController.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -423,7 +407,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="RailPathData">
-    <Position X="20.5" Y="0.5" Width="2.25" />
+    <Position X="28" Y="4.5" Width="2.25" />
     <NestedTypes>
       <Class Name="RailPathData.PathDataDetail" Collapsed="true">
         <TypeIdentifier>
@@ -434,6 +418,27 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAEAAAAAAAAAACAAAAAAEAEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\RailPathData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EventBase&lt;T&gt;" Collapsed="true">
+    <Position X="0.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\EventBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemyController_Normal">
+    <Position X="3" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAEAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\EnemyController_Normal.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemyBase" Collapsed="true">
+    <Position X="3" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EEQAAICBACAAQRAAAAAAgBEBBJAAAIBlAQDACAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\EnemyBase.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Enum Name="ARState" Collapsed="true">
@@ -465,10 +470,10 @@
     </TypeIdentifier>
   </Enum>
   <Enum Name="EnemyMoveType" Collapsed="true">
-    <Position X="12.25" Y="7.75" Width="1.5" />
+    <Position X="14.25" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\EnemyController.cs</FileName>
+      <FileName>Assets\Scripts\EnemyBase.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="EventType" Collapsed="true">
