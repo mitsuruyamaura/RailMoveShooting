@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09c60239bd34faa4484dfb1a64148de2, type: 3}
+  m_Name: EnemyDataSO
+  m_EditorClassIdentifier: 
+  enemyDatasList:
+  - enemyName: Zombie
+    enemyMoveType: 0
+    enemyNo: 0
+    hp: 10
+    attackPower: 1
+    moveValue: 1
+    attackInterval: 5
+    point: 150
+  - enemyName: Wizard
+    enemyMoveType: 1
+    enemyNo: 1
+    hp: 30
+    attackPower: 2
+    moveValue: 5
+    attackInterval: 7.5
+    point: 500

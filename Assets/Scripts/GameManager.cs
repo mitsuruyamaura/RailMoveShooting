@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 
     [SerializeField, HideInInspector]
-    private MissionTriggerPoint[] eventTriggerPoint;
+    private MissionEventDetail[] eventTriggerPoint;
 
     [SerializeField, HideInInspector]
     private List<EnemyController_Normal> enemiesList = new List<EnemyController_Normal>();
@@ -40,9 +40,6 @@ public class GameManager : MonoBehaviour {
     [SerializeField, HideInInspector]
     private int currentMissionDuration;
 
-    [SerializeField, HideInInspector]
-    private EventGenerator eventGenerator;
-
 
 
 
@@ -55,13 +52,28 @@ public class GameManager : MonoBehaviour {
     [SerializeField, Header("パスにおけるミッションの発生有無")]  // Debug 用
     private bool[] isMissionTriggers;
 
+    [SerializeField]
+    private EventGenerator eventGenerator;
+
     [Header("現在のゲームの進行状態")]
     public GameState currentGameState;
+
+    private int clearMissionCount;
+
+    [SerializeField]
+    private List<MissionEventDetail> missionEventDetailsList = new List<MissionEventDetail>();
+
+    [SerializeField, Header("ミッションで発生しているイベントのリスト")]
+    private List<EventBase<int>> eventBasesList = new List<EventBase<int>>();
 
 
     private IEnumerator Start() {
 
+        currentGameState = GameState.Wait;
+
         originRailPathData = DataBaseManager.instance.GetRailPathDatasFromBranchNo(0, BranchDirectionType.NoBranch);
+
+        eventGenerator.SetUpEventGenerator(this, playerController);
 
         // RailMoveController の初期設定
         railMoveController.SetUpRailMoveController(this);
@@ -84,11 +96,19 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     private void SetMissionTriggers() {
 
-        // 分岐がある場合には変更する
+        // 配列の初期化
         isMissionTriggers = new bool[originRailPathData.GetIsMissionTriggers().Length];
 
         // ミッション発生有無の情報を登録
         isMissionTriggers = originRailPathData.GetIsMissionTriggers();
+
+        for (int i = 0; i < isMissionTriggers.Length; i++) {
+            if (originRailPathData.pathDataDetails[i].missionEventDetail) {
+                missionEventDetailsList.Add(originRailPathData.pathDataDetails[i].missionEventDetail);
+            }
+        }
+
+        clearMissionCount = 0;
     }
 
     /// <summary>
@@ -101,13 +121,32 @@ public class GameManager : MonoBehaviour {
             // TODO ミッション発生
             Debug.Log("ミッション発生");
 
+            // ミッションの準備
+            PreparateMission(missionEventDetailsList[clearMissionCount]);
+
             // Debug 用　いまはそのまま進行
-            railMoveController.ResumeMove();
+            //railMoveController.ResumeMove();
 
         } else {
             // ミッションなし。次のパスへ移動を再開
             railMoveController.ResumeMove();
         }
+    }
+
+    /// <summary>
+    /// ミッションの準備
+    /// </summary>
+    /// <param name="missionEventDetail"></param>
+    private void PreparateMission(MissionEventDetail missionEventDetail) {
+
+        // ミッションの時間設定
+        currentMissionDuration = missionEventDetail.missionDuration;
+
+        // ミッション内の各イベントの生成(敵、ギミック、トラップ、アイテムなどを生成)
+        eventGenerator.GenerateEvents((missionEventDetail.eventTypes, missionEventDetail.eventNos), missionEventDetail.eventTrans);
+
+        // ミッション開始
+        StartCoroutine(StartMission(missionEventDetail.clearConditionsType));
     }
 
 
@@ -163,16 +202,16 @@ public class GameManager : MonoBehaviour {
         yield return StartCoroutine(CheckNextRootBranch());
     }
 
-    /// <summary>
-    /// ゲームの準備
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator PreparateGame() {
-        for (int i = 0; i < eventTriggerPoint.Length; i++) {
-            eventTriggerPoint[i].SetUpMissionTriggerPoint(this);
-        }
-        yield return null;
-    }
+    ///// <summary>
+    ///// ゲームの準備
+    ///// </summary>
+    ///// <returns></returns>
+    //private IEnumerator PreparateGame() {
+    //    for (int i = 0; i < eventTriggerPoint.Length; i++) {
+    //        eventTriggerPoint[i].SetUpMissionTriggerPoint(this);
+    //    }
+    //    yield return null;
+    //}
 
     /// <summary>
     /// 敵の情報を List に追加
@@ -257,7 +296,7 @@ public class GameManager : MonoBehaviour {
                     // 選択した分岐のルートを設定
                     fieldAutoScroller.SetNextField(GetPathDatasList(uiManager.GetSubmitBranch().Item2));
                 }
-                
+
                 break;
 
             case RootType.Boss_Battle:
@@ -268,7 +307,7 @@ public class GameManager : MonoBehaviour {
 
                 break;
         }
-       
+
         // 次のためにアップ
         currentRailCount++;
     }
@@ -283,27 +322,27 @@ public class GameManager : MonoBehaviour {
         currentMissionDuration--;
     }
 
-    /// <summary>
-    /// ミッションの準備
-    /// </summary>
-    /// <param name="missionDuration"></param>
-    /// <param name="clearConditionsType"></param>
-    /// <param name="events"></param>
-    /// <param name="eventTrans"></param>
-    public void PreparateMission(int missionDuration, ClearConditionsType clearConditionsType, (EventType[] eventTypes, int[] eventNos) events, Transform[] eventTrans) {
+    ///// <summary>
+    ///// ミッションの準備
+    ///// </summary>
+    ///// <param name="missionDuration"></param>
+    ///// <param name="clearConditionsType"></param>
+    ///// <param name="events"></param>
+    ///// <param name="eventTrans"></param>
+    //public void PreparateMission(int missionDuration, ClearConditionsType clearConditionsType, (EventType[] eventTypes, int[] eventNos) events, Transform[] eventTrans) {
 
-        // カメラの移動停止
-        fieldAutoScroller.StopAndPlayMotion();
+    //    // カメラの移動停止
+    //    fieldAutoScroller.StopAndPlayMotion();
 
-        // ミッションの時間設定
-        currentMissionDuration = missionDuration;
+    //    // ミッションの時間設定
+    //    currentMissionDuration = missionDuration;
 
-        // ミッション内の各イベントの生成(敵、ギミック、トラップ、アイテムなどを生成)
-        eventGenerator.GenerateEvents(events, eventTrans);
+    //    // ミッション内の各イベントの生成(敵、ギミック、トラップ、アイテムなどを生成)
+    //    eventGenerator.GenerateEvents(events, eventTrans);
 
-        // ミッション開始
-        StartCoroutine(StartMission(clearConditionsType));
-    }
+    //    // ミッション開始
+    //    StartCoroutine(StartMission(clearConditionsType));
+    //}
 
     /// <summary>
     /// ミッション開始
@@ -348,12 +387,17 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     public void EndMission() {
 
-        ClearEnemiesList();
+        ClearEventList();
 
-        ClearGimmicksList();
+        // 移動再開
+        railMoveController.ResumeMove();
+
+        //ClearEnemiesList();
+
+        //ClearGimmicksList();
 
         // カメラの移動再開
-        fieldAutoScroller.StopAndPlayMotion();
+        //fieldAutoScroller.StopAndPlayMotion();
     }
 
     /// <summary>
@@ -382,5 +426,34 @@ public class GameManager : MonoBehaviour {
         }
 
         gimmicksList.Clear();
+    }
+
+    /// <summary>
+    /// イベントの List をクリア
+    /// </summary>
+    private void ClearEventList() {
+        if (eventBasesList.Count > 0) {
+            for (int i = 0; i < eventBasesList.Count; i++) {
+                Destroy(eventBasesList[i]);
+            }
+        }
+
+        eventBasesList.Clear();
+    }
+
+    /// <summary>
+    /// イベントの情報を List から削除し、敵の場合には、ミッション内の敵の残数を減らす
+    /// </summary>
+    /// <param name="enemy"></param>
+    public void RemoveEventList(EventBase<int> eventBase) {
+        
+        if (eventBase.eventType == EventType.Enemy || eventBase.eventType == EventType.Boss) {
+            currentMissionDuration--;
+        }
+        eventBasesList.Remove(eventBase);
+    }
+
+    public void AddEventList(EventBase<int> eventBase) {
+        eventBasesList.Add(eventBase);
     }
 }
