@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour {
     private RailMoveController railMoveController;
 
     [SerializeField, Header("経路用のパス群の元データ")]
-    private RailPathData[] originRailPathDatas;
+    private RailPathData originRailPathData;
 
     [SerializeField, Header("パスにおけるミッションの発生有無")]  // Debug 用
     private bool[] isMissionTriggers;
@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour {
 
     private IEnumerator Start() {
 
-        originRailPathDatas = DataBaseManager.instance.GetRailPathDatasFromBranchNo(0);
+        originRailPathData = DataBaseManager.instance.GetRailPathDatasFromBranchNo(0, BranchDirectionType.NoBranch);
 
         // RailMoveController の初期設定
         railMoveController.SetUpRailMoveController(this);
@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour {
         SetMissionTriggers();
 
         // 次に再生するレール移動の目的地と経路のパスを設定
-        railMoveController.SetNextRailPathData(originRailPathDatas[0]);
+        railMoveController.SetNextRailPathData(originRailPathData);
 
         // レール移動の経路と移動登録が完了するまで待機
         yield return new WaitUntil(() => railMoveController.GetMoveSetting());
@@ -85,10 +85,10 @@ public class GameManager : MonoBehaviour {
     private void SetMissionTriggers() {
 
         // 分岐がある場合には変更する
-        isMissionTriggers = new bool[originRailPathDatas[0].GetIsMissionTriggers().Length];
+        isMissionTriggers = new bool[originRailPathData.GetIsMissionTriggers().Length];
 
         // ミッション発生有無の情報を登録
-        isMissionTriggers = originRailPathDatas[0].GetIsMissionTriggers();
+        isMissionTriggers = originRailPathData.GetIsMissionTriggers();
     }
 
     /// <summary>
@@ -113,28 +113,34 @@ public class GameManager : MonoBehaviour {
 
     public void PreparateCheckNextBranch(int nextbranchNo) {
 
-        StartCoroutine(ChecNextBranch(nextbranchNo));
+        StartCoroutine(CheckNextBranch(nextbranchNo));
 
     }
 
-    private IEnumerator ChecNextBranch(int nextbranchNo) {
-        if (nextbranchNo > originRailPathDatas.Length) {
+    private IEnumerator CheckNextBranch(int nextStagePathDataNo) {
+        if (nextStagePathDataNo >= DataBaseManager.instance.GetStagePathDetasListCount()) {
             // 終了
             Debug.Log("ゲーム終了");
 
             yield break;
         }
 
-        // TODO 分岐の判定
+        // TODO 分岐があるかどうかの判定
+        if (DataBaseManager.instance.GetBranchDatasListCount(nextStagePathDataNo) == 1) {
+            // 分岐なしの場合、次の経路を登録
+            originRailPathData = DataBaseManager.instance.GetRailPathDatasFromBranchNo(nextStagePathDataNo, BranchDirectionType.NoBranch);
+        } else {
+            // 分岐がある場合、UI に分岐を表示し、選択を待つ
 
+        }
 
         // 分岐後、次の経路を登録
-        originRailPathDatas = DataBaseManager.instance.GetRailPathDatasFromBranchNo(nextbranchNo);
+        originRailPathData = DataBaseManager.instance.GetRailPathDatasFromBranchNo(nextStagePathDataNo, BranchDirectionType.NoBranch);
 
         SetMissionTriggers();
 
         // 経路を移動先に設定
-        railMoveController.SetNextRailPathData(originRailPathDatas[0]);
+        railMoveController.SetNextRailPathData(originRailPathData);
     }
 
 

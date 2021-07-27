@@ -16,7 +16,7 @@ public enum EnemyMoveType {
 /// <summary>
 /// エネミーの基幹クラス
 /// </summary>
-public class EnemyBase : MonoBehaviour  //  EventBase<int>    
+public class EnemyBase : EventBase<int>  //  EventBase<int>    
 {
     protected Animator anim;
     protected Tween tween;
@@ -133,7 +133,7 @@ public class EnemyBase : MonoBehaviour  //  EventBase<int>
         }
 
         // プレイヤーの情報を保持しており、攻撃中でないなら
-        if (player != null && !isAttack) {
+        if (player != null) {
 
             // 攻撃用のメソッドを登録
             SetAttackCoroutine();
@@ -201,9 +201,9 @@ public class EnemyBase : MonoBehaviour  //  EventBase<int>
         return attackPower;
     }
 
-    //public override void TriggerEvent(int value) {
-    //    CalcDamage(value);
-    //}
+    public override void TriggerEvent(int value) {
+        CalcDamage(value);
+    }
 
     /// <summary>
     /// ダメージ計算
