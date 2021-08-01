@@ -140,9 +140,12 @@ MonoBehaviour:
   - railMoveDuration: 3
     pathTran: {fileID: 1848663331618097173}
     isMissionTrigger: 0
+    missionEventDetail: {fileID: 0}
   - railMoveDuration: 3
     pathTran: {fileID: 527895371687559793}
-    isMissionTrigger: 1
+    isMissionTrigger: 0
+    missionEventDetail: {fileID: 0}
   - railMoveDuration: 3
     pathTran: {fileID: 2315118873131830220}
     isMissionTrigger: 0
+    missionEventDetail: {fileID: 0}

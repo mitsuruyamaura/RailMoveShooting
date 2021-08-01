@@ -63,8 +63,11 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     private List<MissionEventDetail> missionEventDetailsList = new List<MissionEventDetail>();
 
+
+    // mi
+
     [SerializeField, Header("ミッションで発生しているイベントのリスト")]
-    private List<EventBase<int>> eventBasesList = new List<EventBase<int>>();
+    private List<EventBase> eventBasesList = new List<EventBase>();
 
 
     private IEnumerator Start() {
@@ -134,6 +137,65 @@ public class GameManager : MonoBehaviour {
     }
 
     /// <summary>
+    /// ルートの分岐確認の準備
+    /// </summary>
+    /// <param name="nextbranchNo">moveCount</param>
+    public void PreparateCheckNextBranch(int nextbranchNo) {
+
+        StartCoroutine(CheckNextBranch(nextbranchNo));
+
+    }
+    /// <summary>
+    /// ルートの分岐判定
+    /// </summary>
+    /// <param name="nextStagePathDataNo"></param>
+    /// <returns></returns>
+    private IEnumerator CheckNextBranch(int nextStagePathDataNo) {
+        if (nextStagePathDataNo >= DataBaseManager.instance.GetStagePathDetasListCount()) {
+            // 終了
+            Debug.Log("ゲーム終了");
+
+            yield break;
+        }
+
+        // ルートに分岐があるかどうかの判定
+        if (DataBaseManager.instance.GetBranchDatasListCount(nextStagePathDataNo) == 1) {
+
+            Debug.Log("分岐なしで次のルートへ");
+
+            // 分岐なしの場合、次の経路を登録
+            originRailPathData = DataBaseManager.instance.GetRailPathDatasFromBranchNo(nextStagePathDataNo, BranchDirectionType.NoBranch);
+        } else {
+            // TODO 分岐がある場合、UI に分岐を表示し、選択を待つ
+
+            Debug.Log("ルートの分岐発生");
+
+            // TODO 分岐を選択するまで待機
+
+            // TODO 選択したルートを次のルートに設定
+
+        }
+
+        // 分岐後、次の経路を登録
+        //originRailPathData = DataBaseManager.instance.GetRailPathDatasFromBranchNo(nextStagePathDataNo, BranchDirectionType.NoBranch);
+
+        // ルート内のミッション情報を設定
+        SetMissionTriggers();
+
+        // 経路を移動先に設定
+        railMoveController.SetNextRailPathData(originRailPathData);
+
+        // レール移動の経路と移動登録が完了するまで待機
+        yield return new WaitUntil(() => railMoveController.GetMoveSetting());
+
+        // ゲームの進行状態を移動中に変更する
+        currentGameState = GameState.Play_Move;
+    }
+
+
+    // mi
+
+    /// <summary>
     /// ミッションの準備
     /// </summary>
     /// <param name="missionEventDetail"></param>
@@ -148,40 +210,6 @@ public class GameManager : MonoBehaviour {
         // ミッション開始
         StartCoroutine(StartMission(missionEventDetail.clearConditionsType));
     }
-
-
-    public void PreparateCheckNextBranch(int nextbranchNo) {
-
-        StartCoroutine(CheckNextBranch(nextbranchNo));
-
-    }
-
-    private IEnumerator CheckNextBranch(int nextStagePathDataNo) {
-        if (nextStagePathDataNo >= DataBaseManager.instance.GetStagePathDetasListCount()) {
-            // 終了
-            Debug.Log("ゲーム終了");
-
-            yield break;
-        }
-
-        // TODO 分岐があるかどうかの判定
-        if (DataBaseManager.instance.GetBranchDatasListCount(nextStagePathDataNo) == 1) {
-            // 分岐なしの場合、次の経路を登録
-            originRailPathData = DataBaseManager.instance.GetRailPathDatasFromBranchNo(nextStagePathDataNo, BranchDirectionType.NoBranch);
-        } else {
-            // 分岐がある場合、UI に分岐を表示し、選択を待つ
-
-        }
-
-        // 分岐後、次の経路を登録
-        originRailPathData = DataBaseManager.instance.GetRailPathDatasFromBranchNo(nextStagePathDataNo, BranchDirectionType.NoBranch);
-
-        SetMissionTriggers();
-
-        // 経路を移動先に設定
-        railMoveController.SetNextRailPathData(originRailPathData);
-    }
-
 
     public IEnumerator SetStart() {
 
@@ -237,9 +265,9 @@ public class GameManager : MonoBehaviour {
             return;
         }
 
-        for (int i = 0; i < enemiesList.Count; i++) {
-            enemiesList[i].GetComponent<EnemyController_Normal>().PauseMove();
-        }
+        //for (int i = 0; i < enemiesList.Count; i++) {
+        //    enemiesList[i].GetComponent<EnemyController_Normal>().PauseMove();
+        //}
     }
 
     /// <summary>
@@ -250,9 +278,9 @@ public class GameManager : MonoBehaviour {
             return;
         }
 
-        for (int i = 0; i < enemiesList.Count; i++) {
-            enemiesList[i].GetComponent<EnemyController_Normal>().ResumeMove();
-        }
+        //for (int i = 0; i < enemiesList.Count; i++) {
+        //    enemiesList[i].GetComponent<EnemyController_Normal>().ResumeMove();
+        //}
     }
 
     /// <summary>
@@ -445,7 +473,7 @@ public class GameManager : MonoBehaviour {
     /// イベントの情報を List から削除し、敵の場合には、ミッション内の敵の残数を減らす
     /// </summary>
     /// <param name="enemy"></param>
-    public void RemoveEventList(EventBase<int> eventBase) {
+    public void RemoveEventList(EventBase eventBase) {
         
         if (eventBase.eventType == EventType.Enemy || eventBase.eventType == EventType.Boss) {
             currentMissionDuration--;
@@ -453,7 +481,7 @@ public class GameManager : MonoBehaviour {
         eventBasesList.Remove(eventBase);
     }
 
-    public void AddEventList(EventBase<int> eventBase) {
+    public void AddEventList(EventBase eventBase) {
         eventBasesList.Add(eventBase);
     }
 }
