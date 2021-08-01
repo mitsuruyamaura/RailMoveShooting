@@ -1,5 +1,8 @@
 using System.Collections;
 using UnityEngine;
+using UniRx;
+using UniRx.Triggers;
+using System;
 
 /// <summary>
 /// Ray による弾の発射処理の制御クラス
@@ -23,16 +26,22 @@ public class RayController : MonoBehaviour
     [SerializeField]  //Debug用
     private string[] layerMasksStr;
 
-    private EventBase<int> eventBase;
-
     [SerializeField]
     private PlayerController playerController;
+
+    private EventBase eventBase;
+
+    //[SerializeField, HideInInspector]
+    //private BodyRegionPartsController parts;
+
+
+    // mi
 
     [SerializeField, HideInInspector]
     private ARManager arManager;
 
-    [SerializeField, HideInInspector]
-    private BodyRegionPartsController parts;
+
+
 
     void Start()
     {
@@ -40,6 +49,12 @@ public class RayController : MonoBehaviour
         for (int i = 0; i < layerMasks.Length; i++) {
             layerMasksStr[i] = LayerMask.LayerToName(layerMasks[i]);
         }
+
+        this.UpdateAsObservable()
+            .TakeUntilDestroy(this)
+            .Where(_ => playerController.BulletCount > 0 && !playerController.isReloading && Input.GetMouseButton(0))
+            .ThrottleFirst(TimeSpan.FromSeconds(playerController.shootInterval))
+            .Subscribe(_ => { StartCoroutine(ShootTimer()); });
     }
 
     void Update()
@@ -55,11 +70,11 @@ public class RayController : MonoBehaviour
         }
 
         // 発射判定(弾数が残っており、リロード実行中でない場合)　押しっぱなしで発射できる
-        if (playerController.BulletCount > 0  && !playerController.isReloading && Input.GetMouseButton(0)) {
+        //if (playerController.BulletCount > 0  && !playerController.isReloading && Input.GetMouseButton(0)) {
 
-            // 発射時間の計測
-            StartCoroutine(ShootTimer());
-        }
+        //    // 発射時間の計測
+        //    StartCoroutine(ShootTimer());
+        //}
     }
 
     /// <summary>
@@ -67,8 +82,8 @@ public class RayController : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     private IEnumerator ShootTimer() {
-        if (!isShooting) {
-            isShooting = true;
+        //if (!isShooting) {
+        //    isShooting = true;
 
             // 発射エフェクトの表示。初回のみ生成し、２回目はオンオフで切り替える
             if (muzzleFlashObj == null) {
@@ -92,13 +107,11 @@ public class RayController : MonoBehaviour
                 hitEffectObj.SetActive(false);
             }
 
-            isShooting = false;
+        //    isShooting = false;
 
-        } else {
-            yield return null;
-        }
-
-
+        //} else {
+        //    yield return null;
+        //}
     }
 
     /// <summary>
@@ -126,11 +139,13 @@ public class RayController : MonoBehaviour
                 //}
                 //else 
                 if (target.TryGetComponent(out eventBase)) {
-                    eventBase.TriggerEvent(playerController.bulletPower);
-                }
 
-                // 演出
-                PlayHitEffect(hit.point, hit.normal);
+                    // 部位によるダメージ量の修正を計算 
+                    CalcDamage();
+
+                    // 演出
+                    PlayHitEffect(hit.point, hit.normal);
+                }
 
                 //// ダメージ処理
                 //if (target.TryGetComponent(out enemy)) {
@@ -140,13 +155,17 @@ public class RayController : MonoBehaviour
                 //    PlayHitEffect(hit.point, hit.normal);
                 //}
                 //　同じ対象の場合
-            } else {
+            } else if (target == hit.collider.gameObject) {
                 //if (target.TryGetComponent(out parts)) {
                 //    parts.CalcDamageParts(playerController.bulletPower);
                 //} else 
-                if (target.TryGetComponent(out eventBase)) {
-                    eventBase.TriggerEvent(playerController.bulletPower);                    
-                }
+                //if (target.TryGetComponent(out eventBase)) {
+
+                // 部位によるダメージ量の修正を計算 
+                CalcDamage();
+
+                //eventBase.TriggerEvent(playerController.bulletPower);
+                //}
 
                 // 演出
                 PlayHitEffect(hit.point, hit.normal);
@@ -177,5 +196,22 @@ public class RayController : MonoBehaviour
 
             hitEffectObj.SetActive(true);
         }
+    }
+
+    /// <summary>
+    /// 部位によるダメージ量の修正を計算
+    /// </summary>
+    /// <returns></returns>
+    private void CalcDamage() {
+        (int lastDamage, BodyRegionType hitRegionType) partsValue;
+
+        if (target.TryGetComponent(out BodyRegionPartsController parts)) {
+            partsValue = parts.CalcDamageParts(playerController.bulletPower);
+        } else {
+            partsValue = (playerController.bulletPower, BodyRegionType.Boby);
+        }
+
+        // 部位とダメージ決定
+        eventBase.TriggerEvent(partsValue.lastDamage, partsValue.hitRegionType);
     }
 }
