@@ -1,26 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
-using UnityEngine.AI;
-
-/// <summary>
-/// エネミーの移動方法の種類
-/// </summary>
-public enum EnemyMoveType {
-    Agent,
-    Boss_0,
-    Boss_1
-}
 
 /// <summary>
 /// エネミーの基幹クラス
 /// </summary>
-public class EnemyBase : EventBase<int>  //  EventBase<int>    
+public class EnemyBase : EventBase    
 {
-    protected Animator anim;
-    protected Tween tween;
-
     [SerializeField]
     protected GameObject lookTarget;
 
@@ -33,7 +19,10 @@ public class EnemyBase : EventBase<int>  //  EventBase<int>
     [SerializeField]
     protected int attackPower;
 
-    protected NavMeshAgent agent;
+    [SerializeField]
+    protected float moveSpeed;
+
+    protected Animator anim;
 
     protected bool isAttack;
 
@@ -51,18 +40,23 @@ public class EnemyBase : EventBase<int>  //  EventBase<int>
 
     public EnemyMoveType enemyMoveType;
 
-    // 敵のデータを持たせる
-
-
-    [SerializeField]
+    [SerializeField, Header("部位の情報を登録するリスト")]
     protected List<BodyRegionPartsController> partsControllersList = new List<BodyRegionPartsController>();
 
+    // TODO 敵のデータのクラスを持たせる
 
-    void Start() {
+
+
+    protected virtual void Start() {
         // デバッグ用
         SetUpEnemy(lookTarget);
     }
 
+    /// <summary>
+    /// エネミーの設定。外部クラスから呼び出す設計
+    /// </summary>
+    /// <param name="playerObj"></param>
+    /// <param name="gameManager"></param>
     public virtual void SetUpEnemy(GameObject playerObj, GameManager gameManager = null) {
 
         lookTarget = playerObj;
@@ -73,25 +67,11 @@ public class EnemyBase : EventBase<int>  //  EventBase<int>
 
         TryGetComponent(out anim);
 
-        // NavMesh を利用しているか判定
-        if (TryGetComponent(out agent)) {
-
-            // 利用している場合には目標地点をセット
-            agent.destination = lookTarget.transform.position;
-                  
-            // アニメがある場合には再生
-            if (anim) {
-
-                // 移動速度を NavMesh に設定
-
-                anim.SetBool("Walk", true);
-            }
-        }
-
-        // 部位ごとの情報を設定
-        for (int i = 0; i < partsControllersList.Count; i++) {
-            //partsControllersList[i].SetUpPartsController(this);
-        }
+        //// 部位ごとの情報があるか確認
+        //if (partsControllersList.Count > 0) {
+        //    // 部位の情報を設定
+        //    SetBodyParts();
+        //}
     }
 
     /// <summary>
@@ -112,7 +92,7 @@ public class EnemyBase : EventBase<int>  //  EventBase<int>
 
     protected virtual void Update() {
 
-        // 敵を対象(カメラ)の方向を向ける
+        // エネミーを対象(カメラ)の方向を向ける
         if (lookTarget) {
             Vector3 direction = lookTarget.transform.position - transform.position;
             direction.y = 0;
@@ -120,16 +100,23 @@ public class EnemyBase : EventBase<int>  //  EventBase<int>
             Quaternion lookRotation = Quaternion.LookRotation(direction, Vector3.up);
             transform.rotation = Quaternion.Lerp(transform.rotation, lookRotation, 0.1f);
         }
-
-        // 目的地を更新
-        if (lookTarget != null && agent != null) {
-            agent.destination = lookTarget.transform.position;
-        }
     }
 
     protected virtual void OnTriggerStay(Collider other) {
         if (isAttack) {
             return;
+        }
+
+        // ローカル関数を定義
+        void SetAttackCoroutine() {
+            // 攻撃用のメソッドを代入して登録
+            attackCoroutine = Attack(player);
+
+            // 登録したメソッドを実行
+            StartCoroutine(attackCoroutine);
+
+            Debug.Log("攻撃開始");
+
         }
 
         // プレイヤーの情報を保持しており、攻撃中でないなら
@@ -147,19 +134,8 @@ public class EnemyBase : EventBase<int>  //  EventBase<int>
                 // 攻撃用のメソッドを登録
                 SetAttackCoroutine();
 
-                Debug.Log("プレイヤー 初感知");
+                Debug.Log("攻撃範囲内にプレイヤー 初感知");
             }
-        }
-
-        // 攻撃用のメソッドを登録
-        void SetAttackCoroutine() {
-            // 攻撃用のメソッドを代入して登録
-            attackCoroutine = Attack(player);
-
-            // 登録したメソッドを実行
-            StartCoroutine(attackCoroutine);
-
-            Debug.Log("攻撃開始");
         }
     }
 
@@ -175,7 +151,7 @@ public class EnemyBase : EventBase<int>  //  EventBase<int>
             isAttack = false;
             StopCoroutine(attackCoroutine);
 
-            Debug.Log("範囲外");
+            Debug.Log("攻撃範囲外");
         }
     }
 
@@ -197,22 +173,90 @@ public class EnemyBase : EventBase<int>  //  EventBase<int>
         isAttack = false;
     }
 
+    /// <summary>
+    /// 攻撃力取得用
+    /// </summary>
+    /// <returns></returns>
     public int GetAttackPower() {
         return attackPower;
     }
 
-    public override void TriggerEvent(int value) {
-        CalcDamage(value);
+    /// <summary>
+    /// 抽象クラスのメソッドを実装
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="hitBodyRegionType"></param>
+    public override void TriggerEvent(int value, BodyRegionType hitBodyRegionType) {
+
+        // ダメージ計算
+        CalcDamage(value, hitBodyRegionType);
     }
 
     /// <summary>
     /// ダメージ計算
     /// </summary>
     /// <param name="damage"></param>
-    public virtual void CalcDamage(int damage, BodyRegionType bodyPartType = BodyRegionType.Boby) {
+    /// <param name="hitParts"></param>
+    public virtual void CalcDamage(int damage, BodyRegionType hitParts) {
         if (isDead) {
             return;
         }
 
+        hp -= damage;
+
+        if(anim) anim.ResetTrigger("Attack");
+
+        if (hp <= 0) {
+            isDead = true;
+
+            if (anim) {
+                anim.SetBool("Walk", false);
+                anim.SetBool("Down", true);
+            }
+
+            // TODO エネミーの情報を外部クラスの List で管理している場合には、List から削除
+            //gameManager.RemoveEnemyList(this);
+
+            // 部位による判定があり、かつ、頭を打って倒した場合
+            if (hitParts == BodyRegionType.Head) {
+
+                // 頭を消す
+                BodyRegionPartsController parts = partsControllersList.Find(x => x.GetBodyPartType() == hitParts);
+                parts.gameObject.SetActive(false);
+
+                // スコアにボーナス(任意)
+                point *= 3;
+            }
+
+            // スコア加算
+            
+
+            Destroy(gameObject, 1.5f);
+        } else {
+            if(anim) anim.SetTrigger("Damage");
+        }
     }
+
+    /// <summary>
+    /// 移動を一時停止
+    /// </summary>
+    public virtual void PauseMove() {
+        
+    }
+
+    /// <summary>
+    /// 移動を再開
+    /// </summary>
+    public virtual void ResumeMove() {
+        
+    }
+
+    ///// <summary>
+    ///// 部位ごとの情報を設定
+    ///// </summary>
+    //protected void SetBodyParts() {
+    //    for (int i = 0; i < partsControllersList.Count; i++) {
+    //        partsControllersList[i].SetUpPartsController(this);
+    //    }
+    //}
 }

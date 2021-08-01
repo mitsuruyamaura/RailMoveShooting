@@ -118,6 +118,8 @@ public class RailMoveController : MonoBehaviour
             // DOTween を停止
             tween.Kill();
 
+            tween = null;
+
             // 移動先が残っていない場合には、ゲームマネージャー側で分岐の確認(次のルート選定、移動先の分岐、ボス、クリアのいずれか)
             moveCount++;
 

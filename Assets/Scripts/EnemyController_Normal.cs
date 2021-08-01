@@ -39,19 +39,19 @@ public class EnemyController_Normal : EnemyBase
     //    tween = sequence;
     //}
 
-    /// <summary>
-    /// ˆÚ“®‚ğˆê’â~
-    /// </summary>
-    public void PauseMove() {
-        tween.Pause();
-    }
+    ///// <summary>
+    ///// ˆÚ“®‚ğˆê’â~
+    ///// </summary>
+    //public void PauseMove() {
+    //    tween.Pause();
+    //}
 
-    /// <summary>
-    /// ˆÚ“®‚ğÄŠJ
-    /// </summary>
-    public void ResumeMove() {
-        tween.Play();
-    }
+    ///// <summary>
+    ///// ˆÚ“®‚ğÄŠJ
+    ///// </summary>
+    //public void ResumeMove() {
+    //    tween.Play();
+    //}
 
     ///// <summary>
     ///// “G‚Ìİ’è
