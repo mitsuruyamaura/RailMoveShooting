@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[System.Serializable]
 public class MissionEventDetail : MonoBehaviour {
 
     [Header("ミッションのクリア条件")]

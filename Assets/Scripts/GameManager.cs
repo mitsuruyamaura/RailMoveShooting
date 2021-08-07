@@ -63,6 +63,8 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     private List<MissionEventDetail> missionEventDetailsList = new List<MissionEventDetail>();
 
+    // ロード確認用
+    //public RailPathData.PathDataDetail pathDataDetail;
 
     // mi
 
@@ -74,7 +76,17 @@ public class GameManager : MonoBehaviour {
 
         currentGameState = GameState.Wait;
 
+        //if (PlayerPrefsHelper.ExistsData("rail3")) {
+        //    Debug.Log("セーブデータあり");
+        //    pathDataDetail = PlayerPrefsHelper.LoadGetObjectData<RailPathData.PathDataDetail>("rail3");
+        //} else {
+        //    Debug.Log("セーブデータなし");
+        //    originRailPathData = DataBaseManager.instance.GetRailPathDatasFromBranchNo(0, BranchDirectionType.NoBranch);
+        //}
+
         originRailPathData = DataBaseManager.instance.GetRailPathDatasFromBranchNo(0, BranchDirectionType.NoBranch);
+
+        //PlayerPrefsHelper.SaveSetObjectData("rail3", originRailPathData.pathDataDetails[0]);
 
         eventGenerator.SetUpEventGenerator(this, playerController);
 

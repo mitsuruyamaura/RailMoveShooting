@@ -6,6 +6,7 @@ using System.Linq;
 /// <summary>
 /// レール移動用のパスデータ管理クラス
 /// </summary>
+[System.Serializable]
 public class RailPathData : MonoBehaviour
 {
     [System.Serializable]
