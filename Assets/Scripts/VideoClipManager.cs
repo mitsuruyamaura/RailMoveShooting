@@ -41,21 +41,22 @@ public class VideoClipManager : MonoBehaviour
     }
 
     /// <summary>
-    /// デバッグ用
+    /// デバッグ用(Awake でやらないこと。DataBaseManager の準備が競合して間に合わない)
     /// </summary>
     /// <returns></returns>
     IEnumerator Start() {
 
         yield return null;
 
-        PrepareVideo(1);
+        // VideoClip の準備
+        PrepareVideoClip(1);
     }
 
     /// <summary>
     /// VideoClip の準備
     /// </summary>
     /// <param name="videoNo"></param>
-    public void PrepareVideo(int setVideoNo) {
+    public void PrepareVideoClip(int setVideoNo) {
 
         // VideoClip が未設定なら
         if (videoPlayer.clip == null) {
@@ -63,19 +64,17 @@ public class VideoClipManager : MonoBehaviour
             // 対象の VideoClip を検索して設定
             videoPlayer.clip = DataBaseManager.instance.GetVideoData(setVideoNo).videoClip;
 
-            // 読み込み後のコールバック登録
+            // 読み込み後のイベントのコールバック登録
             videoPlayer.prepareCompleted += OnCompletePrepare;
 
             // 読み込み開始
             videoPlayer.Prepare();
 
-            // TODO フェイドインと合わせる
-            
-        }
+            Debug.Log("VideoClip ロード開始");
 
-        //// 読み込むまで待機(videoPlayer.prepareCompleted を使わない場合)
-        //while (!videoPlayer.isPrepared)
-        //    yield return null;
+            // TODO フェイドインと合わせる
+
+        }
 
         /// <summary>
         /// Prepare 完了時に呼ばれるコールバック
@@ -83,13 +82,18 @@ public class VideoClipManager : MonoBehaviour
         /// <param name="vp"></param>
         void OnCompletePrepare(VideoPlayer vp) {
 
+            // イベントのコールバックから削除(残っていると次回も実行されるため)
             videoPlayer.prepareCompleted -= OnCompletePrepare;
 
-            Debug.Log("ロード完了");
+            Debug.Log("VideoClip ロード完了");
 
             // 再生
             StartCoroutine(PlayVideo());
         }
+
+        //// 読み込むまで待機(videoPlayer.prepareCompleted を使わない場合)
+        //while (!videoPlayer.isPrepared)
+        //    yield return null;
     }
 
     /// <summary>
@@ -103,7 +107,7 @@ public class VideoClipManager : MonoBehaviour
 
         videoPlayer.Play();
 
-        Debug.Log("再生");
+        Debug.Log("VideoClip 再生");
 
         // 再生が終了するまで待機
         while (videoPlayer.isPlaying) {
@@ -125,7 +129,7 @@ public class VideoClipManager : MonoBehaviour
             // 一時停止
             videoPlayer.Pause();
 
-            Debug.Log("一時停止");
+            Debug.Log("VideoClip 一時停止");
         }
     }
 
@@ -140,6 +144,6 @@ public class VideoClipManager : MonoBehaviour
         // フェードアウトして初期化
         canvasGroup.DOFade(0, 1.0f).OnComplete(() => { Initialize(); });       
 
-        Debug.Log("停止");
+        Debug.Log("VideoClip 停止");
     }
 }
