@@ -2439,10 +2439,20 @@ PrefabInstance:
       propertyPath: pathDataDetails.Array.data[1].isMissionTrigger
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6572080289317892610, guid: 75d3b74badc2b9342b049af135f549a0,
+        type: 3}
+      propertyPath: pathDataDetails.Array.data[2].isMissionTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6572080289317892611, guid: 75d3b74badc2b9342b049af135f549a0,
         type: 3}
       propertyPath: m_Name
       value: RailPathData
+      objectReference: {fileID: 0}
+    - target: {fileID: 6572080289317892611, guid: 75d3b74badc2b9342b049af135f549a0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75d3b74badc2b9342b049af135f549a0, type: 3}
