@@ -103,6 +103,10 @@ public class RailMoveController : MonoBehaviour
 
         Debug.Log("目標地点 到着 : " + waypointIndex + " 番目");
 
+        // カメラの回転
+        railMoveTarget.transform.DORotate(currentRailPathData.pathDataDetails[waypointIndex].pathTran.eulerAngles, currentRailPathData.pathDataDetails[waypointIndex].railMoveDuration).SetEase(Ease.Linear);
+        Debug.Log(currentRailPathData.pathDataDetails[waypointIndex].pathTran.eulerAngles);
+
         // 移動の一時停止
         PauseMove();
 

@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// –¢Žg—p
+/// </summary>
 [CreateAssetMenu(fileName = "PathDataSO", menuName = "Create PathDataSO")]
 public class PathDataSO : ScriptableObject {
 
