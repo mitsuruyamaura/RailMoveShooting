@@ -168,11 +168,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pathDataDetails:
-  - railMoveDuration: 6
+  - railMoveDuration: 8
     pathTran: {fileID: 1848663331618097173}
     isMissionTrigger: 0
     missionEventDetail: {fileID: 0}
-  - railMoveDuration: 3
+  - railMoveDuration: 4
     pathTran: {fileID: 527895371687559793}
     isMissionTrigger: 0
     missionEventDetail: {fileID: 0}
@@ -180,7 +180,7 @@ MonoBehaviour:
     pathTran: {fileID: 2090265930035029643}
     isMissionTrigger: 0
     missionEventDetail: {fileID: 0}
-  - railMoveDuration: 6
+  - railMoveDuration: 7
     pathTran: {fileID: 2315118873131830220}
     isMissionTrigger: 0
     missionEventDetail: {fileID: 0}
