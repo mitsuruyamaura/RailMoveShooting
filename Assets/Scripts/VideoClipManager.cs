@@ -49,7 +49,7 @@ public class VideoClipManager : MonoBehaviour
         yield return null;
 
         // VideoClip ‚Ì€”õ
-        PrepareVideoClip(1);
+        //PrepareVideoClip(1);
     }
 
     /// <summary>

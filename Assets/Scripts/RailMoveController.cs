@@ -12,6 +12,9 @@ public class RailMoveController : MonoBehaviour
     [SerializeField]
     private RailPathData currentRailPathData;
 
+    [SerializeField, Header("カメラの移動タイプ(Linear か Catmull Rom を設定)")]
+    private PathType pathType;
+
     private Tween tween;
 
     private GameManager gameManager;
@@ -62,7 +65,7 @@ public class RailMoveController : MonoBehaviour
         Debug.Log(totalTime);
 
         // パスによる移動開始
-        tween = railMoveTarget.transform.DOPath(paths, totalTime).SetEase(Ease.Linear).OnWaypointChange((waypointIndex) => CheckArrivalDestination(waypointIndex));
+        tween = railMoveTarget.transform.DOPath(paths, totalTime, pathType).SetEase(Ease.Linear).OnWaypointChange((waypointIndex) => CheckArrivalDestination(waypointIndex));
         Debug.Log("移動開始");
 
         // TODO 他に必要な処理を追記
@@ -102,6 +105,10 @@ public class RailMoveController : MonoBehaviour
     private void CheckArrivalDestination(int waypointIndex) {
 
         Debug.Log("目標地点 到着 : " + waypointIndex + " 番目");
+
+        // カメラの回転
+        railMoveTarget.transform.DORotate(currentRailPathData.pathDataDetails[waypointIndex].pathTran.eulerAngles, currentRailPathData.pathDataDetails[waypointIndex].railMoveDuration).SetEase(Ease.Linear);
+        Debug.Log(currentRailPathData.pathDataDetails[waypointIndex].pathTran.eulerAngles);
 
         // 移動の一時停止
         PauseMove();

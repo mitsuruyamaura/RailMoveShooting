@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// –¢Žg—p
+/// </summary>
 [System.Serializable]
 public class PathData {
 
