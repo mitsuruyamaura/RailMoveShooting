@@ -6,12 +6,17 @@ using Cinemachine;
 // 参考サイト
 // https://light11.hatenadiary.com/entry/2019/07/16/210124
 
-
+/// <summary>
+/// VirtualCamera の状態
+/// </summary>
 public enum CameraStatus {
     Play,
     Stop
 }
 
+/// <summary>
+/// Dolly 移動用のカメラの制御
+/// </summary>
 public class DollyCamera : MonoBehaviour
 {
     [SerializeField]
@@ -54,7 +59,7 @@ public class DollyCamera : MonoBehaviour
     public void SetPath(CinemachinePathBase nextPath) {
         dolly.m_Path = nextPath;
 
-        Debug.Log(dolly.m_Path.PathLength);
+        //Debug.Log(dolly.m_Path.PathLength);   // インスペクターで見れる。Waypoints の数と位置によって自動的に設定
 
         currentCameraStatus = CameraStatus.Play;
     }
