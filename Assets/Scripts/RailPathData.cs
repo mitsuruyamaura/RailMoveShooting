@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Cinemachine;
 
 /// <summary>
 /// レール移動用のパスデータ管理クラス
@@ -28,6 +29,8 @@ public class RailPathData : MonoBehaviour
     [Header("経路用のパスデータ群")]
     public PathDataDetail[] pathDataDetails;
 
+    [Tooltip("Cinemachine TrackedDolly 用のパス")]
+    public CinemachineSmoothPath smoothPath;
 
     /// <summary>
     /// パスの移動時間の取得
