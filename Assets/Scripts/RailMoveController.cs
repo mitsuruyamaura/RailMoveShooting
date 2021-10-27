@@ -15,6 +15,9 @@ public class RailMoveController : MonoBehaviour
     [SerializeField, Header("カメラの移動タイプ(Linear か Catmull Rom を設定)")]
     private PathType pathType;
 
+    [SerializeField]
+    private DollyCamera dollyCamera;
+
     private Tween tween;
 
     private GameManager gameManager;
@@ -43,10 +46,19 @@ public class RailMoveController : MonoBehaviour
     /// <param name="nextPathDataList"></param>
     public void SetNextRailPathData(RailPathData nextRailPathData) {
         // 目的地取得
-        currentRailPathData = nextRailPathData; ;
+        currentRailPathData = nextRailPathData;
 
-        // 移動開始
-        StartCoroutine(StartRailMove());
+        // Cinemachine の TrackedDolly を使用する場合
+        if (GameData.instance.useCinemachine && dollyCamera != null) {
+
+            // Path をセット
+            dollyCamera.SetPath(currentRailPathData.smoothPath);
+
+        } else {
+
+            // 移動開始
+            StartCoroutine(StartRailMove());
+        }
     }
 
     /// <summary>

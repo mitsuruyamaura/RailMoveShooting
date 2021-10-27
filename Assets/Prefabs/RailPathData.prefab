@@ -60,6 +60,62 @@ Transform:
   m_Father: {fileID: 5006531821375082777}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4001047025436086402
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2861636974383902711}
+  - component: {fileID: 2691927921452758599}
+  m_Layer: 0
+  m_Name: CinemachineSmoothPath
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2861636974383902711
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4001047025436086402}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5006531821375082777}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2691927921452758599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4001047025436086402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a200b19ca1a9685429ed7e043c28e904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Resolution: 20
+  m_Appearance:
+    pathColor: {r: 0, g: 1, b: 0, a: 1}
+    inactivePathColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    width: 0.2
+  m_Looped: 0
+  m_Waypoints:
+  - position: {x: 10, y: 0, z: -5}
+    roll: 0
+  - position: {x: 20, y: 0, z: 5}
+    roll: 0
+  - position: {x: 15, y: 0, z: 15}
+    roll: 0
 --- !u!1 &4498685088563767515
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,6 +177,7 @@ Transform:
   - {fileID: 570193093635140365}
   - {fileID: 1809611501726687593}
   - {fileID: 4498685088563767508}
+  - {fileID: 2861636974383902711}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -136,11 +193,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a81ca97deb22494190dd09c0d00c1cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  railMoveDurations:
-  - 3
-  - 3
-  - 3
-  pathTrans:
-  - {fileID: 570193093635140365}
-  - {fileID: 1809611501726687593}
-  - {fileID: 4498685088563767508}
+  pathDataDetails:
+  - railMoveDuration: 0
+    pathTran: {fileID: 570193093635140365}
+    isMissionTrigger: 0
+    missionEventDetail: {fileID: 0}
+  - railMoveDuration: 0
+    pathTran: {fileID: 1809611501726687593}
+    isMissionTrigger: 0
+    missionEventDetail: {fileID: 0}
+  - railMoveDuration: 0
+    pathTran: {fileID: 4498685088563767508}
+    isMissionTrigger: 0
+    missionEventDetail: {fileID: 0}
+  smoothPath: {fileID: 2691927921452758599}

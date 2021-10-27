@@ -9,6 +9,8 @@ public class GameData : MonoBehaviour
 
     public ReactiveProperty<int> scoreReactiveProperty;
 
+    public bool useCinemachine;
+
 
     void Awake() {
         if (instance == null) {
