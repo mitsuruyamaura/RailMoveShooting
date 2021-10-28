@@ -18,6 +18,9 @@ public class RailMoveController : MonoBehaviour
     [SerializeField]
     private DollyCamera dollyCamera;
 
+    [SerializeField]
+    private CameraSwitcher cameraSwitcher;
+
     private Tween tween;
 
     private GameManager gameManager;
@@ -132,6 +135,9 @@ public class RailMoveController : MonoBehaviour
 
             // Debug用  次のパスへの移動開始
             //ResumeMove();
+
+            // VirtualCamera 切り替え
+            cameraSwitcher.SwitchCamera(waypointIndex);
 
         } else {
             // DOTween を停止
