@@ -59,6 +59,9 @@ public class RailMoveController : MonoBehaviour
 
         } else {
 
+            // Virtual Camera をオフ(MainCamera を有効にする)
+            cameraSwitcher.gameObject.SetActive(false);
+
             // 移動開始
             StartCoroutine(StartRailMove());
         }
@@ -137,7 +140,7 @@ public class RailMoveController : MonoBehaviour
             //ResumeMove();
 
             // VirtualCamera 切り替え
-            cameraSwitcher.SwitchCamera(waypointIndex);
+            //cameraSwitcher.SwitchCamera(waypointIndex);
 
         } else {
             // DOTween を停止
