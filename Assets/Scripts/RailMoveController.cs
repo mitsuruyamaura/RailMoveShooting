@@ -21,11 +21,18 @@ public class RailMoveController : MonoBehaviour
     [SerializeField]
     private CameraSwitcher cameraSwitcher;
 
-    private Tween tween;
+    private Tween tweenMove;
+    private Tween tweenRotation;
 
     private GameManager gameManager;
 
     private int moveCount;
+
+    // 以下の３つはパスごとの移動時に利用する
+    private Vector3[] paths;
+    private float[] moveDurations;
+    private int pathCount;
+
 
     //void Start() {
     //    // Debug 用  レール移動の開始
@@ -75,16 +82,23 @@ public class RailMoveController : MonoBehaviour
 
         yield return null;
 
+        // パスのカウントを初期化
+        pathCount = 0;
+
         // 移動先のパスの情報から Position の情報だけを抽出して配列を作成
-        Vector3[] paths = currentRailPathData.GetPathTrans().Select(x => x.position).ToArray();
+        //Vector3[] paths = currentRailPathData.GetPathTrans().Select(x => x.position).ToArray();
+        paths = currentRailPathData.GetPathTrans().Select(x => x.position).ToArray();
 
         // 移動先のパスの移動時間を合計
         float totalTime = currentRailPathData.GetRailMoveDurations().Sum();
+        moveDurations = currentRailPathData.GetRailMoveDurations();
+
         Debug.Log(totalTime);
 
-        // パスによる移動開始
-        tween = railMoveTarget.transform.DOPath(paths, totalTime, pathType).SetEase(Ease.Linear).OnWaypointChange((waypointIndex) => CheckArrivalDestination(waypointIndex));
-        Debug.Log("移動開始");
+        // TODO パスによる移動開始(すべてのパスを指定して、まとめて動かす場合)
+        //tweenMove = railMoveTarget.transform.DOPath(paths, totalTime, pathType).SetEase(Ease.Linear).OnWaypointChange((waypointIndex) => CheckArrivalDestination(waypointIndex));
+
+        RailMove();
 
         // TODO 他に必要な処理を追記
 
@@ -96,6 +110,59 @@ public class RailMoveController : MonoBehaviour
 
         // 移動開始
         ResumeMove();
+
+        Debug.Log("移動開始");
+    }
+
+    /// <summary>
+    /// パスのカウントアップ(パスごとに動かす場合)
+    /// </summary>
+    public void CountUp() {
+        pathCount++;
+        Debug.Log(pathCount);
+
+        RailMove();
+    }
+
+    /// <summary>
+    /// 2点間のパスの目標地点を設定して移動
+    /// </summary>
+    public void RailMove() {
+
+        // 残っているパスがない場合
+        if (pathCount >= currentRailPathData.GetPathTrans().Length) {
+            // DOTween を停止
+            tweenMove.Kill();
+
+            tweenMove = null;
+
+            // 移動先が残っていない場合には、ゲームマネージャー側で分岐の確認(次のルート選定、移動先の分岐、ボス、クリアのいずれか)
+            moveCount++;
+
+            gameManager.PreparateCheckNextBranch(moveCount);
+
+            Debug.Log("分岐確認");
+
+            return;
+        }
+
+        Vector3[] targetPaths;
+
+        if (pathCount == 0) {
+            targetPaths = new Vector3[2] { railMoveTarget.position, paths[pathCount] };
+        } else {
+            targetPaths = new Vector3[2] { paths[pathCount -1], paths[pathCount] };            
+        }
+        float duration = moveDurations[pathCount];
+
+        Debug.Log("スタート地点 :" + targetPaths[0]);
+        Debug.Log("目標地点 :" + targetPaths[1]);
+        Debug.Log("移動にかかる時間 :" + duration);
+
+        tweenMove = railMoveTarget.transform.DOPath(targetPaths, duration, pathType).SetEase(Ease.Linear).OnWaypointChange((waypointIndex) => CheckArrivalDestination(waypointIndex));
+
+        tweenRotation = railMoveTarget.transform.DORotate(currentRailPathData.pathDataDetails[pathCount].pathTran.eulerAngles, duration).SetEase(Ease.Linear);
+        Debug.Log($" 回転角度 :  { currentRailPathData.pathDataDetails[pathCount].pathTran.eulerAngles } ");
     }
 
     /// <summary>
@@ -103,8 +170,9 @@ public class RailMoveController : MonoBehaviour
     /// </summary>
     public void PauseMove() {
         // 一時停止
-        transform.DOPlay();
-        tween.Pause();
+        transform.DOPause();
+        tweenMove.Pause();
+        tweenRotation.Pause();
     }
 
     /// <summary>
@@ -112,8 +180,9 @@ public class RailMoveController : MonoBehaviour
     /// </summary>
     public void ResumeMove() {
         // 移動再開
-        transform.DOPause();
-        tween.Play();
+        transform.DOPlay();
+        tweenMove.Play();
+        tweenRotation.Play();
     }
 
     /// <summary>
@@ -122,19 +191,25 @@ public class RailMoveController : MonoBehaviour
     /// <param name="waypointIndex"></param>
     private void CheckArrivalDestination(int waypointIndex) {
 
+        if (waypointIndex == 0) {
+            return;
+        }
+
         Debug.Log("目標地点 到着 : " + waypointIndex + " 番目");
 
-        // カメラの回転
-        railMoveTarget.transform.DORotate(currentRailPathData.pathDataDetails[waypointIndex].pathTran.eulerAngles, currentRailPathData.pathDataDetails[waypointIndex].railMoveDuration).SetEase(Ease.Linear);
-        Debug.Log(currentRailPathData.pathDataDetails[waypointIndex].pathTran.eulerAngles);
+        // TODO カメラの回転(まとめて動かす場合)
+        //railMoveTarget.transform.DORotate(currentRailPathData.pathDataDetails[waypointIndex].pathTran.eulerAngles, currentRailPathData.pathDataDetails[waypointIndex].railMoveDuration).SetEase(Ease.Linear);
+        //Debug.Log(currentRailPathData.pathDataDetails[waypointIndex].pathTran.eulerAngles);
 
         // 移動の一時停止
         PauseMove();
 
         // 移動先のパスがまだ残っているか確認
-        if (waypointIndex < currentRailPathData.GetPathTrans().Length) {
-            // ミッションが発生するかゲームマネージャー側で確認
-            gameManager.CheckMissionTrigger(waypointIndex++);
+        if (waypointIndex < currentRailPathData.GetPathTrans().Length) {  // waypointIndex < currentRailPathData.GetPathTrans().Length(まとめて動かす場合の条件式)
+
+
+            // TODO ミッションが発生するかゲームマネージャー側で確認(まとめて動かす場合の条件式)
+            //gameManager.CheckMissionTrigger(waypointIndex++);
 
             // Debug用  次のパスへの移動開始
             //ResumeMove();
@@ -142,11 +217,14 @@ public class RailMoveController : MonoBehaviour
             // VirtualCamera 切り替え
             //cameraSwitcher.SwitchCamera(waypointIndex);
 
+            // パスごとに動かす場合
+            gameManager.CheckMissionTrigger(pathCount);
+
         } else {
             // DOTween を停止
-            tween.Kill();
+            tweenMove.Kill();
 
-            tween = null;
+            tweenMove = null;
 
             // 移動先が残っていない場合には、ゲームマネージャー側で分岐の確認(次のルート選定、移動先の分岐、ボス、クリアのいずれか)
             moveCount++;
@@ -162,6 +240,6 @@ public class RailMoveController : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public bool GetMoveSetting() {
-        return tween != null ? true : false;
+        return tweenMove != null ? true : false;
     }
 }

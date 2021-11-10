@@ -143,8 +143,11 @@ public class GameManager : MonoBehaviour {
             //railMoveController.ResumeMove();
 
         } else {
-            // ミッションなし。次のパスへ移動を再開
-            railMoveController.ResumeMove();
+            // TODO ミッションなし。次のパスへ移動を再開(まとめて動かす場合の条件式)
+            //railMoveController.ResumeMove();
+
+            // パスごとに動かす場合
+            railMoveController.CountUp();
         }
     }
 
