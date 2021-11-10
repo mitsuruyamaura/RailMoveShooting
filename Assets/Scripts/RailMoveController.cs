@@ -93,7 +93,7 @@ public class RailMoveController : MonoBehaviour
         float totalTime = currentRailPathData.GetRailMoveDurations().Sum();
         moveDurations = currentRailPathData.GetRailMoveDurations();
 
-        Debug.Log(totalTime);
+        //Debug.Log(totalTime);
 
         // TODO パスによる移動開始(すべてのパスを指定して、まとめて動かす場合)
         //tweenMove = railMoveTarget.transform.DOPath(paths, totalTime, pathType).SetEase(Ease.Linear).OnWaypointChange((waypointIndex) => CheckArrivalDestination(waypointIndex));
@@ -135,6 +135,7 @@ public class RailMoveController : MonoBehaviour
             tweenMove.Kill();
 
             tweenMove = null;
+            tweenRotation = null;
 
             // 移動先が残っていない場合には、ゲームマネージャー側で分岐の確認(次のルート選定、移動先の分岐、ボス、クリアのいずれか)
             moveCount++;
@@ -155,14 +156,14 @@ public class RailMoveController : MonoBehaviour
         }
         float duration = moveDurations[pathCount];
 
-        Debug.Log("スタート地点 :" + targetPaths[0]);
-        Debug.Log("目標地点 :" + targetPaths[1]);
-        Debug.Log("移動にかかる時間 :" + duration);
+        //Debug.Log("スタート地点 :" + targetPaths[0]);
+        //Debug.Log("目標地点 :" + targetPaths[1]);
+        //Debug.Log("移動にかかる時間 :" + duration);
 
         tweenMove = railMoveTarget.transform.DOPath(targetPaths, duration, pathType).SetEase(Ease.Linear).OnWaypointChange((waypointIndex) => CheckArrivalDestination(waypointIndex));
 
         tweenRotation = railMoveTarget.transform.DORotate(currentRailPathData.pathDataDetails[pathCount].pathTran.eulerAngles, duration).SetEase(Ease.Linear);
-        Debug.Log($" 回転角度 :  { currentRailPathData.pathDataDetails[pathCount].pathTran.eulerAngles } ");
+        //Debug.Log($" 回転角度 :  { currentRailPathData.pathDataDetails[pathCount].pathTran.eulerAngles } ");
     }
 
     /// <summary>
@@ -195,7 +196,8 @@ public class RailMoveController : MonoBehaviour
             return;
         }
 
-        Debug.Log("目標地点 到着 : " + waypointIndex + " 番目");
+        //Debug.Log("目標地点 到着 : " + waypointIndex + " 番目");
+        Debug.Log("目標地点 到着 : " + pathCount + " 番目");
 
         // TODO カメラの回転(まとめて動かす場合)
         //railMoveTarget.transform.DORotate(currentRailPathData.pathDataDetails[waypointIndex].pathTran.eulerAngles, currentRailPathData.pathDataDetails[waypointIndex].railMoveDuration).SetEase(Ease.Linear);
@@ -204,35 +206,43 @@ public class RailMoveController : MonoBehaviour
         // 移動の一時停止
         PauseMove();
 
-        // 移動先のパスがまだ残っているか確認
-        if (waypointIndex < currentRailPathData.GetPathTrans().Length) {  // waypointIndex < currentRailPathData.GetPathTrans().Length(まとめて動かす場合の条件式)
+        // パスごとの移動のデバッグ用
+        //CountUp();
+
+        // パスごとに動かす場合
+        gameManager.CheckMissionTrigger(pathCount);
 
 
-            // TODO ミッションが発生するかゲームマネージャー側で確認(まとめて動かす場合の条件式)
-            //gameManager.CheckMissionTrigger(waypointIndex++);
+        // TODO まとめて動かす場合には、下記をすべて使う
 
-            // Debug用  次のパスへの移動開始
-            //ResumeMove();
+        //// 移動先のパスがまだ残っているか確認
+        //if (waypointIndex < currentRailPathData.GetPathTrans().Length) {(まとめて動かす場合の条件式)
 
-            // VirtualCamera 切り替え
-            //cameraSwitcher.SwitchCamera(waypointIndex);
+        //    // ミッションが発生するかゲームマネージャー側で確認(まとめて動かす場合の条件式)
+        //    //gameManager.CheckMissionTrigger(waypointIndex++);
 
-            // パスごとに動かす場合
-            gameManager.CheckMissionTrigger(pathCount);
+        //    // Debug用  次のパスへの移動開始
+        //    //ResumeMove();
 
-        } else {
-            // DOTween を停止
-            tweenMove.Kill();
+        //    // VirtualCamera 切り替え
+        //    //cameraSwitcher.SwitchCamera(waypointIndex);
 
-            tweenMove = null;
+        //    // パスごとに動かす場合
+        //    gameManager.CheckMissionTrigger(pathCount);
 
-            // 移動先が残っていない場合には、ゲームマネージャー側で分岐の確認(次のルート選定、移動先の分岐、ボス、クリアのいずれか)
-            moveCount++;
+        //} else {
+        //    // DOTween を停止
+        //    tweenMove.Kill();
 
-            gameManager.PreparateCheckNextBranch(moveCount);
+        //    tweenMove = null;
 
-            Debug.Log("分岐確認");
-        }
+        //    // 移動先が残っていない場合には、ゲームマネージャー側で分岐の確認(次のルート選定、移動先の分岐、ボス、クリアのいずれか)
+        //    moveCount++;
+
+        //    gameManager.PreparateCheckNextBranch(moveCount);
+
+        //    Debug.Log("分岐確認");
+        //}
     }
 
     /// <summary>
