@@ -104,6 +104,9 @@ public class GameManager : MonoBehaviour {
 
         // ゲームの進行状態を移動中に変更する
         currentGameState = GameState.Play_Move;
+
+        // 隠れるアクションのデバッグ用
+        //currentGameState = GameState.Play_Mission;
     }
 
     /// <summary>
