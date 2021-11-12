@@ -20,6 +20,14 @@ public class UIManager : MonoBehaviour {
 
     private int maxLifeIcon;
 
+    [SerializeField]
+    private Text txtBulletCount;
+
+    private int maxBulletCount;
+
+    [SerializeField]
+    private GameObject playerInfoSet;
+
 
     /// <summary>
     /// デバッグ内容を画面表示
@@ -66,9 +74,17 @@ public class UIManager : MonoBehaviour {
     /// <param name="maxHp"></param>
     public void SetPlayerInfo(int maxHp, int maxBulletCount) {
         maxLifeIcon = maxHp;
-        
-        //this.maxBulletCount = maxBulletCount;
-        //UpdateDisplayBulletCount(this.maxBulletCount);
+
+        this.maxBulletCount = maxBulletCount;
+        UpdateDisplayBulletCount(this.maxBulletCount);
+    }
+
+    /// <summary>
+    /// 弾数表示の更新
+    /// </summary>
+    /// <param name="currentBulletCount"></param>
+    public void UpdateDisplayBulletCount(int currentBulletCount) {
+        txtBulletCount.text = currentBulletCount.ToString() + " / " + maxBulletCount.ToString();
     }
 }
 
