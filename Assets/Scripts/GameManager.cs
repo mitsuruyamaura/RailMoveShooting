@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour {
 
     private int currentRailCount;       // Œ»İ‚Ìisó‹µ
 
-    [SerializeField, HideInInspector]
+    [SerializeField]
     private PlayerController playerController;
 
     [SerializeField, HideInInspector]
@@ -89,6 +89,12 @@ public class GameManager : MonoBehaviour {
         //PlayerPrefsHelper.SaveSetObjectData("rail3", originRailPathData.pathDataDetails[0]);
 
         eventGenerator.SetUpEventGenerator(this, playerController);
+
+        // ‰Šú•Ší“o˜^
+        GameData.instance.AddWeaponData(DataBaseManager.instance.GetWeaponData(0));
+
+        // ‰Šú•Šíİ’è
+        playerController.ChangeBulletData(GameData.instance.weaponDatasList[0]);
 
         // RailMoveController ‚Ì‰Šúİ’è
         railMoveController.SetUpRailMoveController(this);

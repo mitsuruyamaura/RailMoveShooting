@@ -33,6 +33,9 @@ public class DataBaseManager : MonoBehaviour
     [SerializeField]
     private VideoDataSO videoDataSO;
 
+    [SerializeField]
+    private WeaponDataSO weaponDataSO;
+
     /// <summary>
     /// stagePathDatasList 変数の Count 用のプロパティ
     /// </summary>
@@ -125,5 +128,14 @@ public class DataBaseManager : MonoBehaviour
     /// <returns></returns>
     public VideoData GetVideoData(int searchVideoNo) {
         return videoDataSO.videoDatasList.Find(x => x.videoNo == searchVideoNo);
+    }
+
+    /// <summary>
+    /// WeaponData の情報を取得
+    /// </summary>
+    /// <param name="searchWeaponNo"></param>
+    /// <returns></returns>
+    public WeaponData GetWeaponData(int searchWeaponNo) {
+        return weaponDataSO.weaponDatasList.Find(x => x.weaponNo == searchWeaponNo);
     }
 }

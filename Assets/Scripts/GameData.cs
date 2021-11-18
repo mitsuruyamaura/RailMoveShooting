@@ -11,6 +11,9 @@ public class GameData : MonoBehaviour
 
     public bool useCinemachine;
 
+    [Header("E‚Á‚½•Ší‚Ì“o˜^—pƒŠƒXƒg")]
+    public List<WeaponData> weaponDatasList = new List<WeaponData>();
+
 
     void Awake() {
         if (instance == null) {
@@ -23,5 +26,13 @@ public class GameData : MonoBehaviour
 
     public void InitializeGameData() {
         scoreReactiveProperty = new ReactiveProperty<int>();
+    }
+
+    /// <summary>
+    /// •Šíƒf[ƒ^‚Ì“o˜^
+    /// </summary>
+    /// <param name="weaponData"></param>
+    public void AddWeaponData(WeaponData weaponData) {
+        weaponDatasList.Add(weaponData);
     }
 }
