@@ -124,6 +124,51 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: 03f8c6e8fa52f744b8cf4e7401c5cf2b, type: 2}
+--- !u!1 &4455127
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4455129}
+  - component: {fileID: 4455128}
+  m_Layer: 0
+  m_Name: WeaponChanger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &4455128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4455127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9bff78c6b3013240b4d1e2c7e41bfe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentWeaponNo: 0
+  player: {fileID: 454872043}
+--- !u!4 &4455129
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4455127}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &243429575
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,6 +747,8 @@ MonoBehaviour:
   shootRange: 5000
   isReloadModeOn: 1
   isReloading: 0
+  currentBulletNo: 0
+  currentBulletCountsList: []
 --- !u!54 &454872044
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -846,6 +893,7 @@ MonoBehaviour:
   scoreReactiveProperty:
     value: 0
   useCinemachine: 0
+  weaponDatasList: []
 --- !u!4 &640557842
 Transform:
   m_ObjectHideFlags: 0
@@ -2717,6 +2765,7 @@ MonoBehaviour:
   enemyDataSO: {fileID: 0}
   stagePathDataSO: {fileID: 11400000, guid: eab1913d05ce1ee45bd95f50f8dc9324, type: 2}
   videoDataSO: {fileID: 11400000, guid: 0ab662f366048f8478ff71d4816408b0, type: 2}
+  weaponDataSO: {fileID: 11400000, guid: 4c475c8311d8b08488588204bc5ca41f, type: 2}
 --- !u!1 &897499328
 GameObject:
   m_ObjectHideFlags: 0
@@ -3475,7 +3524,7 @@ MonoBehaviour:
   fieldAutoScroller: {fileID: 0}
   uiManager: {fileID: 0}
   rootDatasList: []
-  playerController: {fileID: 0}
+  playerController: {fileID: 454872043}
   currentMissionDuration: 0
   railMoveController: {fileID: 560543692}
   originRailPathData: {fileID: 0}

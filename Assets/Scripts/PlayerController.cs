@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 /// <summary>
 /// プレイヤー情報の管理クラス
@@ -35,6 +37,17 @@ public class PlayerController : MonoBehaviour
 
     [Header("リロード状態の制御")]
     public bool isReloading;
+
+    public int currentBulletNo;
+
+    [System.Serializable]
+    public struct CurrentBulletCount {
+        public int bulletNo;
+        public int bulletCount;
+    }
+
+    public List<CurrentBulletCount> currentBulletCountsList = new List<CurrentBulletCount>();
+
 
     /// <summary>
     /// 弾数用のプロパティ
@@ -133,5 +146,34 @@ public class PlayerController : MonoBehaviour
 
             Debug.Log("敵の攻撃がプレイヤーにヒット");
         }
+    }
+
+    /// <summary>
+    /// バレットの情報を更新
+    /// </summary>
+    /// <param name="weaponData"></param>
+    public void ChangeBulletData(WeaponData weaponData) {
+
+        // 初期武器以外の場合
+        if (weaponData.weaponNo != 0) {
+
+            // 弾が残っている場合で、まだ記録されていないとき
+            if (bulletCount > 0 && !currentBulletCountsList.Exists(x => x.bulletNo == currentBulletNo)) {
+
+                // 記録しておく
+                currentBulletCountsList.Add(new CurrentBulletCount { bulletNo = currentBulletNo, bulletCount = bulletCount});
+            }
+        }
+
+        bulletPower = weaponData.bulletPower;
+        bulletCount = weaponData.maxBullet;
+
+        reloadTime = weaponData.reloadTime;
+        shootInterval = weaponData.shootInterval;
+        shootRange = weaponData.shootRange;
+
+        // 記録されている弾数がある場合には、そちらにする
+        bulletCount = currentBulletCountsList.Find(x => x.bulletNo == weaponData.weaponNo).bulletCount;
+
     }
 }
