@@ -24,6 +24,8 @@ public class WeaponEventInfo : MonoBehaviour
     [SerializeField]
     private CanvasGroup canvasGroup;
 
+    public bool isChooseWeapon;
+
 
     /// <summary>
     /// 武器取得イベントの初期設定
@@ -37,7 +39,6 @@ public class WeaponEventInfo : MonoBehaviour
 
         btnCancel.onClick.AddListener(OnClickCancel);
         btnCancel.onClick.AddListener(() => SwitchActivateButtons(false));
-        Debug.Log("ボタンにメソッド登録");
 
         SwitchActivateButtons(true);
 
@@ -52,6 +53,8 @@ public class WeaponEventInfo : MonoBehaviour
 
         txtWeaponName.text = string.Empty;
         imgWeaponIcon.sprite = null;
+
+        isChooseWeapon = false;
     }
 
     /// <summary>
@@ -63,6 +66,8 @@ public class WeaponEventInfo : MonoBehaviour
 
         txtWeaponName.text = weaponData.weaponName;
         imgWeaponIcon.sprite = weaponData.weaponIcon;
+
+        SwitchActivateButtons(true);
     }
 
 
@@ -70,16 +75,12 @@ public class WeaponEventInfo : MonoBehaviour
 
         // 武器登録
         GameData.instance.AddWeaponData(weaponData);
-
-        InitializeWeaponData();
-        Hide();
+        isChooseWeapon = true;
     }
 
 
     private void OnClickCancel() {
-
-        InitializeWeaponData();
-        Hide();
+        isChooseWeapon = true;
     }
 
 
@@ -97,5 +98,7 @@ public class WeaponEventInfo : MonoBehaviour
 
     public void Hide(float duration = 0.5f) {
         canvasGroup.DOFade(0, duration).OnComplete(() => gameObject.SetActive(false));
+
+        InitializeWeaponData();
     }
 }

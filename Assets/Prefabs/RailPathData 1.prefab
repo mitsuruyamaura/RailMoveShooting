@@ -87,6 +87,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2315118873131830220}
+  - component: {fileID: 6705293396165929871}
   m_Layer: 0
   m_Name: PathTran_2
   m_TagString: Untagged
@@ -108,6 +109,23 @@ Transform:
   m_Father: {fileID: 6572080289317892609}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
+--- !u!114 &6705293396165929871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2315118873131830211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98e384b80b3669a4199a02194efb9b36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clearConditionsType: 1
+  missionDuration: 500
+  eventTypes: 06000000
+  eventNos: 02000000
+  eventTrans: []
 --- !u!1 &4333513117335650675
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,6 +277,6 @@ MonoBehaviour:
     missionEventDetail: {fileID: 0}
   - railMoveDuration: 7
     pathTran: {fileID: 2315118873131830220}
-    isMissionTrigger: 0
-    missionEventDetail: {fileID: 0}
+    isMissionTrigger: 1
+    missionEventDetail: {fileID: 6705293396165929871}
   smoothPath: {fileID: 8532632027491861447}

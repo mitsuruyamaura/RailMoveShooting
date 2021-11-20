@@ -59,8 +59,8 @@ public class GameManager : MonoBehaviour {
 
     private int clearMissionCount;
 
-    [SerializeField]
-    private List<MissionEventDetail> missionEventDetailsList = new List<MissionEventDetail>();
+    //[SerializeField]
+    //private List<MissionEventDetail> missionEventDetailsList = new List<MissionEventDetail>();
 
     // ロード確認用
     //public RailPathData.PathDataDetail pathDataDetail;
@@ -131,11 +131,11 @@ public class GameManager : MonoBehaviour {
         // ミッション発生有無の情報を登録
         isMissionTriggers = originRailPathData.GetIsMissionTriggers();
 
-        for (int i = 0; i < isMissionTriggers.Length; i++) {
-            if (originRailPathData.pathDataDetails[i].missionEventDetail) {
-                missionEventDetailsList.Add(originRailPathData.pathDataDetails[i].missionEventDetail);
-            }
-        }
+        //for (int i = 0; i < isMissionTriggers.Length; i++) {
+        //    if (originRailPathData.pathDataDetails[i].missionEventDetail) {
+        //        missionEventDetailsList.Add(originRailPathData.pathDataDetails[i].missionEventDetail);
+        //    }
+        //}
 
         clearMissionCount = 0;
     }
@@ -151,7 +151,7 @@ public class GameManager : MonoBehaviour {
             Debug.Log("ミッション発生");
 
             // ミッションの準備
-            PreparateMission(missionEventDetailsList[clearMissionCount]);
+            PreparateMission(originRailPathData.pathDataDetails[index].missionEventDetail);
 
             // Debug 用　いまはそのまま進行
             //railMoveController.ResumeMove();
@@ -439,6 +439,17 @@ public class GameManager : MonoBehaviour {
 
                 // カウントダウン
                 currentMissionDuration--;
+            }
+
+            // 武器取得イベントかつ、武器選択のいずれかのボタンを押したら
+            if (weaponEventInfo.gameObject.activeSelf && weaponEventInfo.isChooseWeapon) {
+                // イベント終了
+                currentMissionDuration = 0;
+
+                weaponEventInfo.Hide();
+
+                Debug.Log("武器取得イベント終了");
+                yield break;
             }
 
             yield return null;
