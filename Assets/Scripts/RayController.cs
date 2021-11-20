@@ -3,6 +3,7 @@ using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
 using System;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// Ray による弾の発射処理の制御クラス
@@ -63,6 +64,19 @@ public class RayController : MonoBehaviour
         //if (arManager.ARStateReactiveProperty.Value != ARState.Play) {
         //    return;
         //}
+
+
+#if UNITY_EDITOR
+        // UI がタップされたときは処理しない(UI のボタンを押したらそちらのみを反応させる)
+        if (EventSystem.current.IsPointerOverGameObject()) {
+            return;
+        }
+#else   // スマホ用
+        if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)) {
+            return;
+        }
+#endif
+
 
         // リロード判定(弾数 0 でリロード機能ありの場合)
         if (playerController.BulletCount == 0 && playerController.isReloadModeOn && Input.GetMouseButtonDown(0)) {

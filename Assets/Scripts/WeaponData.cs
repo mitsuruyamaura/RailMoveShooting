@@ -12,4 +12,5 @@ public class WeaponData
     public int bulletPower;
     public float shootInterval;
     public float shootRange;
+    public Sprite weaponIcon;
 }

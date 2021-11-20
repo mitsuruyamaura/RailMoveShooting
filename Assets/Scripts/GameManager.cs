@@ -42,7 +42,6 @@ public class GameManager : MonoBehaviour {
 
 
 
-
     [SerializeField]
     private RailMoveController railMoveController;
 
@@ -60,8 +59,8 @@ public class GameManager : MonoBehaviour {
 
     private int clearMissionCount;
 
-    [SerializeField]
-    private List<MissionEventDetail> missionEventDetailsList = new List<MissionEventDetail>();
+    //[SerializeField]
+    //private List<MissionEventDetail> missionEventDetailsList = new List<MissionEventDetail>();
 
     // ロード確認用
     //public RailPathData.PathDataDetail pathDataDetail;
@@ -70,6 +69,9 @@ public class GameManager : MonoBehaviour {
 
     [SerializeField, Header("ミッションで発生しているイベントのリスト")]
     private List<EventBase> eventBasesList = new List<EventBase>();
+
+    [SerializeField]
+    private WeaponEventInfo weaponEventInfo;
 
 
     private IEnumerator Start() {
@@ -92,6 +94,9 @@ public class GameManager : MonoBehaviour {
 
         // 初期武器登録
         GameData.instance.AddWeaponData(DataBaseManager.instance.GetWeaponData(0));
+
+        // 武器取得イベント用の設定
+        weaponEventInfo.InitializeWeaponEventInfo();
 
         // 初期武器設定
         playerController.ChangeBulletData(GameData.instance.weaponDatasList[0]);
@@ -126,11 +131,11 @@ public class GameManager : MonoBehaviour {
         // ミッション発生有無の情報を登録
         isMissionTriggers = originRailPathData.GetIsMissionTriggers();
 
-        for (int i = 0; i < isMissionTriggers.Length; i++) {
-            if (originRailPathData.pathDataDetails[i].missionEventDetail) {
-                missionEventDetailsList.Add(originRailPathData.pathDataDetails[i].missionEventDetail);
-            }
-        }
+        //for (int i = 0; i < isMissionTriggers.Length; i++) {
+        //    if (originRailPathData.pathDataDetails[i].missionEventDetail) {
+        //        missionEventDetailsList.Add(originRailPathData.pathDataDetails[i].missionEventDetail);
+        //    }
+        //}
 
         clearMissionCount = 0;
     }
@@ -146,7 +151,7 @@ public class GameManager : MonoBehaviour {
             Debug.Log("ミッション発生");
 
             // ミッションの準備
-            PreparateMission(missionEventDetailsList[clearMissionCount]);
+            PreparateMission(originRailPathData.pathDataDetails[index].missionEventDetail);
 
             // Debug 用　いまはそのまま進行
             //railMoveController.ResumeMove();
@@ -228,8 +233,16 @@ public class GameManager : MonoBehaviour {
         // ミッションの時間設定
         currentMissionDuration = missionEventDetail.missionDuration;
 
-        // ミッション内の各イベントの生成(敵、ギミック、トラップ、アイテムなどを生成)
-        eventGenerator.GenerateEvents((missionEventDetail.eventTypes, missionEventDetail.eventNos), missionEventDetail.eventTrans);
+        // 武器取得イベントか判定
+        if (missionEventDetail.eventTypes[0] == EventType.Weapon) {
+            // 武器の情報を取得してセット
+            weaponEventInfo.SetWeaponData(DataBaseManager.instance.GetWeaponData(missionEventDetail.eventNos[0]));
+            weaponEventInfo.Show();
+        } else {
+
+            // ミッション内の各イベントの生成(敵、ギミック、トラップ、アイテムなどを生成)
+            eventGenerator.GenerateEvents((missionEventDetail.eventTypes, missionEventDetail.eventNos), missionEventDetail.eventTrans);
+        }
 
         // ミッション開始
         StartCoroutine(StartMission(missionEventDetail.clearConditionsType));
@@ -428,6 +441,17 @@ public class GameManager : MonoBehaviour {
                 currentMissionDuration--;
             }
 
+            // 武器取得イベントかつ、武器選択のいずれかのボタンを押したら
+            if (weaponEventInfo.gameObject.activeSelf && weaponEventInfo.isChooseWeapon) {
+                // イベント終了
+                currentMissionDuration = 0;
+
+                weaponEventInfo.Hide();
+
+                Debug.Log("武器取得イベント終了");
+                yield break;
+            }
+
             yield return null;
         }
 
@@ -439,10 +463,17 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     public void EndMission() {
 
+        // 武器の取得イベントの場合には武器を取得せずにポップアップを閉じる
+        if (weaponEventInfo.gameObject.activeSelf) {
+            weaponEventInfo.Hide();
+        }
+
         ClearEventList();
 
         // 移動再開
-        railMoveController.ResumeMove();
+        //railMoveController.ResumeMove();
+
+        railMoveController.CountUp();
 
         //ClearEnemiesList();
 

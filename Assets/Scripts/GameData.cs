@@ -34,5 +34,7 @@ public class GameData : MonoBehaviour
     /// <param name="weaponData"></param>
     public void AddWeaponData(WeaponData weaponData) {
         weaponDatasList.Add(weaponData);
+
+        Debug.Log("•Ší’Ç‰Á : " + weaponData.weaponName);
     }
 }
