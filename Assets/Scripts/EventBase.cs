@@ -11,5 +11,5 @@ public abstract class EventBase : MonoBehaviour
     /// <summary>
     /// イベント発火用
     /// </summary>
-    public abstract void TriggerEvent(int value, BodyRegionType hitBodyRegionType);
+    public abstract void TriggerEvent(int value, BodyRegionType hitBodyRegionType = BodyRegionType.Not_Available);
 }

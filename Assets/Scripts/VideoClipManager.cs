@@ -33,6 +33,7 @@ public class VideoClipManager : MonoBehaviour
     /// </summary>
     private void Initialize() {
         canvasGroup.alpha = 0;
+        canvasGroup.blocksRaycasts = false;
 
         videoPlayer.clip = null;
 
@@ -103,7 +104,7 @@ public class VideoClipManager : MonoBehaviour
     private IEnumerator PlayVideo() {
 
         // TODO フェードインして再生(簡易。後でトランジションと合わせる)
-        canvasGroup.DOFade(1.0f, 1.0f);   // OnComplete でPlay するとダメ
+        canvasGroup.DOFade(1.0f, 1.0f).OnComplete(() => canvasGroup.blocksRaycasts = true);   // OnComplete でPlay するとダメ
 
         videoPlayer.Play();
 
@@ -142,7 +143,10 @@ public class VideoClipManager : MonoBehaviour
         videoPlayer.Stop();
 
         // フェードアウトして初期化
-        canvasGroup.DOFade(0, 1.0f).OnComplete(() => { Initialize(); });       
+        canvasGroup.DOFade(0, 1.0f)
+            .OnComplete(() => {
+                Initialize();
+            });
 
         Debug.Log("VideoClip 停止");
     }

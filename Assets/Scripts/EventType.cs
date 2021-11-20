@@ -7,5 +7,6 @@ public enum EventType {
     Gimmick,
     Trap,
     Treasure,
-    Item
+    Item,
+    Weapon
 }
