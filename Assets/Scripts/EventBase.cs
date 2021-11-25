@@ -12,4 +12,6 @@ public abstract class EventBase : MonoBehaviour
     /// イベント発火用
     /// </summary>
     public abstract void TriggerEvent(int value, BodyRegionType hitBodyRegionType = BodyRegionType.Not_Available);
+
+    public abstract void SetUpEvent(PlayerController playerController, GameManager gameManager);
 }

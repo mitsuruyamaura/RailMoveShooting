@@ -74,10 +74,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e384b80b3669a4199a02194efb9b36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clearConditionsType: 1
-  missionDuration: 500
+  clearConditionsType: 0
+  missionDuration: 1
   eventTypes: 00000000
-  eventNos: 01000000
+  eventNos: 00000000
   eventTrans:
   - {fileID: 4197259167027252105}
 --- !u!1 &2315118873131830211
@@ -265,7 +265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pathDataDetails:
-  - railMoveDuration: 8
+  - railMoveDuration: 3
     pathTran: {fileID: 1848663331618097173}
     isMissionTrigger: 1
     missionEventDetail: {fileID: 25659774304477908}

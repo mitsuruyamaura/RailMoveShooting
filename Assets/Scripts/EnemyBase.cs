@@ -46,20 +46,18 @@ public class EnemyBase : EventBase
     // TODO 敵のデータのクラスを持たせる
 
 
-
     protected virtual void Start() {
         // デバッグ用
-        SetUpEnemy(lookTarget);
+        //SetUpEnemy(lookTarget);
     }
 
     /// <summary>
-    /// エネミーの設定。外部クラスから呼び出す設計
+    /// 
     /// </summary>
-    /// <param name="playerObj"></param>
+    /// <param name="playerController"></param>
     /// <param name="gameManager"></param>
-    public virtual void SetUpEnemy(GameObject playerObj, GameManager gameManager = null) {
-
-        lookTarget = playerObj;
+    public override void SetUpEvent(PlayerController playerController, GameManager gameManager) {
+        lookTarget = playerController.gameObject;
         this.gameManager = gameManager;
 
         // 敵のデータを敵の番号から検索してセット
@@ -72,7 +70,30 @@ public class EnemyBase : EventBase
         //    // 部位の情報を設定
         //    SetBodyParts();
         //}
+
     }
+
+    ///// <summary>
+    ///// エネミーの設定。外部クラスから呼び出す設計
+    ///// </summary>
+    ///// <param name="playerObj"></param>
+    ///// <param name="gameManager"></param>
+    //public virtual void SetUpEnemy(GameObject playerObj, GameManager gameManager = null) {
+
+    //    lookTarget = playerObj;
+    //    this.gameManager = gameManager;
+
+    //    // 敵のデータを敵の番号から検索してセット
+    //    GetEnemyData();
+
+    //    TryGetComponent(out anim);
+
+    //    //// 部位ごとの情報があるか確認
+    //    //if (partsControllersList.Count > 0) {
+    //    //    // 部位の情報を設定
+    //    //    SetBodyParts();
+    //    //}
+    //}
 
     /// <summary>
     /// 敵の情報をデータベースより取得して設定

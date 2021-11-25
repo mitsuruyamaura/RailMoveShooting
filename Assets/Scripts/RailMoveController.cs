@@ -132,10 +132,10 @@ public class RailMoveController : MonoBehaviour
         // 残っているパスがない場合
         if (pathCount >= currentRailPathData.GetPathTrans().Length) {
             // DOTween を停止
-            tweenMove.Kill();
+            //tweenMove.Kill();
 
-            tweenMove = null;
-            tweenRotation = null;
+            //tweenMove = null;
+            //tweenRotation = null;
 
             // 移動先が残っていない場合には、ゲームマネージャー側で分岐の確認(次のルート選定、移動先の分岐、ボス、クリアのいずれか)
             moveCount++;
@@ -171,7 +171,7 @@ public class RailMoveController : MonoBehaviour
     /// </summary>
     public void PauseMove() {
         // 一時停止
-        transform.DOPause();
+        //transform.DOPause();
         tweenMove.Pause();
         tweenRotation.Pause();
     }
@@ -181,7 +181,7 @@ public class RailMoveController : MonoBehaviour
     /// </summary>
     public void ResumeMove() {
         // 移動再開
-        transform.DOPlay();
+        //transform.DOPlay();
         tweenMove.Play();
         tweenRotation.Play();
     }
@@ -204,10 +204,18 @@ public class RailMoveController : MonoBehaviour
         //Debug.Log(currentRailPathData.pathDataDetails[waypointIndex].pathTran.eulerAngles);
 
         // 移動の一時停止
-        PauseMove();
+        //PauseMove();
 
         // パスごとの移動のデバッグ用
         //CountUp();
+
+        // DOTween を停止
+        tweenMove.Kill();
+        tweenRotation.Kill();
+
+        tweenMove = null;
+        tweenRotation = null;
+
 
         // パスごとに動かす場合
         gameManager.CheckMissionTrigger(pathCount);

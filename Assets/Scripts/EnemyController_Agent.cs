@@ -10,10 +10,10 @@ public class EnemyController_Agent : EnemyBase
     /// <summary>
     /// エネミーの設定
     /// </summary>
-    /// <param name="playerObj"></param>
+    /// <param name="playerController"></param>
     /// <param name="gameManager"></param>
-    public override void SetUpEnemy(GameObject playerObj, GameManager gameManager = null) {
-        base.SetUpEnemy(playerObj, gameManager);
+    public override void SetUpEvent(PlayerController playerController, GameManager gameManager) {
+        base.SetUpEvent(playerController, gameManager);
 
         // NavMesh を利用しているか判定
         if (TryGetComponent(out agent)) {
