@@ -93,7 +93,9 @@ public class DataBaseManager : MonoBehaviour
     public EventDataSO.EventData GetEventDataFromEventType(EventType eventType, int eventNo) {
         switch (eventType) {
             case EventType.Enemy:
-                return enemyEventDataSO.eventDatasList.Find(x => x.eventNo == eventNo);
+                EventDataSO.EventData enemy = enemyEventDataSO.eventDatasList.Find(x => x.eventNo == eventNo);
+                Debug.Log(enemy.eventPrefab.name);
+                return enemy;
 
             case EventType.Gimmick:
                 return gimmickDataSO.eventDatasList.Find(x => x.eventNo == eventNo);

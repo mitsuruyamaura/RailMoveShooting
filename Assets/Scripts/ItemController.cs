@@ -18,12 +18,23 @@ public class ItemController : EventBase
     private PlayerController playerController;
 
     /// <summary>
-    /// ê›íË
+    /// èâä˙ê›íË
     /// </summary>
     /// <param name="playerController"></param>
-    public void SetUpItem(PlayerController playerController) {
+    /// <param name="gameManager"></param>
+    public override void SetUpEvent(PlayerController playerController, GameManager gameManager) {
+
         this.playerController = playerController;
     }
+
+
+    ///// <summary>
+    ///// ê›íË
+    ///// </summary>
+    ///// <param name="playerController"></param>
+    //public void SetUpItem(PlayerController playerController) {
+    //    this.playerController = playerController;
+    //}
 
     public override void TriggerEvent(int value, BodyRegionType hitBodyRegionType) {
         ItemEffect(value);

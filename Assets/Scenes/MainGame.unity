@@ -3107,6 +3107,7 @@ MonoBehaviour:
   txtWeaponName: {fileID: 1724487862}
   imgWeaponIcon: {fileID: 2059168733}
   canvasGroup: {fileID: 829164633}
+  isChooseWeapon: 0
 --- !u!225 &829164633
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -3524,6 +3525,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Zombie1
       objectReference: {fileID: 0}
+    - target: {fileID: 5047940641189803728, guid: ae9ea0112eb35434095ae5ac4393adef,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8094862561351484611, guid: ae9ea0112eb35434095ae5ac4393adef,
         type: 3}
       propertyPath: m_RootOrder
@@ -3800,9 +3806,8 @@ MonoBehaviour:
   originRailPathData: {fileID: 0}
   isMissionTriggers: 
   eventGenerator: {fileID: 346531876}
-  currentGameState: 0
-  missionEventDetailsList: []
   eventBasesList: []
+  currentGameState: 0
   weaponEventInfo: {fileID: 829164632}
 --- !u!4 &1550902662
 Transform:

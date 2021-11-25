@@ -54,10 +54,11 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     private EventGenerator eventGenerator;
 
-    [Header("現在のゲームの進行状態")]
-    public GameState currentGameState;
+    [SerializeField, Header("ミッションで発生しているイベントのリスト")]
+    private List<EventBase> eventBasesList = new List<EventBase>();
 
-    private int clearMissionCount;
+
+    //private int clearMissionCount;
 
     //[SerializeField]
     //private List<MissionEventDetail> missionEventDetailsList = new List<MissionEventDetail>();
@@ -66,9 +67,9 @@ public class GameManager : MonoBehaviour {
     //public RailPathData.PathDataDetail pathDataDetail;
 
     // mi
+    [Header("現在のゲームの進行状態")]
+    public GameState currentGameState;
 
-    [SerializeField, Header("ミッションで発生しているイベントのリスト")]
-    private List<EventBase> eventBasesList = new List<EventBase>();
 
     [SerializeField]
     private WeaponEventInfo weaponEventInfo;
@@ -137,7 +138,7 @@ public class GameManager : MonoBehaviour {
         //    }
         //}
 
-        clearMissionCount = 0;
+        //clearMissionCount = 0;
     }
 
     /// <summary>
@@ -241,7 +242,7 @@ public class GameManager : MonoBehaviour {
         } else {
 
             // ミッション内の各イベントの生成(敵、ギミック、トラップ、アイテムなどを生成)
-            eventGenerator.GenerateEvents((missionEventDetail.eventTypes, missionEventDetail.eventNos), missionEventDetail.eventTrans);
+            eventGenerator.PrepareGenerateEvents((missionEventDetail.eventTypes, missionEventDetail.eventNos), missionEventDetail.eventTrans);
         }
 
         // ミッション開始
