@@ -3163,12 +3163,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48e7ee19e3da7e34abbd6d0ab3e86186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyEventDataSO: {fileID: 0}
+  enemyEventDataSO: {fileID: 11400000, guid: f6eac6ec1b699614ca73a4420059ae53, type: 2}
   gimmickDataSO: {fileID: 0}
   trapDataSO: {fileID: 0}
   itemDataSO: {fileID: 0}
   treasureDataSO: {fileID: 0}
-  enemyDataSO: {fileID: 0}
+  enemyDataSO: {fileID: 11400000, guid: 356496573cb963948b8d5272027fe344, type: 2}
   stagePathDataSO: {fileID: 11400000, guid: eab1913d05ce1ee45bd95f50f8dc9324, type: 2}
   videoDataSO: {fileID: 11400000, guid: 0ab662f366048f8478ff71d4816408b0, type: 2}
   weaponDataSO: {fileID: 11400000, guid: 4c475c8311d8b08488588204bc5ca41f, type: 2}
