@@ -52,7 +52,7 @@ public class EnemyBase : EventBase
     }
 
     /// <summary>
-    /// 
+    /// エネミーの初期設定
     /// </summary>
     /// <param name="playerController"></param>
     /// <param name="gameManager"></param>
@@ -71,10 +71,11 @@ public class EnemyBase : EventBase
         //    SetBodyParts();
         //}
 
+        Debug.Log("エネミーの設定完了");
     }
 
     ///// <summary>
-    ///// エネミーの設定。外部クラスから呼び出す設計
+    ///// エネミーの設定。外部クラスから呼び出す設計(SetUpEvent を使うようにしたので、こちらは使わない)
     ///// </summary>
     ///// <param name="playerObj"></param>
     ///// <param name="gameManager"></param>
@@ -128,6 +129,25 @@ public class EnemyBase : EventBase
             return;
         }
 
+        // プレイヤーの情報を保持しており、攻撃中でないなら
+        if (player != null) {
+
+            // 攻撃用のメソッドを登録
+            SetAttackCoroutine();
+
+            Debug.Log("プレイヤー　感知済");
+
+        // プレイヤーの情報がないなら
+        } else {
+            if (other.transform.parent.TryGetComponent(out player)) {
+
+                // 攻撃用のメソッドを登録
+                SetAttackCoroutine();
+
+                Debug.Log("攻撃範囲内にプレイヤー 初感知");
+            }
+        }
+
         // ローカル関数を定義
         void SetAttackCoroutine() {
             // 攻撃用のメソッドを代入して登録
@@ -138,25 +158,6 @@ public class EnemyBase : EventBase
 
             Debug.Log("攻撃開始");
 
-        }
-
-        // プレイヤーの情報を保持しており、攻撃中でないなら
-        if (player != null) {
-
-            // 攻撃用のメソッドを登録
-            SetAttackCoroutine();
-
-            Debug.Log("プレイヤー　感知済");
-
-            // プレイヤーの情報がないなら
-        } else {
-            if (other.transform.parent.TryGetComponent(out player)) {
-
-                // 攻撃用のメソッドを登録
-                SetAttackCoroutine();
-
-                Debug.Log("攻撃範囲内にプレイヤー 初感知");
-            }
         }
     }
 
@@ -210,7 +211,7 @@ public class EnemyBase : EventBase
     public override void TriggerEvent(int value, BodyRegionType hitBodyRegionType) {
 
         // ダメージ計算
-        CalcDamage(value, hitBodyRegionType);
+        CalcDamage(value, hitBodyRegionType);     
     }
 
     /// <summary>
@@ -218,14 +219,14 @@ public class EnemyBase : EventBase
     /// </summary>
     /// <param name="damage"></param>
     /// <param name="hitParts"></param>
-    public virtual void CalcDamage(int damage, BodyRegionType hitParts) {
+    protected virtual void CalcDamage(int damage, BodyRegionType hitParts) {
         if (isDead) {
             return;
         }
 
         hp -= damage;
 
-        if(anim) anim.ResetTrigger("Attack");
+        if (anim) anim.ResetTrigger("Attack");
 
         if (hp <= 0) {
             isDead = true;
@@ -250,11 +251,11 @@ public class EnemyBase : EventBase
             }
 
             // スコア加算
-            
+
 
             Destroy(gameObject, 1.5f);
         } else {
-            if(anim) anim.SetTrigger("Damage");
+            if (anim) anim.SetTrigger("Damage");
         }
     }
 

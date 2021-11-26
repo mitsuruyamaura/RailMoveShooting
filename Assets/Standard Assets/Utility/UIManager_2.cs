@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
 
-public class UIManager : MonoBehaviour {
+public class UIManager_2 : MonoBehaviour {
 
     [SerializeField]
     private Text txtDebugMessage;

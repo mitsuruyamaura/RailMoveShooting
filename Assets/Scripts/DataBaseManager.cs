@@ -9,7 +9,7 @@ public class DataBaseManager : MonoBehaviour
 {
     public static DataBaseManager instance;
 
-    [SerializeField, HideInInspector]
+    [SerializeField]
     private EventDataSO enemyEventDataSO;
 
     [SerializeField, HideInInspector]
@@ -24,7 +24,7 @@ public class DataBaseManager : MonoBehaviour
     [SerializeField, HideInInspector]
     private EventDataSO treasureDataSO;
 
-    [SerializeField, HideInInspector]
+    [SerializeField]
     private EnemyDataSO enemyDataSO;
 
     [SerializeField]

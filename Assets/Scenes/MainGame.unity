@@ -3163,12 +3163,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48e7ee19e3da7e34abbd6d0ab3e86186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyEventDataSO: {fileID: 0}
+  enemyEventDataSO: {fileID: 11400000, guid: f6eac6ec1b699614ca73a4420059ae53, type: 2}
   gimmickDataSO: {fileID: 0}
   trapDataSO: {fileID: 0}
   itemDataSO: {fileID: 0}
   treasureDataSO: {fileID: 0}
-  enemyDataSO: {fileID: 0}
+  enemyDataSO: {fileID: 11400000, guid: 356496573cb963948b8d5272027fe344, type: 2}
   stagePathDataSO: {fileID: 11400000, guid: eab1913d05ce1ee45bd95f50f8dc9324, type: 2}
   videoDataSO: {fileID: 11400000, guid: 0ab662f366048f8478ff71d4816408b0, type: 2}
   weaponDataSO: {fileID: 11400000, guid: 4c475c8311d8b08488588204bc5ca41f, type: 2}
@@ -3467,36 +3467,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 15
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1356280313
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1356280314}
-  m_Layer: 0
-  m_Name: GameObject (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1356280314
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1356280313}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1359902572
 PrefabInstance:
@@ -3801,7 +3771,6 @@ MonoBehaviour:
   uiManager: {fileID: 0}
   rootDatasList: []
   playerController: {fileID: 454872043}
-  currentMissionDuration: 0
   railMoveController: {fileID: 560543692}
   originRailPathData: {fileID: 0}
   isMissionTriggers: 

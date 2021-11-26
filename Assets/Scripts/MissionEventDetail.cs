@@ -18,6 +18,9 @@ public class MissionEventDetail : MonoBehaviour {
     [Tooltip("イベントの生成地点")]
     public Transform[] eventTrans;
 
+    [Header("イベントのプレファブ")]
+    public EventBase[] eventPrefabs;
+
     //private BoxCollider boxCollider;
     //private GameManager gameManager;
 
@@ -37,7 +40,7 @@ public class MissionEventDetail : MonoBehaviour {
 
     //        // ミッション発生の重複判定防止
     //        boxCollider.enabled = false;
-            
+
     //        // ミッション開始の準備
     //        gameManager.PreparateMission(missionDuration, clearConditionsType, (eventTypes, eventNos), eventTrans);
     //    }
