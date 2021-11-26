@@ -3,7 +3,6 @@ using UnityEngine;
 /// <summary>
 /// イベント共通用の抽象クラス
 /// </summary>
-/// <typeparam name="T"></typeparam>
 public abstract class EventBase : MonoBehaviour
 {
     public EventType eventType;
@@ -13,5 +12,10 @@ public abstract class EventBase : MonoBehaviour
     /// </summary>
     public abstract void TriggerEvent(int value, BodyRegionType hitBodyRegionType = BodyRegionType.Not_Available);
 
+    /// <summary>
+    /// イベントの初期設定用
+    /// </summary>
+    /// <param name="playerController"></param>
+    /// <param name="gameManager"></param>
     public abstract void SetUpEvent(PlayerController playerController, GameManager gameManager);
 }

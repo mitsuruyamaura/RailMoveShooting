@@ -75,11 +75,39 @@ public class EventGenerator : MonoBehaviour
     /// <param name="eventTran"></param>
     private void GenerateEvent(EventDataSO.EventData eventData, Transform eventTran) {
 
-
         Debug.Log(eventData.eventPrefab);
         Debug.Log(eventTran);
 
-        EventBase eventBase = Instantiate(eventData.eventPrefab, eventTran).GetComponent<EventBase>();
+        EventBase eventBase = Instantiate(eventData.eventPrefab, eventTran.position, eventData.eventPrefab.transform.rotation).GetComponent<EventBase>();
+        eventBase.SetUpEvent(playerController, gameManager);
+
+        gameManager.AddEventList(eventBase);
+    }
+
+
+    //　教材はこっち
+
+    /// <summary>
+    /// ミッション内の各イベントの生成処理のオーバーロード
+    /// </summary>
+    /// <param name="eventDatas"></param>
+    /// <param name="eventTrans"></param>
+    public void PrepareGenerateEvents(EventBase[] eventDatas, Transform[] eventTrans) {
+
+        for (int i = 0; i < eventDatas.Length; i++) {
+
+            GenerateEvent(eventDatas[i], eventTrans[i]);
+        }
+     }
+
+    /// <summary>
+    /// イベント生成。各イベントごとに振る舞いを変える処理のオーバーロード
+    /// スクリプタブル・オブジェクトを利用せず、MissionEventTrigger に直接 EventBase のプレファブをアサインして利用する場合
+    /// </summary>
+    /// <param name="eventPrefab"></param>
+    /// <param name="eventTran"></param>
+    private void GenerateEvent(EventBase eventPrefab, Transform eventTran) {
+        EventBase eventBase = Instantiate(eventPrefab, eventTran.position, eventPrefab.transform.rotation).GetComponent<EventBase>();
         eventBase.SetUpEvent(playerController, gameManager);
 
         gameManager.AddEventList(eventBase);
