@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour {
     [SerializeField, HideInInspector]
     private FieldAutoScroller fieldAutoScroller;
 
-    [SerializeField, HideInInspector]
+    [SerializeField]
     private UIManager uiManager;
 
     [System.Serializable]
@@ -534,6 +534,8 @@ public class GameManager : MonoBehaviour {
     /// <param name="index"></param>
     public void CheckMoviePlay(int index) {
 
+        Debug.Log(index);
+
         if (!isMoviePlays[index]) {
 
             Debug.Log("ムービー再生 なし");
@@ -556,6 +558,12 @@ public class GameManager : MonoBehaviour {
 
         Debug.Log("ムービー準備開始");
 
+        // Canvas を非表示
+        uiManager.SwitchActivateCanvas(false);
+
+        // TODO ゲームステートを切り替えて、画面のタップを止める
+
+
         yield return StartCoroutine(PlayMovie());
 
         /// ムービー再生
@@ -570,6 +578,14 @@ public class GameManager : MonoBehaviour {
             yield return new WaitForSeconds((float)originRailPathData.pathDataDetails[index].missionEventDetail.videoClip.length);
 
             Debug.Log("ムービー再生　終了");
+
+            // Canvas を表示
+            uiManager.SwitchActivateCanvas(true);
+
+            // TODO ゲームステートを切り替えて、画面のタップを有効化
+
+            // 画面のフェードインが戻るまでの間、待機してから
+            yield return new WaitForSeconds(1.0f);
 
             // ミッション発生有無の確認
             CheckMissionTrigger(index);

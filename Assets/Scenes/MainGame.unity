@@ -3429,6 +3429,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1312238516}
   - component: {fileID: 1312238515}
+  - component: {fileID: 1312238517}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -3468,6 +3469,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1312238517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1312238514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb40a97302cc10842ad3ac78b32bb09a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  txtDebugMessage: {fileID: 0}
+  btnStopMotion: {fileID: 0}
+  autoScroller: {fileID: 0}
+  txtStopMotionCount: {fileID: 0}
+  submitBranchButtonPrefab: {fileID: 0}
+  submitBranchButtonsList: []
+  rightBranchTran: {fileID: 0}
+  leftBranchTran: {fileID: 0}
+  centerBranchTran: {fileID: 0}
+  isSubmitBranch: 0
+  submitBranchNo: 0
+  txtARIntroduction: {fileID: 0}
+  targetIcon: {fileID: 0}
+  lifeTran: {fileID: 0}
+  lifePrefab: {fileID: 0}
+  lifesList: []
+  txtBulletCount: {fileID: 0}
+  playerInfoSet: {fileID: 0}
+  txtScore: {fileID: 0}
+  canvasObj: {fileID: 7590395237101197921}
 --- !u!1001 &1359902572
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3764,11 +3797,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventTriggerPoint: []
-  enemiesList: []
   gimmicksList: []
   pathDataSO: {fileID: 0}
   fieldAutoScroller: {fileID: 0}
-  uiManager: {fileID: 0}
+  uiManager: {fileID: 1312238517}
   rootDatasList: []
   railMoveController: {fileID: 560543692}
   originRailPathData: {fileID: 6572080289317892610, guid: 75d3b74badc2b9342b049af135f549a0,
@@ -3777,6 +3809,8 @@ MonoBehaviour:
   playerController: {fileID: 454872043}
   eventGenerator: {fileID: 346531876}
   eventBasesList: []
+  enemiesList: []
+  isMoviePlays: 
   currentGameState: 0
   weaponEventInfo: {fileID: 829164632}
 --- !u!4 &1550902662
