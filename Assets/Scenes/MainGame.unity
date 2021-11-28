@@ -3770,10 +3770,11 @@ MonoBehaviour:
   fieldAutoScroller: {fileID: 0}
   uiManager: {fileID: 0}
   rootDatasList: []
-  playerController: {fileID: 454872043}
   railMoveController: {fileID: 560543692}
-  originRailPathData: {fileID: 0}
+  originRailPathData: {fileID: 6572080289317892610, guid: 75d3b74badc2b9342b049af135f549a0,
+    type: 3}
   isMissionTriggers: 
+  playerController: {fileID: 454872043}
   eventGenerator: {fileID: 346531876}
   eventBasesList: []
   currentGameState: 0
