@@ -19,7 +19,7 @@ public class RayController : MonoBehaviour
     private GameObject hitEffectObj;
 
     private GameObject target;
-    private EnemyController_Normal enemy;
+    private EnemyController enemy;
 
     [SerializeField, Header("Ray 用のレイヤー設定")]
     private int[] layerMasks;
@@ -132,8 +132,11 @@ public class RayController : MonoBehaviour
     /// 弾の発射
     /// </summary>
     private void Shoot() {
-        // カメラの位置から Ray を投射
+        // カメラの位置から正面に向かって Ray を投射
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+
+        // クリックした位置用
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Debug.DrawRay(ray.origin, ray.direction, Color.red, 3.0f);
 
         RaycastHit hit;
@@ -152,44 +155,50 @@ public class RayController : MonoBehaviour
                 //    parts.CalcDamageParts(playerController.bulletPower);
                 //}
                 //else 
-                if (target.TryGetComponent(out eventBase)) {
 
-                    // 部位によるダメージ量の修正を計算 
-                    CalcDamage();
+                // 通常用
+                //if (target.TryGetComponent(out eventBase)) {
 
-                    // 演出
-                    PlayHitEffect(hit.point, hit.normal);
-                }
-
-                //// ダメージ処理
-                //if (target.TryGetComponent(out enemy)) {
-                //    enemy.CalcDamage(playerController.bulletPower);
+                //    // 部位によるダメージ量の修正を計算 
+                //    CalcDamage();
 
                 //    // 演出
                 //    PlayHitEffect(hit.point, hit.normal);
                 //}
-                //　同じ対象の場合
+
+                // ダメージ処理(デバッグ用。教材用)
+                if (target.TryGetComponent(out enemy)) {
+                    enemy.TriggerEvent(playerController.bulletPower);
+
+                    // 演出
+                    PlayHitEffect(hit.point, hit.normal);
+                }
+                
+            //　同じ対象の場合
             } else if (target == hit.collider.gameObject) {
                 //if (target.TryGetComponent(out parts)) {
                 //    parts.CalcDamageParts(playerController.bulletPower);
                 //} else 
                 //if (target.TryGetComponent(out eventBase)) {
 
-                // 部位によるダメージ量の修正を計算 
-                CalcDamage();
+                // TODO 本番用
+                // 通常。部位によるダメージ量の修正を計算 
+                //CalcDamage();
 
                 //eventBase.TriggerEvent(playerController.bulletPower);
                 //}
 
                 // 演出
-                PlayHitEffect(hit.point, hit.normal);
+                //PlayHitEffect(hit.point, hit.normal);
 
-                //if (target.TryGetComponent(out enemy)) {
-                //    enemy.CalcDamage(playerController.bulletPower);
 
-                //    // 演出
-                //    PlayHitEffect(hit.point, hit.normal);
-                //}
+                // デバッグ用
+                if (target.TryGetComponent(out enemy)) {
+                    enemy.TriggerEvent(playerController.bulletPower);
+
+                    // 演出
+                    PlayHitEffect(hit.point, hit.normal);
+                }
             }
         }
 

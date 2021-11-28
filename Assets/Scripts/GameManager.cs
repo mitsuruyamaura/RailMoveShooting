@@ -8,9 +8,6 @@ public class GameManager : MonoBehaviour {
     private MissionEventDetail[] eventTriggerPoint;
 
     [SerializeField, HideInInspector]
-    private List<EnemyController_Normal> enemiesList = new List<EnemyController_Normal>();
-
-    [SerializeField, HideInInspector]
     private List<GameObject> gimmicksList = new List<GameObject>();
 
     [SerializeField, HideInInspector]
@@ -34,9 +31,6 @@ public class GameManager : MonoBehaviour {
 
     private int currentRailCount;       // 現在の進行状況
 
-    [SerializeField]
-    private PlayerController playerController;
-
 
 
     //　ここから使っている
@@ -51,9 +45,12 @@ public class GameManager : MonoBehaviour {
     private bool[] isMissionTriggers;
 
     [SerializeField]
+    private PlayerController playerController;
+
+    [SerializeField]
     private EventGenerator eventGenerator;
 
-    [SerializeField, Header("ミッションで発生しているイベントのリスト")]
+    [SerializeField, Header("ミッションで発生しているイベントのリスト"), HideInInspector]
     private List<EventBase> eventBasesList = new List<EventBase>();
 
     private int currentMissionDuration;
@@ -66,6 +63,12 @@ public class GameManager : MonoBehaviour {
 
     // ロード確認用
     //public RailPathData.PathDataDetail pathDataDetail;
+
+    [SerializeField]
+    private List<EnemyController> enemiesList = new List<EnemyController>();
+
+    [SerializeField]
+    private bool[] isMoviePlays;
 
     // mi
     [Header("現在のゲームの進行状態")]
@@ -140,6 +143,14 @@ public class GameManager : MonoBehaviour {
         //}
 
         //clearMissionCount = 0;
+
+        // mi
+
+        // TODO 
+        isMoviePlays = new bool[originRailPathData.GetIsMoviePlays().Length];
+
+        // ムービー再生有無の情報を登録
+        isMoviePlays = originRailPathData.GetIsMoviePlays();
     }
 
     /// <summary>
@@ -183,11 +194,11 @@ public class GameManager : MonoBehaviour {
             weaponEventInfo.Show();
         } else {
 
-            // ミッション内の各イベントの生成(敵、ギミック、トラップ、アイテムなどを生成)
-            eventGenerator.PrepareGenerateEvents((missionEventDetail.eventTypes, missionEventDetail.eventNos), missionEventDetail.eventTrans);
+            // TODO こっちがメイン。ミッション内の各イベントの生成(敵、ギミック、トラップ、アイテムなどを生成)
+            //eventGenerator.PrepareGenerateEvents((missionEventDetail.eventTypes, missionEventDetail.eventNos), missionEventDetail.eventTrans);
 
             // プレファブを直接 MissionEventTrigger 内に登録する(スクリプタブル・オブジェクトを利用しない)場合
-            //eventGenerator.PrepareGenerateEvents(missionEventDetail.eventPrefabs, missionEventDetail.eventTrans);
+            eventGenerator.PrepareGenerateEvents(missionEventDetail.enemyPrefabs, missionEventDetail.eventTrans);
         }
 
         // ミッション開始
@@ -309,7 +320,7 @@ public class GameManager : MonoBehaviour {
     /// 敵の情報を List に追加
     /// </summary>
     /// <param name="enemyController"></param>
-    public void AddEnemyList(EnemyController_Normal enemyController) {
+    public void AddEnemyList(EnemyController enemyController) {
         enemiesList.Add(enemyController);
     }
 
@@ -408,7 +419,7 @@ public class GameManager : MonoBehaviour {
     /// 敵の情報を List から削除し、ミッション内の敵の残数を減らす
     /// </summary>
     /// <param name="enemy"></param>
-    public void RemoveEnemyList(EnemyController_Normal enemy) {
+    public void RemoveEnemyList(EnemyController enemy) {
         enemiesList.Remove(enemy);
 
         currentMissionDuration--;
@@ -517,6 +528,53 @@ public class GameManager : MonoBehaviour {
         yield return StartCoroutine(CheckNextRootBranch());
     }
 
+    /// <summary>
+    /// ムービーを再生するか確認
+    /// </summary>
+    /// <param name="index"></param>
+    public void CheckMoviePlay(int index) {
+
+        if (!isMoviePlays[index]) {
+
+            Debug.Log("ムービー再生 なし");
+
+            // ミッション発生有無の確認
+            CheckMissionTrigger(index);
+        } else {
+
+            // ムービー再生の準備
+            StartCoroutine(PrepareMoviePlay(index));
+        }
+    }
+
+    /// <summary>
+    /// ムービー再生の準備
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns></returns>
+    private IEnumerator PrepareMoviePlay(int index) {
+
+        Debug.Log("ムービー準備開始");
+
+        yield return StartCoroutine(PlayMovie());
+
+        /// ムービー再生
+        IEnumerator PlayMovie() {
+
+            Debug.Log("ムービー再生開始");
+
+            // ムービー再生の準備と再生
+            VideoClipManager.instance.PrepareVideoClip(originRailPathData.pathDataDetails[index].missionEventDetail.videoNo, originRailPathData.pathDataDetails[index].missionEventDetail.videoClip);
+
+            // ムービー再生が終了するまで待機
+            yield return new WaitForSeconds((float)originRailPathData.pathDataDetails[index].missionEventDetail.videoClip.length);
+
+            Debug.Log("ムービー再生　終了");
+
+            // ミッション発生有無の確認
+            CheckMissionTrigger(index);
+        }
+    }
 
     ///// <summary>
     ///// ゲームの準備

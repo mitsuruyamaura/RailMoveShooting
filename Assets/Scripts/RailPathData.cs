@@ -24,6 +24,10 @@ public class RailPathData : MonoBehaviour
 
         [Tooltip("ミッションで発生するイベント群の情報。isMissionTrigger がオンの時に登録する")]
         public MissionEventDetail missionEventDetail;
+
+        // 未
+        [Tooltip("ムービーの再生有無。オンで再生")]
+        public bool isMoviePlay;
     }
 
     [Header("経路用のパスデータ群")]
@@ -54,5 +58,13 @@ public class RailPathData : MonoBehaviour
     /// <returns></returns>
     public bool[] GetIsMissionTriggers(){
         return pathDataDetails.Select(x => x.isMissionTrigger).ToArray();
+    }
+
+    /// <summary>
+    /// ムービー再生有無の取得
+    /// </summary>
+    /// <returns></returns>
+    public bool[] GetIsMoviePlays() {
+        return pathDataDetails.Select(x => x.isMoviePlay).ToArray();
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Video;
 
 [System.Serializable]
 public class MissionEventDetail : MonoBehaviour {
@@ -9,17 +10,28 @@ public class MissionEventDetail : MonoBehaviour {
     [Header("ミッションクリアのための敵の残数/残り時間")]
     public int missionDuration;
 
-    [Header("発生するイベントの種類")]
+    [Header("発生するイベントの種類"), HideInInspector]
     public EventType[] eventTypes;
 
-    [Header("発生するイベントの番号")]
+    [Header("発生するイベントの番号"), HideInInspector]
     public int[] eventNos;
 
     [Tooltip("イベントの生成地点")]
     public Transform[] eventTrans;
 
-    [Header("イベントのプレファブ")]
+    [Header("イベントのプレファブ"), HideInInspector]
     public EventBase[] eventPrefabs;
+
+    [Header("敵のプレファブ")]
+    public EnemyController[] enemyPrefabs;
+
+    [Header("ムービーのデータ")]
+    public VideoClip videoClip;
+
+    [Header("再生するムービーの番号"), HideInInspector]
+    public int videoNo;
+
+
 
     //private BoxCollider boxCollider;
     //private GameManager gameManager;

@@ -217,8 +217,11 @@ public class RailMoveController : MonoBehaviour
         tweenRotation = null;
 
 
+        // TOOD ムービーの確認
+        gameManager.CheckMoviePlay(pathCount);
+
         // パスごとに動かす場合
-        gameManager.CheckMissionTrigger(pathCount);
+        //gameManager.CheckMissionTrigger(pathCount);
 
 
         // TODO まとめて動かす場合には、下記をすべて使う
