@@ -57,13 +57,22 @@ public class VideoClipManager : MonoBehaviour
     /// VideoClip の準備
     /// </summary>
     /// <param name="videoNo"></param>
-    public void PrepareVideoClip(int setVideoNo) {
+    public void PrepareVideoClip(int setVideoNo, VideoClip sourceVideoClip = null) {
 
         // VideoClip が未設定なら
         if (videoPlayer.clip == null) {
 
-            // 対象の VideoClip を検索して設定
-            videoPlayer.clip = DataBaseManager.instance.GetVideoData(setVideoNo).videoClip;
+            // VideoClip の引数情報がない場合
+            if (sourceVideoClip == null) {
+
+                // 対象の VideoClip を検索して設定
+                videoPlayer.clip = DataBaseManager.instance.GetVideoData(setVideoNo).videoClip;
+            } else {
+
+                // VideoClip の情報がある場合は、それを使う
+                videoPlayer.clip = sourceVideoClip;
+            }
+            
 
             // 読み込み後のイベントのコールバック登録
             videoPlayer.prepareCompleted += OnCompletePrepare;

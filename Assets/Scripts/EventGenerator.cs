@@ -92,7 +92,7 @@ public class EventGenerator : MonoBehaviour
     /// </summary>
     /// <param name="eventDatas"></param>
     /// <param name="eventTrans"></param>
-    public void PrepareGenerateEvents(EventBase[] eventDatas, Transform[] eventTrans) {
+    public void PrepareGenerateEvents(EnemyController[] eventDatas, Transform[] eventTrans) {
 
         for (int i = 0; i < eventDatas.Length; i++) {
 
@@ -106,11 +106,11 @@ public class EventGenerator : MonoBehaviour
     /// </summary>
     /// <param name="eventPrefab"></param>
     /// <param name="eventTran"></param>
-    private void GenerateEvent(EventBase eventPrefab, Transform eventTran) {
-        EventBase eventBase = Instantiate(eventPrefab, eventTran.position, eventPrefab.transform.rotation).GetComponent<EventBase>();
-        eventBase.SetUpEvent(playerController, gameManager);
+    private void GenerateEvent(EnemyController eventPrefab, Transform eventTran) {
+        EnemyController enemy = Instantiate(eventPrefab, eventTran.position, eventPrefab.transform.rotation);
+        enemy.SetUpEnemy(playerController, gameManager);
 
-        gameManager.AddEventList(eventBase);
+        gameManager.AddEnemyList(enemy);
     }
 
 

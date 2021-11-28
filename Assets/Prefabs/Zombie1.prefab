@@ -1451,11 +1451,12 @@ GameObject:
   m_Component:
   - component: {fileID: 8094862561351484611}
   - component: {fileID: 2223856128803105209}
-  - component: {fileID: 9112863320226630037}
   - component: {fileID: 2614729796978598542}
+  - component: {fileID: 9112863320226630037}
   - component: {fileID: 479112445308646799}
-  - component: {fileID: 1272589023344923117}
+  - component: {fileID: 8538663676205915874}
   - component: {fileID: 8517180222902808894}
+  - component: {fileID: 1272589023344923117}
   m_Layer: 6
   m_Name: Zombie1
   m_TagString: Enemy
@@ -1472,7 +1473,7 @@ Transform:
   m_GameObject: {fileID: 5047940641189803728}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalScale: {x: 6, y: 6, z: 6}
   m_Children:
   - {fileID: 5955140582748994680}
   - {fileID: 9189097838168918400}
@@ -1512,20 +1513,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!136 &9112863320226630037
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5047940641189803728}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1.567642
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.76584876, z: 0}
 --- !u!195 &2614729796978598542
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1548,6 +1535,20 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!136 &9112863320226630037
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5047940641189803728}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1.567642
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.76584876, z: 0}
 --- !u!54 &479112445308646799
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1564,7 +1565,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &1272589023344923117
+--- !u!114 &8538663676205915874
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1573,10 +1574,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 5047940641189803728}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55565d9311cc1e0458639d7611802a7a, type: 3}
+  m_Script: {fileID: 11500000, guid: d1712f7072c37744f93a0a14294a1f76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bodyPartType: 2
+  lookTarget: {fileID: 0}
+  enemyNo: 0
+  hp: 3
+  attackPower: 1
+  moveSpeed: 2
+  enemyMoveType: 0
 --- !u!114 &8517180222902808894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1599,6 +1605,19 @@ MonoBehaviour:
   partsControllersList:
   - {fileID: 1272589023344923117}
   - {fileID: 4170997444282825536}
+--- !u!114 &1272589023344923117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5047940641189803728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55565d9311cc1e0458639d7611802a7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bodyPartType: 2
 --- !u!1 &5447071362818561708
 GameObject:
   m_ObjectHideFlags: 0

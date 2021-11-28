@@ -69,6 +69,10 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text txtScore;
 
+    [SerializeField]
+    private GameObject canvasObj;
+
+
     /// <summary>
     /// デバッグ内容を画面表示
     /// </summary>
@@ -87,12 +91,13 @@ public class UIManager : MonoBehaviour
 
     // mi
 
+    // 本来は使う。いまはデバッグのため未使用
 
-    void Start() {
-        btnStopMotion.onClick.AddListener(OnClickStopMotion);
+    //void Start() {
+    //    btnStopMotion.onClick.AddListener(OnClickStopMotion);
 
-        GameData.instance.scoreReactiveProperty.Subscribe(x => UpdateDisplayScore(x));
-    }
+    //    GameData.instance.scoreReactiveProperty.Subscribe(x => UpdateDisplayScore(x));
+    //}
 
     private void UpdateDisplayScore(int scoreValue) {
         txtScore.text = scoreValue.ToString();
@@ -226,6 +231,13 @@ public class UIManager : MonoBehaviour
     /// <param name="currentBulletCount"></param>
     public void UpdateDisplayBulletCount(int currentBulletCount) {
         txtBulletCount.text = currentBulletCount.ToString() + " / " + maxBulletCount.ToString();
+    }
+
+    /// <summary>
+    /// キャンバスの表示オンオフ切り替え
+    /// </summary>
+    public void SwitchActivateCanvas(bool isSwitch) {
+        canvasObj.SetActive(isSwitch);
     }
 }
 

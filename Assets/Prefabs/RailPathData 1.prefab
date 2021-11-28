@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 527895371687559793}
+  - component: {fileID: 6694098204674570480}
   m_Layer: 0
   m_Name: PathTran_1
   m_TagString: Untagged
@@ -30,6 +31,27 @@ Transform:
   m_Father: {fileID: 6572080289317892609}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+--- !u!114 &6694098204674570480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 527895371687559806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98e384b80b3669a4199a02194efb9b36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clearConditionsType: 0
+  missionDuration: 0
+  eventTypes: 
+  eventNos: 
+  eventTrans: []
+  eventPrefabs: []
+  enemyPrefabs: []
+  videoClip: {fileID: 32900000, guid: 6251fef58fb25214cb2b6808d8b9d849, type: 3}
+  videoNo: 0
 --- !u!1 &1848663331618097178
 GameObject:
   m_ObjectHideFlags: 0
@@ -80,6 +102,12 @@ MonoBehaviour:
   eventNos: 00000000
   eventTrans:
   - {fileID: 4197259167027252105}
+  eventPrefabs:
+  - {fileID: 8517180222902808894, guid: ae9ea0112eb35434095ae5ac4393adef, type: 3}
+  enemyPrefabs:
+  - {fileID: 8538663676205915874, guid: ae9ea0112eb35434095ae5ac4393adef, type: 3}
+  videoClip: {fileID: 32900000, guid: f8f95de16aa22f6439aaea3ad9ab40b5, type: 3}
+  videoNo: 0
 --- !u!1 &2315118873131830211
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,7 +119,7 @@ GameObject:
   - component: {fileID: 2315118873131830220}
   - component: {fileID: 6705293396165929871}
   m_Layer: 0
-  m_Name: PathTran_2
+  m_Name: PathTran_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,7 +135,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0.38268343, w: 0.92387956}
   m_LocalPosition: {x: 15, y: 10, z: 15}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 5500893542213995760}
+  - {fileID: 4810514384288130492}
   m_Father: {fileID: 6572080289317892609}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
@@ -123,11 +153,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e384b80b3669a4199a02194efb9b36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clearConditionsType: 1
-  missionDuration: 500
+  clearConditionsType: 0
+  missionDuration: 2
   eventTypes: 06000000
   eventNos: 02000000
-  eventTrans: []
+  eventTrans:
+  - {fileID: 5500893542213995760}
+  - {fileID: 4810514384288130492}
+  eventPrefabs: []
+  enemyPrefabs:
+  - {fileID: 8538663676205915874, guid: ae9ea0112eb35434095ae5ac4393adef, type: 3}
+  - {fileID: 8538663676205915874, guid: ae9ea0112eb35434095ae5ac4393adef, type: 3}
+  videoClip: {fileID: 0}
+  videoNo: 0
+--- !u!1 &2446260705958933852
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4810514384288130492}
+  m_Layer: 0
+  m_Name: EventTran_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4810514384288130492
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2446260705958933852}
+  m_LocalRotation: {x: 0.1464466, y: 0.35355338, z: -0.35355338, w: 0.8535535}
+  m_LocalPosition: {x: -2.196602, y: 2.196602, z: 3.4774551}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2315118873131830220}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4333513117335650675
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,8 +205,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2090265930035029643}
+  - component: {fileID: 4470903019244385540}
   m_Layer: 0
-  m_Name: PathTran_1 (1)
+  m_Name: PathTran_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -154,10 +223,95 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: 5, y: 10, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2764143135072228371}
   m_Father: {fileID: 6572080289317892609}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
+--- !u!114 &4470903019244385540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4333513117335650675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98e384b80b3669a4199a02194efb9b36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clearConditionsType: 0
+  missionDuration: 1
+  eventTypes: 00000000
+  eventNos: 00000000
+  eventTrans:
+  - {fileID: 2764143135072228371}
+  eventPrefabs:
+  - {fileID: 8517180222902808894, guid: ae9ea0112eb35434095ae5ac4393adef, type: 3}
+  enemyPrefabs:
+  - {fileID: 8538663676205915874, guid: ae9ea0112eb35434095ae5ac4393adef, type: 3}
+  videoClip: {fileID: 0}
+  videoNo: 0
+--- !u!1 &4788961149087620300
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2764143135072228371}
+  m_Layer: 0
+  m_Name: EventTran_0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2764143135072228371
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4788961149087620300}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2090265930035029643}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4886137548045005936
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5500893542213995760}
+  m_Layer: 0
+  m_Name: EventTran_0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5500893542213995760
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4886137548045005936}
+  m_LocalRotation: {x: 0.1464466, y: 0.35355338, z: -0.35355338, w: 0.8535535}
+  m_LocalPosition: {x: -2.196602, y: 2.196602, z: 3.4774551}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2315118873131830220}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5645376334418798123
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,18 +423,22 @@ MonoBehaviour:
     pathTran: {fileID: 1848663331618097173}
     isMissionTrigger: 1
     missionEventDetail: {fileID: 25659774304477908}
+    isMoviePlay: 0
   - railMoveDuration: 4
     pathTran: {fileID: 527895371687559793}
     isMissionTrigger: 0
-    missionEventDetail: {fileID: 0}
+    missionEventDetail: {fileID: 6694098204674570480}
+    isMoviePlay: 1
   - railMoveDuration: 3
     pathTran: {fileID: 2090265930035029643}
-    isMissionTrigger: 0
-    missionEventDetail: {fileID: 0}
+    isMissionTrigger: 1
+    missionEventDetail: {fileID: 4470903019244385540}
+    isMoviePlay: 0
   - railMoveDuration: 7
     pathTran: {fileID: 2315118873131830220}
     isMissionTrigger: 1
     missionEventDetail: {fileID: 6705293396165929871}
+    isMoviePlay: 0
   smoothPath: {fileID: 8532632027491861447}
 --- !u!1 &7924368768465653869
 GameObject:
@@ -306,7 +464,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7924368768465653869}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.68, y: 0, z: 7.68}
+  m_LocalPosition: {x: -1.12, y: 0, z: 17.94}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1848663331618097173}
