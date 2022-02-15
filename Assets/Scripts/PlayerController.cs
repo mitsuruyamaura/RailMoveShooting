@@ -9,10 +9,9 @@ using System.Linq;
 public class PlayerController : MonoBehaviour
 {
     private int hp;                // 現在のHp値
-    private int bulletCount;       // 現在の弾数地
 
-    [SerializeField, HideInInspector]
-    private UIManager uiManagaer;
+    [SerializeField]
+    private int bulletCount;       // 現在の弾数
 
     [SerializeField, Header("最大Hp値")]
     private int maxHp;
@@ -38,15 +37,27 @@ public class PlayerController : MonoBehaviour
     [Header("リロード状態の制御")]
     public bool isReloading;
 
-    public int currentBulletNo;
+    [SerializeField]
+    private UIManager uiManagaer;
+
+    public int currentWeaponNo;
 
     [System.Serializable]
-    public struct CurrentBulletCount {
+    public class BulletCountData {
         public int bulletNo;
         public int bulletCount;
+
+        /// <summary>
+        /// 残弾数の更新
+        /// </summary>
+        /// <param name="amount"></param>
+        public void SetBulletCount(int amount) {
+            bulletCount = amount;
+            Debug.Log("残弾数更新");
+        }
     }
 
-    public List<CurrentBulletCount> currentBulletCountsList = new List<CurrentBulletCount>();
+    public List<BulletCountData> bulletCountDatasList = new List<BulletCountData>();
 
 
     /// <summary>
@@ -55,10 +66,27 @@ public class PlayerController : MonoBehaviour
     public int BulletCount
     {
         set => bulletCount = Mathf.Clamp(value, 0, maxBullet);
-        get => bulletCount;        
+        get => bulletCount;
     }
 
     //HP も同じようにプロパティ化できる
+
+
+    // mi
+
+    private bool isShootPermission;
+
+    public bool IsShootPerimission
+    {
+        set => isShootPermission = value;
+        get => isShootPermission;
+    }
+
+    [SerializeField]
+    private GameObject playerObj;
+
+    [SerializeField]
+    private GameObject weaponObj;
 
 
     void Start() {
@@ -78,7 +106,12 @@ public class PlayerController : MonoBehaviour
         BulletCount = maxBullet = maxBullet == 0 ? 10 : maxBullet;
 
         // 他の設定も初期値判定を作った方が安心
+        uiManagaer.SetPlayerInfo(maxHp, BulletCount);
 
+
+        // mi
+        IsShootPerimission = true;
+         
     }
 
     /// <summary>
@@ -88,7 +121,7 @@ public class PlayerController : MonoBehaviour
         hp = Mathf.Clamp(hp += amount, 0, maxHp);
 
         // HP 表示の更新
-        //uiManagaer.UpdateDisplayLife(hp);
+        uiManagaer.UpdateDisplayLife(hp);
 
         if (hp <= 0) {
             Debug.Log("Game Over");
@@ -149,31 +182,58 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// バレットの情報を更新
+    /// 武器(バレット)の情報を変更して武器切り替え
     /// </summary>
     /// <param name="weaponData"></param>
     public void ChangeBulletData(WeaponData weaponData) {
 
-        // 初期武器以外の場合
-        if (weaponData.weaponNo != 0) {
+        // 現在使用している武器の番号を保持
+        currentWeaponNo = weaponData.weaponNo;
 
-            // 弾が残っている場合で、まだ記録されていないとき
-            if (bulletCount > 0 && !currentBulletCountsList.Exists(x => x.bulletNo == currentBulletNo)) {
-
-                // 記録しておく
-                currentBulletCountsList.Add(new CurrentBulletCount { bulletNo = currentBulletNo, bulletCount = bulletCount});
-            }
-        }
-
+        // 武器の情報を各変数に設定
         bulletPower = weaponData.bulletPower;
-        bulletCount = weaponData.maxBullet;
+        maxBullet = weaponData.maxBullet;
 
         reloadTime = weaponData.reloadTime;
         shootInterval = weaponData.shootInterval;
         shootRange = weaponData.shootRange;
 
-        // 記録されている弾数がある場合には、そちらにする
-        bulletCount = currentBulletCountsList.Find(x => x.bulletNo == weaponData.weaponNo).bulletCount;
+        bulletCount = maxBullet;
 
+        // すでに使用したことのある武器である場合
+        if (bulletCountDatasList.Exists(x =>  x.bulletNo == currentWeaponNo)) {
+
+            // 弾数を前回の残弾数にする
+            bulletCount = bulletCountDatasList.Find(x => x.bulletNo == currentWeaponNo).bulletCount;
+        }
+    }
+
+    /// <summary>
+    /// 使用している武器のデータ(武器の番号と残弾数)を記録して更新
+    /// </summary>
+    /// <param name="weaponData"></param>
+    public void UpdateCurrentBulletCountData(WeaponData weaponData) {
+
+        // まだ一度も使用している武器の残弾数を記録していないとき
+        if (!bulletCountDatasList.Exists(x => x.bulletNo == currentWeaponNo)) {
+            // 新しくデータを作成して、記録
+            bulletCountDatasList.Add(new BulletCountData { bulletNo = currentWeaponNo, bulletCount = bulletCount });
+        } else {
+            // 使用したことがある武器ですでにデータがある場合には、そのデータを見つけて上書きして記録
+            bulletCountDatasList.Find(x => x.bulletNo == currentWeaponNo).SetBulletCount(bulletCount);
+        }
+
+        // 武器の情報を設定
+        ChangeBulletData(weaponData);
+    }
+
+    /// <summary>
+    /// ゲームクリア時の演出の準備
+    /// </summary>
+    public void PrepareClearSettings() {
+        // プレイヤーのゲームオブジェクトとの親子関係の解消
+        playerObj.transform.SetParent(null);
+        // 武器を非表示
+        weaponObj.SetActive(false);
     }
 }
