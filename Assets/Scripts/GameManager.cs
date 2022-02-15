@@ -16,9 +16,6 @@ public class GameManager : MonoBehaviour {
     [SerializeField, HideInInspector]
     private FieldAutoScroller fieldAutoScroller;
 
-    [SerializeField]
-    private UIManager uiManager;
-
     [System.Serializable]
     public class RootEventData {
         public int[] rootEventNos;
@@ -53,8 +50,19 @@ public class GameManager : MonoBehaviour {
     [SerializeField, Header("ミッションで発生しているイベントのリスト"), HideInInspector]
     private List<EventBase> eventBasesList = new List<EventBase>();
 
+    [SerializeField]
+    private List<EnemyController> enemiesList = new List<EnemyController>();
+
     private int currentMissionDuration;
 
+    [Header("現在のゲームの進行状態")]
+    public GameState currentGameState;
+
+    [SerializeField]
+    private WeaponEventInfo weaponEventInfo;
+
+    [SerializeField]
+    private UIManager uiManager;
 
     //private int clearMissionCount;
 
@@ -64,19 +72,13 @@ public class GameManager : MonoBehaviour {
     // ロード確認用
     //public RailPathData.PathDataDetail pathDataDetail;
 
-    [SerializeField]
-    private List<EnemyController> enemiesList = new List<EnemyController>();
 
+    // mi
     [SerializeField]
     private bool[] isMoviePlays;
 
-    // mi
-    [Header("現在のゲームの進行状態")]
-    public GameState currentGameState;
-
-
     [SerializeField]
-    private WeaponEventInfo weaponEventInfo;
+    private CameraController cameraController;
 
 
     private IEnumerator Start() {
@@ -99,6 +101,8 @@ public class GameManager : MonoBehaviour {
 
         // 初期武器登録
         GameData.instance.AddWeaponData(DataBaseManager.instance.GetWeaponData(0));
+        //GameData.instance.AddWeaponData(DataBaseManager.instance.GetWeaponData(1));
+        //GameData.instance.AddWeaponData(DataBaseManager.instance.GetWeaponData(2));
 
         // 武器取得イベント用の設定
         weaponEventInfo.InitializeWeaponEventInfo();
@@ -136,6 +140,7 @@ public class GameManager : MonoBehaviour {
         // ミッション発生有無の情報を登録
         isMissionTriggers = originRailPathData.GetIsMissionTriggers();
 
+        // GetIsMissionTriggers で取得しているので不要
         //for (int i = 0; i < isMissionTriggers.Length; i++) {
         //    if (originRailPathData.pathDataDetails[i].missionEventDetail) {
         //        missionEventDetailsList.Add(originRailPathData.pathDataDetails[i].missionEventDetail);
@@ -267,9 +272,10 @@ public class GameManager : MonoBehaviour {
 
         ClearEventList();
 
-        // 移動再開
+        // 移動再開(使わない)
         //railMoveController.ResumeMove();
 
+        // 移動再開
         railMoveController.CountUp();
 
         //ClearEnemiesList();
@@ -313,9 +319,6 @@ public class GameManager : MonoBehaviour {
         eventBasesList.Clear();
     }
 
-
-    // mi
-
     /// <summary>
     /// 敵の情報を List に追加
     /// </summary>
@@ -323,6 +326,100 @@ public class GameManager : MonoBehaviour {
     public void AddEnemyList(EnemyController enemyController) {
         enemiesList.Add(enemyController);
     }
+
+
+    /// <summary>
+    /// 敵の情報を List から削除し、ミッション内の敵の残数を減らす
+    /// </summary>
+    /// <param name="enemy"></param>
+    public void RemoveEnemyList(EnemyController enemy) {
+        enemiesList.Remove(enemy);
+
+        currentMissionDuration--;
+    }
+
+    /// <summary>
+    /// 敵の List をクリア
+    /// </summary>
+    private void ClearEnemiesList() {
+
+        if (enemiesList.Count > 0) {
+            for (int i = 0; i < enemiesList.Count; i++) {
+                Destroy(enemiesList[i]);
+            }
+        }
+
+        enemiesList.Clear();
+    }
+
+    /// <summary>
+    /// ルートの分岐確認の準備
+    /// </summary>
+    /// <param name="nextbranchNo">moveCount</param>
+    public void PreparateCheckNextBranch(int nextbranchNo) {
+
+        StartCoroutine(CheckNextBranch(nextbranchNo));
+
+    }
+    /// <summary>
+    /// ルートの分岐判定
+    /// </summary>
+    /// <param name="nextStagePathDataNo"></param>
+    /// <returns></returns>
+    private IEnumerator CheckNextBranch(int nextStagePathDataNo) {
+        if (nextStagePathDataNo >= DataBaseManager.instance.GetStagePathDetasListCount()) {
+            // 終了
+            Debug.Log("ゲーム終了");
+
+            // 発射許可を取り消し
+            playerController.IsShootPerimission = false;
+
+            // プレイヤーのゲームオブジェクトをカメラから切り離す
+            playerController.PrepareClearSettings();
+
+            // カメラの演出
+            cameraController.ClearCameraRoll(playerController.transform.position + new Vector3(0, 0, 10), new Vector3(0, 180, 0), new float[2] { 1.5f, 2.0f});
+
+            yield break;
+        }
+
+        // ルートに分岐があるかどうかの判定
+        if (DataBaseManager.instance.GetBranchDatasListCount(nextStagePathDataNo) == 1) {
+
+            Debug.Log("分岐なしで次のルートへ");
+
+            // 分岐なしの場合、次の経路を登録
+            originRailPathData = DataBaseManager.instance.GetRailPathDatasFromBranchNo(nextStagePathDataNo, BranchDirectionType.NoBranch);
+        } else {
+            // 分岐がある場合、UI に分岐を表示し、選択を待つ
+
+            Debug.Log("ルートの分岐発生");
+
+            // 分岐がある場合、分岐イベントを発生させて、画面上に矢印のボタンを表示
+            uiManager.GenerateBranchButtons(DataBaseManager.instance.GetBranchDirectionTypes(nextStagePathDataNo));
+
+            // 分岐を選択するまで待機(while でもOK)
+            yield return new WaitUntil(() => uiManager.GetSubmitBranch().Item1 == true);
+
+            // 選択した分岐のルートを設定
+            originRailPathData = DataBaseManager.instance.GetRailPathDatasFromBranchNo(nextStagePathDataNo, uiManager.GetSubmitBranch().Item2);
+        }
+
+        // ルート内のミッション情報を設定
+        SetMissionTriggers();
+
+        // 経路を移動先に設定
+        railMoveController.SetNextRailPathData(originRailPathData);
+
+        // レール移動の経路と移動登録が完了するまで待機
+        yield return new WaitUntil(() => railMoveController.GetMoveSetting());
+
+        // ゲームの進行状態を移動中に変更する
+        currentGameState = GameState.Play_Move;
+    }
+
+
+    // mi
 
     /// <summary>
     /// ギミックの情報を List に追加
@@ -368,78 +465,6 @@ public class GameManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// ルートの確認
-    /// 分岐がある場合には分岐の矢印ボタンを生成
-    /// </summary>
-    /// <returns></returns>
-    public IEnumerator CheckNextRootBranch() {
-
-        if (currentRailCount >= rootDatasList.Count) {
-            // TODO クリア判定
-            Debug.Log("クリア");
-
-            yield break;
-        }
-
-        // 現在のレールカウントの RootType を確認して、次に発生するルートを決める
-        switch (rootDatasList[currentRailCount].rootType) {
-            case RootType.Normal_Battle:
-                // 次のルートが１つなら
-                if (rootDatasList[currentRailCount].rootEventNos.Length == 1) {
-                    // 自動的にレール移動を開始
-                    fieldAutoScroller.SetNextField(GetPathDatasList(rootDatasList[currentRailCount].rootEventNos[0]));
-                    Debug.Log("分岐なしの移動開始");
-                } else {
-                    // 分岐がある場合、分岐イベントを発生させて、画面上に矢印のボタンを表示
-                    yield return StartCoroutine(uiManager.GenerateBranchButtons(rootDatasList[currentRailCount].rootEventNos, rootDatasList[currentRailCount].branchDirectionTypes));
-
-                    // 矢印が押されるまで待機(while でもOK)
-                    yield return new WaitUntil(() => uiManager.GetSubmitBranch().Item1 == true);
-
-                    // 選択した分岐のルートを設定
-                    fieldAutoScroller.SetNextField(GetPathDatasList(uiManager.GetSubmitBranch().Item2));
-                }
-
-                break;
-
-            case RootType.Boss_Battle:
-
-                break;
-
-            case RootType.Event:
-
-                break;
-        }
-
-        // 次のためにアップ
-        currentRailCount++;
-    }
-
-    /// <summary>
-    /// 敵の情報を List から削除し、ミッション内の敵の残数を減らす
-    /// </summary>
-    /// <param name="enemy"></param>
-    public void RemoveEnemyList(EnemyController enemy) {
-        enemiesList.Remove(enemy);
-
-        currentMissionDuration--;
-    }
-
-    /// <summary>
-    /// 敵の List をクリア
-    /// </summary>
-    private void ClearEnemiesList() {
-
-        if (enemiesList.Count > 0) {
-            for (int i = 0; i < enemiesList.Count; i++) {
-                Destroy(enemiesList[i]);
-            }
-        }
-
-        enemiesList.Clear();
-    }
-
-    /// <summary>
     /// ギミックの List をクリア
     /// </summary>
     private void ClearGimmicksList() {
@@ -451,81 +476,6 @@ public class GameManager : MonoBehaviour {
         }
 
         gimmicksList.Clear();
-    }
-
-    /// <summary>
-    /// ルートの分岐確認の準備
-    /// </summary>
-    /// <param name="nextbranchNo">moveCount</param>
-    public void PreparateCheckNextBranch(int nextbranchNo) {
-
-        StartCoroutine(CheckNextBranch(nextbranchNo));
-
-    }
-    /// <summary>
-    /// ルートの分岐判定
-    /// </summary>
-    /// <param name="nextStagePathDataNo"></param>
-    /// <returns></returns>
-    private IEnumerator CheckNextBranch(int nextStagePathDataNo) {
-        if (nextStagePathDataNo >= DataBaseManager.instance.GetStagePathDetasListCount()) {
-            // 終了
-            Debug.Log("ゲーム終了");
-
-            yield break;
-        }
-
-        // ルートに分岐があるかどうかの判定
-        if (DataBaseManager.instance.GetBranchDatasListCount(nextStagePathDataNo) == 1) {
-
-            Debug.Log("分岐なしで次のルートへ");
-
-            // 分岐なしの場合、次の経路を登録
-            originRailPathData = DataBaseManager.instance.GetRailPathDatasFromBranchNo(nextStagePathDataNo, BranchDirectionType.NoBranch);
-        } else {
-            // TODO 分岐がある場合、UI に分岐を表示し、選択を待つ
-
-            Debug.Log("ルートの分岐発生");
-
-            // TODO 分岐を選択するまで待機
-
-            // TODO 選択したルートを次のルートに設定
-
-        }
-
-        // 分岐後、次の経路を登録
-        //originRailPathData = DataBaseManager.instance.GetRailPathDatasFromBranchNo(nextStagePathDataNo, BranchDirectionType.NoBranch);
-
-        // ルート内のミッション情報を設定
-        SetMissionTriggers();
-
-        // 経路を移動先に設定
-        railMoveController.SetNextRailPathData(originRailPathData);
-
-        // レール移動の経路と移動登録が完了するまで待機
-        yield return new WaitUntil(() => railMoveController.GetMoveSetting());
-
-        // ゲームの進行状態を移動中に変更する
-        currentGameState = GameState.Play_Move;
-    }
-
-    public IEnumerator SetStart() {
-
-        //playerController.SetUpPlayer();
-
-        //eventGenerator.SetUpEventGenerator(this, playerController);
-
-        //uiManager.SetPlayerInfo(playerController.Hp, playerController.maxBullet);
-
-        //uiManager.SwitchActivatePlayerInfoSet(true);
-
-        //StartCoroutine(uiManager.GenerateLife(playerController.Hp));
-
-        //// ゲームの準備
-        //yield return StartCoroutine(PreparateGame());
-
-        // 次のルートの確認と設定
-        yield return StartCoroutine(CheckNextRootBranch());
     }
 
     /// <summary>
@@ -562,7 +512,7 @@ public class GameManager : MonoBehaviour {
         uiManager.SwitchActivateCanvas(false);
 
         // TODO ゲームステートを切り替えて、画面のタップを止める
-
+        playerController.IsShootPerimission = false;
 
         yield return StartCoroutine(PlayMovie());
 
@@ -574,8 +524,14 @@ public class GameManager : MonoBehaviour {
             // ムービー再生の準備と再生
             VideoClipManager.instance.PrepareVideoClip(originRailPathData.pathDataDetails[index].missionEventDetail.videoNo, originRailPathData.pathDataDetails[index].missionEventDetail.videoClip);
 
+            // ムービーの準備時間だけ待機
+            yield return new WaitForSeconds(1.5f);
+
+            Debug.Log("ムービー準備待機 終了");
+
             // ムービー再生が終了するまで待機
-            yield return new WaitForSeconds((float)originRailPathData.pathDataDetails[index].missionEventDetail.videoClip.length);
+            yield return new WaitUntil(() => !VideoClipManager.instance.IsVideoPlaying);
+            //yield return new WaitForSeconds((float)originRailPathData.pathDataDetails[index].missionEventDetail.videoClip.length);
 
             Debug.Log("ムービー再生　終了");
 
@@ -583,6 +539,7 @@ public class GameManager : MonoBehaviour {
             uiManager.SwitchActivateCanvas(true);
 
             // TODO ゲームステートを切り替えて、画面のタップを有効化
+            playerController.IsShootPerimission = true;
 
             // 画面のフェードインが戻るまでの間、待機してから
             yield return new WaitForSeconds(1.0f);
@@ -590,6 +547,80 @@ public class GameManager : MonoBehaviour {
             // ミッション発生有無の確認
             CheckMissionTrigger(index);
         }
+    }
+
+
+    // 使っていない
+
+    /// <summary>
+    /// AR 用
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator SetStart() {
+
+        //playerController.SetUpPlayer();
+
+        //eventGenerator.SetUpEventGenerator(this, playerController);
+
+        //uiManager.SetPlayerInfo(playerController.Hp, playerController.maxBullet);
+
+        //uiManager.SwitchActivatePlayerInfoSet(true);
+
+        //StartCoroutine(uiManager.GenerateLife(playerController.Hp));
+
+        //// ゲームの準備
+        //yield return StartCoroutine(PreparateGame());
+
+        // TODO 次のルートの確認と設定(古い方なので、使う場合には新しい方にする)
+        yield return StartCoroutine(CheckNextRootBranch());   // CheckNextBranch にすること
+    }
+
+    /// <summary>
+    /// ルートの確認(古いやつ。RootData を使っている)
+    /// 分岐がある場合には分岐の矢印ボタンを生成
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator CheckNextRootBranch() {
+
+        if (currentRailCount >= rootDatasList.Count) {
+            // TODO クリア判定
+            Debug.Log("クリア");
+
+            yield break;
+        }
+
+        // 現在のレールカウントの RootType を確認して、次に発生するルートを決める
+        switch (rootDatasList[currentRailCount].rootType) {
+            case RootType.Normal_Battle:
+                // 次のルートが１つなら
+                if (rootDatasList[currentRailCount].rootEventNos.Length == 1) {
+                    // 自動的にレール移動を開始
+                    fieldAutoScroller.SetNextField(GetPathDatasList(rootDatasList[currentRailCount].rootEventNos[0]));
+                    Debug.Log("分岐なしの移動開始");
+                } else {
+                    // 分岐がある場合、分岐イベントを発生させて、画面上に矢印のボタンを表示
+                    yield return StartCoroutine(uiManager.GenerateBranchButtons(rootDatasList[currentRailCount].rootEventNos, rootDatasList[currentRailCount].branchDirectionTypes));
+
+                    // 矢印が押されるまで待機(while でもOK)
+                    yield return new WaitUntil(() => uiManager.GetSubmitBranchNo().Item1 == true);
+
+                    // 選択した分岐のルートを設定
+                    fieldAutoScroller.SetNextField(GetPathDatasList(uiManager.GetSubmitBranchNo().Item2));
+                }
+
+                break;
+
+            case RootType.Boss_Battle:
+
+                break;
+
+            case RootType.Event:
+
+                break;
+        }
+
+        // 次のためにアップ
+        currentRailCount++;
     }
 
     ///// <summary>
