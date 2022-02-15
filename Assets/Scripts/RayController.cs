@@ -77,6 +77,12 @@ public class RayController : MonoBehaviour
         }
 #endif
 
+        // 発射許可がない場合
+        if (!playerController.IsShootPerimission) {
+            // 処理しない
+            return;
+        }
+
 
         // リロード判定(弾数 0 でリロード機能ありの場合)
         if (playerController.BulletCount == 0 && playerController.isReloadModeOn && Input.GetMouseButtonDown(0)) {
