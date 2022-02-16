@@ -76,6 +76,9 @@ public class PlayerController : MonoBehaviour
 
     private bool isShootPermission;
 
+    /// <summary>
+    /// ”­Ë‹–‰Â—pBtrue ‚Å‚ ‚ê‚Î”­Ë‚Å‚«‚é‚æ‚¤‚É‚·‚é
+    /// </summary>
     public bool IsShootPerimission
     {
         set => isShootPermission = value;

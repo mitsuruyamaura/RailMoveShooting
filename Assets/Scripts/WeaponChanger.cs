@@ -12,9 +12,26 @@ public class WeaponChanger : MonoBehaviour
     [SerializeField]
     private PlayerController player;
 
+    [SerializeField]
+    private WeaponDetail[] weapons;
+
+    /// <summary>
+    /// 初期武器のモデル表示
+    /// </summary>
+    public void InitWeaponModel() {
+
+        // 武器に武器の情報をセット
+        SetUpWeaponDetail();
+
+        // 武器の表示更新
+        SwitchWeaponModel();
+    }
+
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.L)) {
+
+            // 武器の交換
             ChangeWeapon();
         }    
     }
@@ -38,6 +55,32 @@ public class WeaponChanger : MonoBehaviour
         // 武器のデータを更新
         player.UpdateCurrentBulletCountData(GameData.instance.weaponDatasList[currentWeaponNo]);
 
+        // 武器の表示更新
+        SwitchWeaponModel();
+
         Debug.Log("武器交換");
+    }
+
+    /// <summary>
+    /// 武器の表示更新
+    /// </summary>
+    private void SwitchWeaponModel() {
+        // 武器の表示/非表示の切り替え
+        for (int i = 0; i < weapons.Length; i++) {
+            if (weapons[i].weaponNo == GameData.instance.weaponDatasList[currentWeaponNo].weaponNo) {
+                weapons[i].gameObject.SetActive(true);
+            } else {
+                weapons[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 武器に武器の情報をセット(現状では使わない)
+    /// </summary>
+    private void SetUpWeaponDetail() {
+        for (int i = 0; i < weapons.Length; i++) {
+            weapons[i].weaponData = GameData.instance.weaponDatasList.Find(x => x.weaponNo == weapons[i].weaponNo);
+        }
     }
 }
