@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 装備している武器の交換用クラス
+/// </summary>
 public class WeaponChanger : MonoBehaviour
 {
     public int currentWeaponNo;
@@ -30,10 +33,10 @@ public class WeaponChanger : MonoBehaviour
             return;
         }
 
-        currentWeaponNo = currentWeaponNo++ % GameData.instance.weaponDatasList.Count;
+        currentWeaponNo = ++currentWeaponNo % GameData.instance.weaponDatasList.Count;
 
         // 武器のデータを更新
-        player.ChangeBulletData(GameData.instance.weaponDatasList[currentWeaponNo]);
+        player.UpdateCurrentBulletCountData(GameData.instance.weaponDatasList[currentWeaponNo]);
 
         Debug.Log("武器交換");
     }

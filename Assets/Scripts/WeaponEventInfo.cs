@@ -6,25 +6,25 @@ using DG.Tweening;
 
 public class WeaponEventInfo : MonoBehaviour
 {
-    [SerializeField]// デバッグ用
+    [SerializeField]// デバッグ用。あとで SerializeField属性 を削除して private のみにします
     private WeaponData weaponData;
 
     [SerializeField]
-    private Button btnSubmit;
+    private Button btnSubmit;　　　// 決定ボタン用
 
     [SerializeField]
-    private Button btnCancel;
+    private Button btnCancel;      // キャンセルボタン用
 
     [SerializeField]
-    private Text txtWeaponName;
+    private Text txtWeaponName;    // 武器の名称表示用
 
     [SerializeField]
-    private Image imgWeaponIcon;
+    private Image imgWeaponIcon;   // 武器のアイコン画像表示用
 
     [SerializeField]
     private CanvasGroup canvasGroup;
 
-    public bool isChooseWeapon;
+    public bool isChooseWeapon;    // 武器選択の有無
 
 
     /// <summary>
@@ -70,7 +70,9 @@ public class WeaponEventInfo : MonoBehaviour
         SwitchActivateButtons(true);
     }
 
-
+    /// <summary>
+    /// 決定ボタンを押下した際の処理
+    /// </summary>
     private void OnClickSubmit() {
 
         // 武器登録
@@ -78,24 +80,35 @@ public class WeaponEventInfo : MonoBehaviour
         isChooseWeapon = true;
     }
 
-
+    /// <summary>
+    /// キャンセルボタンを押下した際の処理
+    /// </summary>
     private void OnClickCancel() {
         isChooseWeapon = true;
     }
 
-
+    /// <summary>
+    /// 各ボタンの活性化/非活性化の切り替え
+    /// </summary>
+    /// <param name="isSwitch"></param>
     private void SwitchActivateButtons(bool isSwitch) {
         btnSubmit.interactable = isSwitch;
         btnCancel.interactable = isSwitch;
     }
 
-
+    /// <summary>
+    /// 表示
+    /// </summary>
+    /// <param name="duration"></param>
     public void Show(float duration = 0.5f) {
         gameObject.SetActive(true);
         canvasGroup.DOFade(1.0f, duration);
     }
 
-
+    /// <summary>
+    /// 非表示
+    /// </summary>
+    /// <param name="duration"></param>
     public void Hide(float duration = 0.5f) {
         canvasGroup.DOFade(0, duration).OnComplete(() => gameObject.SetActive(false));
 
