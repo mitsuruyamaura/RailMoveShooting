@@ -62,6 +62,9 @@ public class GameManager : MonoBehaviour {
     private WeaponEventInfo weaponEventInfo;
 
     [SerializeField]
+    private WeaponChanger weaponChanger;
+
+    [SerializeField]
     private UIManager uiManager;
 
     //private int clearMissionCount;
@@ -109,6 +112,9 @@ public class GameManager : MonoBehaviour {
 
         // ‰Šú•Šíİ’è
         playerController.ChangeBulletData(GameData.instance.weaponDatasList[0]);
+
+        // ‰Šú•Ší‚Ìƒ‚ƒfƒ‹•\¦
+        weaponChanger.InitWeaponModel();
 
         // RailMoveController ‚Ì‰Šúİ’è
         railMoveController.SetUpRailMoveController(this);

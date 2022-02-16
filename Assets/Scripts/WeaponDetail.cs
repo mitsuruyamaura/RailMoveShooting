@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class WeaponDetail : MonoBehaviour
 {
-    public WeaponData weaponData;
+    public int weaponNo;
+    //public WeaponData weaponData;　　　// データは入るものの、現状では使わない
 }
