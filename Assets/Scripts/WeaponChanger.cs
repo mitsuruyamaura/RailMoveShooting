@@ -20,8 +20,8 @@ public class WeaponChanger : MonoBehaviour
     /// </summary>
     public void InitWeaponModel() {
 
-        // 武器に武器の情報をセット
-        SetUpWeaponDetail();
+        // 武器に武器の情報をセット(不要)
+        //SetUpWeaponDetail();
 
         // 武器の表示更新
         SwitchWeaponModel();
@@ -78,9 +78,9 @@ public class WeaponChanger : MonoBehaviour
     /// <summary>
     /// 武器に武器の情報をセット(現状では使わない)
     /// </summary>
-    private void SetUpWeaponDetail() {
-        for (int i = 0; i < weapons.Length; i++) {
-            weapons[i].weaponData = GameData.instance.weaponDatasList.Find(x => x.weaponNo == weapons[i].weaponNo);
-        }
-    }
+    //private void SetUpWeaponDetail() {
+    //    for (int i = 0; i < weapons.Length; i++) {
+    //        weapons[i].weaponData = GameData.instance.weaponDatasList.Find(x => x.weaponNo == weapons[i].weaponNo);
+    //    }
+    //}
 }

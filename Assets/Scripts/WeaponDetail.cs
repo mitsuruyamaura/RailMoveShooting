@@ -5,5 +5,5 @@ using UnityEngine;
 public class WeaponDetail : MonoBehaviour
 {
     public int weaponNo;
-    public WeaponData weaponData;　　　// データは入るものの、未使用
+    //public WeaponData weaponData;　　　// データは入るものの、現状では使わない
 }
