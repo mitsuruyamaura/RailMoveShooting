@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneStateManager : MonoBehaviour {
+
     public static SceneStateManager instance;
+    private AsyncOperation async;
 
 
     void Awake() {
@@ -24,17 +26,7 @@ public class SceneStateManager : MonoBehaviour {
 
     private IEnumerator ChangeScene(SceneName nextSceneName) {
 
-        yield return new WaitForSeconds(1.0f);
-
-        var async = SceneManager.LoadSceneAsync(nextSceneName.ToString());
-        async.allowSceneActivation = false;
-
-        yield return new WaitUntil(() => async.progress >= 0.9f);
-
-        async.allowSceneActivation = true;
-
-        //TransitionManager.instance.FadeOut(2.0f);
-
-        TransitionManager.instance.FadeInAndFadeOut(0);
+        yield return SceneManager.LoadSceneAsync(nextSceneName.ToString());
+        TransitionManager.instance.FadeOut(2.0f);
     }
 }

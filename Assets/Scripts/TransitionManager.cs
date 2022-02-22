@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TransitionManager : MonoBehaviour {
+
     public static TransitionManager instance;
 
     [SerializeField]
@@ -27,7 +28,11 @@ public class TransitionManager : MonoBehaviour {
     /// <param name="duration"></param>
     public void FadeInAndFadeOut(float duration) {
 
-        fade.FadeIn(duration, () => fade.FadeOut(2.0f));
+        fade.FadeIn(duration, () => {
+            
+            fade.FadeOut(2.0f);
+            
+            });
         Debug.Log("Fade_Opening");
     }
 
@@ -38,15 +43,16 @@ public class TransitionManager : MonoBehaviour {
     public void FadeOut(float duration) {
 
         fade.FadeOut(2.0f);
+        Debug.Log("FadeOut_Start");
     }
 
 
     public void FadeNextScene(float duration, SceneName nextSceneName) {
-        //fade.FadeIn(duration, () => fade.FadeOut(2.0f));
-
-        fade.FadeIn(duration);
-
-        SceneStateManager.instance.PrepareChangeScene(nextSceneName);
-        Debug.Log("Fade_Restart");
+        fade.FadeIn(duration, () => {
+            // フェードイン後に次のシーンの読み込み
+            SceneStateManager.instance.PrepareChangeScene(nextSceneName);
+        });
+                
+        Debug.Log("FadeIn_Start");
     }
 }
