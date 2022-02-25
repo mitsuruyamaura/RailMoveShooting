@@ -459,6 +459,9 @@ public class GameManager : MonoBehaviour {
 
         Debug.Log("ムービー準備開始");
 
+        // BGM を停止
+        SoundManager.instance.MuteBGM();
+
         // Canvas を非表示
         uiManager.SwitchActivateCanvas(false);
 
@@ -485,6 +488,9 @@ public class GameManager : MonoBehaviour {
             //yield return new WaitForSeconds((float)originRailPathData.pathDataDetails[index].missionEventDetail.videoClip.length);
 
             Debug.Log("ムービー再生　終了");
+
+            // BGM 再生
+            SoundManager.instance.PlayBGM(SoundManager.BGM_Type.Main);
 
             // 画面のフェードインが戻るまでの間、待機してから
             yield return new WaitForSeconds(1.0f);

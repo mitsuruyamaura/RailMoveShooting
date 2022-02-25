@@ -14,6 +14,11 @@ public class CameraController : MonoBehaviour
 
         sequence.Append(mainCamera.transform.DOMove(pos, durations[0]).SetEase(Ease.InQuart));
         sequence.AppendInterval(0.5f);
-        sequence.Append(mainCamera.transform.DORotate(rotation, durations[1]).SetEase(Ease.InQuart));
+        sequence.Append(mainCamera.transform.DORotate(rotation, durations[1])
+            .SetEase(Ease.InQuart))
+            .OnComplete(() => {
+                SoundManager.instance.MuteBGM();
+                SoundManager.instance.PlaySE(SoundManager.SE_Type.GameClear);
+            });
     }
 }

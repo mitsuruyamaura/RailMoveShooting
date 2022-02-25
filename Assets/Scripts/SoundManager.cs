@@ -19,7 +19,12 @@ public class SoundManager : MonoBehaviour
     public enum SE_Type {
         // SE用の列挙子をゲームに合わせて登録
         Gun_1,
-        Gun_2
+        Gun_2,
+        Zombie_1_Enter,
+        Zombie_1_Attack,
+        Zombie_1_Down,
+        GameClear,
+        GameOver,
     }
 
     // クロスフェード時間
@@ -193,8 +198,14 @@ public class SoundManager : MonoBehaviour
     /// BGM一時停止
     /// </summary>
     public void MuteBGM() {
-        BGM_Sources[0].Stop();
-        BGM_Sources[1].Stop();
+        BGM_Sources[0].DOFade(0, CROSS_FADE_TIME).SetEase(Ease.Linear)
+            .OnComplete(() => 
+            {
+                BGM_Sources[0].Stop();
+                BGM_Sources[1].Stop();
+                BGM_Sources[0].clip = null;
+                BGM_Sources[1].clip = null;
+            });
     }
 
     /// <summary>
