@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour {
 
     private IEnumerator Start() {
 
-        SoundManager.instance.PlayBGM(0);
+        SoundManager.instance.PlayBGM(SoundManager.BGM_Type.Main);
 
         currentGameState = GameState.Wait;
 

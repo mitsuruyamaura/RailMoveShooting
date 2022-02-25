@@ -121,7 +121,7 @@ public class RayController : MonoBehaviour
         Shoot();
 
         // SE
-        SoundManager.instance.PlaySE(0);
+        SoundManager.instance.PlaySE(SoundManager.SE_Type.Gun_1);
 
         yield return new WaitForSeconds(playerController.shootInterval);
 
