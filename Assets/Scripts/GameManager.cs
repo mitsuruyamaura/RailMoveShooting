@@ -62,10 +62,15 @@ public class GameManager : MonoBehaviour {
     private WeaponEventInfo weaponEventInfo;
 
     [SerializeField]
+    private UIManager uiManager;
+
+    [SerializeField]
     private WeaponChanger weaponChanger;
 
     [SerializeField]
-    private UIManager uiManager;
+    private CameraController cameraController;
+
+
 
     //private int clearMissionCount;
 
@@ -75,16 +80,14 @@ public class GameManager : MonoBehaviour {
     // ロード確認用
     //public RailPathData.PathDataDetail pathDataDetail;
 
-
-    // mi
     [SerializeField]
     private bool[] isMoviePlays;
 
-    [SerializeField]
-    private CameraController cameraController;
 
 
     private IEnumerator Start() {
+
+        SoundManager.instance.PlayBGM(SoundManager.BGM_Type.Main);
 
         currentGameState = GameState.Wait;
 
@@ -155,9 +158,7 @@ public class GameManager : MonoBehaviour {
 
         //clearMissionCount = 0;
 
-        // mi
-
-        // TODO 
+        // ムービー再生情報用の配列を初期化
         isMoviePlays = new bool[originRailPathData.GetIsMoviePlays().Length];
 
         // ムービー再生有無の情報を登録
@@ -173,6 +174,7 @@ public class GameManager : MonoBehaviour {
         if (isMissionTriggers[index]) {
             // TODO ミッション発生
             Debug.Log("ミッション発生");
+            //Debug.Log(index);
 
             // ミッションの準備
             PreparateMission(originRailPathData.pathDataDetails[index].missionEventDetail);
@@ -198,11 +200,14 @@ public class GameManager : MonoBehaviour {
         // ミッションの時間設定
         currentMissionDuration = missionEventDetail.missionDuration;
 
+        //Debug.Log(missionEventDetail.eventTypes[0]);
+        
         // 武器取得イベントか判定
         if (missionEventDetail.eventTypes[0] == EventType.Weapon) {
             // 武器の情報を取得してセット
             weaponEventInfo.SetWeaponData(DataBaseManager.instance.GetWeaponData(missionEventDetail.eventNos[0]));
             weaponEventInfo.Show();
+            Debug.Log("武器取得イベント 発生");
         } else {
 
             // TODO こっちがメイン。ミッション内の各イベントの生成(敵、ギミック、トラップ、アイテムなどを生成)
@@ -365,8 +370,8 @@ public class GameManager : MonoBehaviour {
     public void PreparateCheckNextBranch(int nextbranchNo) {
 
         StartCoroutine(CheckNextBranch(nextbranchNo));
-
     }
+
     /// <summary>
     /// ルートの分岐判定
     /// </summary>
@@ -377,11 +382,11 @@ public class GameManager : MonoBehaviour {
             // 終了
             Debug.Log("ゲーム終了");
 
-            // 発射許可を取り消し
-            playerController.IsShootPerimission = false;
-
-            // プレイヤーのゲームオブジェクトをカメラから切り離す
+            // プレイヤーのクリアの準備
             playerController.PrepareClearSettings();
+
+            // すべての武器を非表示
+            weaponChanger.InactiveWeapons();
 
             // カメラの演出
             cameraController.ClearCameraRoll(playerController.transform.position + new Vector3(0, 0, 10), new Vector3(0, 180, 0), new float[2] { 1.5f, 2.0f});
@@ -422,66 +427,6 @@ public class GameManager : MonoBehaviour {
 
         // ゲームの進行状態を移動中に変更する
         currentGameState = GameState.Play_Move;
-    }
-
-
-    // mi
-
-    /// <summary>
-    /// ギミックの情報を List に追加
-    /// </summary>
-    /// <param name="gimmick"></param>
-    public void AddGimmickList(GameObject gimmick) {
-        gimmicksList.Add(gimmick);
-    }
-
-    /// <summary>
-    /// すべての敵の移動を一時停止
-    /// </summary>
-    public void StopMoveAllEnemies() {
-        if (enemiesList.Count <= 0) {
-            return;
-        }
-
-        //for (int i = 0; i < enemiesList.Count; i++) {
-        //    enemiesList[i].GetComponent<EnemyController_Normal>().PauseMove();
-        //}
-    }
-
-    /// <summary>
-    /// すべての敵の移動を再開
-    /// </summary>
-    public void ResumeMoveAllEnemies() {
-        if (enemiesList.Count <= 0) {
-            return;
-        }
-
-        //for (int i = 0; i < enemiesList.Count; i++) {
-        //    enemiesList[i].GetComponent<EnemyController_Normal>().ResumeMove();
-        //}
-    }
-
-    /// <summary>
-    /// PathData の List を取得
-    /// </summary>
-    /// <param name="checkRootNo"></param>
-    /// <returns></returns>
-    private List<PathData> GetPathDatasList(int checkRootNo) {
-        return pathDataSO.rootDatasList.Find(x => x.rootNo == checkRootNo).pathDatasList;
-    }
-
-    /// <summary>
-    /// ギミックの List をクリア
-    /// </summary>
-    private void ClearGimmicksList() {
-
-        if (gimmicksList.Count > 0) {
-            for (int i = 0; i < gimmicksList.Count; i++) {
-                Destroy(gimmicksList[i]);
-            }
-        }
-
-        gimmicksList.Clear();
     }
 
     /// <summary>
@@ -541,18 +486,81 @@ public class GameManager : MonoBehaviour {
 
             Debug.Log("ムービー再生　終了");
 
+            // BGM 再生
+            SoundManager.instance.PlayBGM(SoundManager.BGM_Type.Main);
+
+            // 画面のフェードインが戻るまでの間、待機してから
+            yield return new WaitForSeconds(1.0f);
+
             // Canvas を表示
             uiManager.SwitchActivateCanvas(true);
 
             // TODO ゲームステートを切り替えて、画面のタップを有効化
             playerController.IsShootPerimission = true;
 
-            // 画面のフェードインが戻るまでの間、待機してから
-            yield return new WaitForSeconds(1.0f);
-
             // ミッション発生有無の確認
             CheckMissionTrigger(index);
         }
+    }
+
+    
+    // mi
+
+    /// <summary>
+    /// ギミックの情報を List に追加
+    /// </summary>
+    /// <param name="gimmick"></param>
+    public void AddGimmickList(GameObject gimmick) {
+        gimmicksList.Add(gimmick);
+    }
+
+    /// <summary>
+    /// すべての敵の移動を一時停止
+    /// </summary>
+    public void StopMoveAllEnemies() {
+        if (enemiesList.Count <= 0) {
+            return;
+        }
+
+        //for (int i = 0; i < enemiesList.Count; i++) {
+        //    enemiesList[i].GetComponent<EnemyController_Normal>().PauseMove();
+        //}
+    }
+
+    /// <summary>
+    /// すべての敵の移動を再開
+    /// </summary>
+    public void ResumeMoveAllEnemies() {
+        if (enemiesList.Count <= 0) {
+            return;
+        }
+
+        //for (int i = 0; i < enemiesList.Count; i++) {
+        //    enemiesList[i].GetComponent<EnemyController_Normal>().ResumeMove();
+        //}
+    }
+
+    /// <summary>
+    /// PathData の List を取得
+    /// </summary>
+    /// <param name="checkRootNo"></param>
+    /// <returns></returns>
+    private List<PathData> GetPathDatasList(int checkRootNo) {
+        return pathDataSO.rootDatasList.Find(x => x.rootNo == checkRootNo).pathDatasList;
+    }
+
+    /// <summary>
+    /// ギミックの List をクリア
+    /// </summary>
+    private void ClearGimmicksList() {
+
+        if (gimmicksList.Count > 0) {
+            for (int i = 0; i < gimmicksList.Count; i++) {
+                Destroy(gimmicksList[i]);
+            }
+        }
+
+        gimmicksList.Clear();
     }
 
 

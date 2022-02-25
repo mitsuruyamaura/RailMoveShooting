@@ -53,6 +53,7 @@ public class RayController : MonoBehaviour
 
         this.UpdateAsObservable()
             .TakeUntilDestroy(this)
+            .Where(_ => playerController.IsShootPerimission)
             .Where(_ => playerController.BulletCount > 0 && !playerController.isReloading && Input.GetMouseButton(0))
             .ThrottleFirst(TimeSpan.FromSeconds(playerController.shootInterval))
             .Subscribe(_ => { StartCoroutine(ShootTimer()); });
@@ -105,27 +106,30 @@ public class RayController : MonoBehaviour
         //if (!isShooting) {
         //    isShooting = true;
 
-            // 発射エフェクトの表示。初回のみ生成し、２回目はオンオフで切り替える
-            if (muzzleFlashObj == null) {
-                // 発射口の位置に RayController ゲームオブジェクトを配置する
-                muzzleFlashObj = Instantiate(EffectManager.instance.muzzleFlashPrefab, transform.position, transform.rotation);
-                muzzleFlashObj.transform.SetParent(gameObject.transform);
-                muzzleFlashObj.transform.localScale = muzzleFlashScale;
+        // 発射エフェクトの表示。初回のみ生成し、２回目はオンオフで切り替える
+        if (muzzleFlashObj == null) {
+            // 発射口の位置に RayController ゲームオブジェクトを配置する
+            muzzleFlashObj = Instantiate(EffectManager.instance.muzzleFlashPrefab, transform.position, transform.rotation);
+            muzzleFlashObj.transform.SetParent(gameObject.transform);
+            muzzleFlashObj.transform.localScale = muzzleFlashScale;
 
-            } else {
-                muzzleFlashObj.SetActive(true);
-            }
+        } else {
+            muzzleFlashObj.SetActive(true);
+        }
 
-            // 発射
-            Shoot();
+        // 発射
+        Shoot();
 
-            yield return new WaitForSeconds(playerController.shootInterval);
+        // SE
+        SoundManager.instance.PlaySE(SoundManager.SE_Type.Gun_1);
 
-            muzzleFlashObj.SetActive(false);
+        yield return new WaitForSeconds(playerController.shootInterval);
 
-            if (hitEffectObj != null) {
-                hitEffectObj.SetActive(false);
-            }
+        muzzleFlashObj.SetActive(false);
+
+        if (hitEffectObj != null) {
+            hitEffectObj.SetActive(false);
+        }
 
         //    isShooting = false;
 

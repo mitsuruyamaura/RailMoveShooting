@@ -72,6 +72,8 @@ public class EnemyController : MonoBehaviour
         }
 
         Debug.Log("エネミーの設定完了");
+
+        SoundManager.instance.PlaySE(SoundManager.SE_Type.Zombie_1_Enter);
     }
 
     void Update() {
@@ -93,6 +95,10 @@ public class EnemyController : MonoBehaviour
 
     private void OnTriggerStay(Collider other) {
         if (isAttack) {
+            return;
+        }
+
+        if (other.tag != "MainCamera") {   // 地面のコライダーや、他のエネミーのコライダーも拾ってしまうため
             return;
         }
 
@@ -150,6 +156,8 @@ public class EnemyController : MonoBehaviour
     private IEnumerator Attack(PlayerController player = null) {
         isAttack = true;
 
+        SoundManager.instance.PlaySE(SoundManager.SE_Type.Zombie_1_Attack);
+
         player.CalcHp(-attackPower);
 
         if (anim) {
@@ -195,6 +203,8 @@ public class EnemyController : MonoBehaviour
 
         if (hp <= 0) {
             isDead = true;
+
+            SoundManager.instance.PlaySE(SoundManager.SE_Type.Zombie_1_Down);
 
             if (anim) {
                 anim.SetBool("Walk", false);
