@@ -1270,6 +1270,8 @@ MonoBehaviour:
   Mute: 0
   BGM_Clips:
   - {fileID: 8300000, guid: 6b65631e41d7d2c4384263f328ee57f2, type: 3}
+  - {fileID: 8300000, guid: 2237104fff6b28b448b21433cc121a3f, type: 3}
+  - {fileID: 8300000, guid: 9b6ec30f70d899943a8fdb7d478a9575, type: 3}
   SE_Clips:
   - {fileID: 8300000, guid: cb0f7734defd5d048a44f587037309b7, type: 3}
   - {fileID: 8300000, guid: 06f9bd552a7514747bff9e2c9eb13ed0, type: 3}

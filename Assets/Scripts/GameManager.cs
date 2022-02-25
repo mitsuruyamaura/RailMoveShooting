@@ -459,9 +459,6 @@ public class GameManager : MonoBehaviour {
 
         Debug.Log("ムービー準備開始");
 
-        // BGM を停止
-        SoundManager.instance.MuteBGM();
-
         // Canvas を非表示
         uiManager.SwitchActivateCanvas(false);
 

@@ -11,6 +11,8 @@ public class SoundManager : MonoBehaviour
     public enum BGM_Type {
         // BGM用の列挙子をゲームに合わせて登録
         Main,
+        Movie_1,
+        Movei_2,
 
         SILENCE = 999,        // 無音状態をBGMとして作成したい場合には追加しておく。それ以外は不要
     }

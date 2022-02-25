@@ -1,9 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 using DG.Tweening;
 
+[RequireComponent(typeof(CanvasGroup))]
 public class VideoClipManager : MonoBehaviour
 {
     public static VideoClipManager instance;
@@ -15,6 +15,10 @@ public class VideoClipManager : MonoBehaviour
     private CanvasGroup canvasGroup;
 
     public VideoClip clip;
+
+
+    public bool IsVideoPlaying { get => videoPlayer.isPlaying; }
+
 
     void Awake() {
         if (instance == null) {
@@ -98,7 +102,7 @@ public class VideoClipManager : MonoBehaviour
             Debug.Log("VideoClip ロード完了");
 
             // 再生
-            StartCoroutine(PlayVideo());
+            StartCoroutine(PlayVideo(DataBaseManager.instance.GetVideoData(setVideoNo).bgmType));
         }
 
         //// 読み込むまで待機(videoPlayer.prepareCompleted を使わない場合)
@@ -110,10 +114,18 @@ public class VideoClipManager : MonoBehaviour
     /// VideoClip の再生
     /// </summary>
     /// <returns></returns>
-    private IEnumerator PlayVideo() {
+    private IEnumerator PlayVideo(SoundManager.BGM_Type bgmType = SoundManager.BGM_Type.SILENCE) {
 
         // TODO フェードインして再生(簡易。後でトランジションと合わせる)
         canvasGroup.DOFade(1.0f, 1.0f).OnComplete(() => canvasGroup.blocksRaycasts = true);   // OnComplete でPlay するとダメ
+
+        // BGM 再生
+        if (bgmType == SoundManager.BGM_Type.SILENCE) {
+            // 設定がない場合には停止
+            SoundManager.instance.MuteBGM();
+        } else {
+            SoundManager.instance.PlayBGM(bgmType);
+        }
 
         videoPlayer.Play();
 
@@ -121,6 +133,11 @@ public class VideoClipManager : MonoBehaviour
 
         // 再生が終了するまで待機
         while (videoPlayer.isPlaying) {
+
+            // 再生中にタップしたら再生停止してスキップ
+            if (Input.GetMouseButtonDown(0)) {
+                PauseVideo();
+            }
             yield return null;
         }
 
@@ -136,7 +153,7 @@ public class VideoClipManager : MonoBehaviour
         // 再生中の VideoClip がある場合
         if (videoPlayer.isPlaying) {
 
-            // 一時停止
+            // 一時停止(isPlayng が false になる)
             videoPlayer.Pause();
 
             Debug.Log("VideoClip 一時停止");
