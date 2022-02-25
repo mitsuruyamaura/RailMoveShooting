@@ -10,6 +10,7 @@ public class SoundManager : MonoBehaviour
     // BGM管理
     public enum BGM_Type {
         // BGM用の列挙子をゲームに合わせて登録
+        Main,
 
         SILENCE = 999,        // 無音状態をBGMとして作成したい場合には追加しておく。それ以外は不要
     }
@@ -17,6 +18,8 @@ public class SoundManager : MonoBehaviour
     // SE管理
     public enum SE_Type {
         // SE用の列挙子をゲームに合わせて登録
+        Gun_1,
+        Gun_2
     }
 
     // クロスフェード時間
