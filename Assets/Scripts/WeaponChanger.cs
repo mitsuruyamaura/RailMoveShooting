@@ -76,6 +76,15 @@ public class WeaponChanger : MonoBehaviour
     }
 
     /// <summary>
+    /// すべての武器を非表示
+    /// </summary>
+    public void InactiveWeapons() {
+        for (int i = 0; i < weapons.Length; i++) {
+            weapons[i].gameObject.SetActive(false);
+        }
+    }
+
+    /// <summary>
     /// 武器に武器の情報をセット(現状では使わない)
     /// </summary>
     //private void SetUpWeaponDetail() {

@@ -119,6 +119,9 @@ public class GameManager : MonoBehaviour {
         // ‰Šú•Ší‚Ìƒ‚ƒfƒ‹•\¦
         weaponChanger.InitWeaponModel();
 
+        // ’Ç‰Á
+        uiManager.GetWeaponChnageButton().onClick.AddListener(weaponChanger.ChangeWeapon);
+
         // RailMoveController ‚Ì‰Šúİ’è
         railMoveController.SetUpRailMoveController(this);
 

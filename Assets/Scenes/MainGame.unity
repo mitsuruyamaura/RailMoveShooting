@@ -664,7 +664,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &318966357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3728,6 +3728,7 @@ MonoBehaviour:
   centerBranchTran: {fileID: 7590395237163557348}
   isSubmitBranch: 0
   canvasObj: {fileID: 7590395237101197921}
+  btnWeaponChange: {fileID: 2110976190}
   txtDebugMessage: {fileID: 0}
   btnStopMotion: {fileID: 0}
   autoScroller: {fileID: 0}
@@ -4375,7 +4376,7 @@ RectTransform:
   m_Children:
   - {fileID: 2110976189}
   m_Father: {fileID: 7590395237101197920}
-  m_RootOrder: 6
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -5384,10 +5385,10 @@ RectTransform:
   - {fileID: 7590395238193634324}
   - {fileID: 829164631}
   - {fileID: 7590395237285939684}
+  - {fileID: 1680915432}
   - {fileID: 7590395238265765317}
   - {fileID: 7590395237779910519}
   - {fileID: 7590395238087955877}
-  - {fileID: 1680915432}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5557,7 +5558,7 @@ RectTransform:
   m_Children:
   - {fileID: 7590395238636004206}
   m_Father: {fileID: 7590395237101197920}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5839,7 +5840,7 @@ RectTransform:
   m_Children:
   - {fileID: 7590395236664543328}
   m_Father: {fileID: 7590395237101197920}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6143,7 +6144,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7590395237101197920}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
