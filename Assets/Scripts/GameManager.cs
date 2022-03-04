@@ -84,7 +84,6 @@ public class GameManager : MonoBehaviour {
     private bool[] isMoviePlays;
 
 
-
     private IEnumerator Start() {
 
         SoundManager.instance.PlayBGM(SoundManager.BGM_Type.Main);
@@ -99,6 +98,7 @@ public class GameManager : MonoBehaviour {
         //    originRailPathData = DataBaseManager.instance.GetRailPathDatasFromBranchNo(0, BranchDirectionType.NoBranch);
         //}
 
+        // TODO 取得する先でステージ番号を使うように変更
         originRailPathData = DataBaseManager.instance.GetRailPathDatasFromBranchNo(0, BranchDirectionType.NoBranch);
 
         //PlayerPrefsHelper.SaveSetObjectData("rail3", originRailPathData.pathDataDetails[0]);
