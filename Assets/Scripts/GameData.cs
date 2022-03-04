@@ -7,12 +7,18 @@ public class GameData : MonoBehaviour
 {
     public static GameData instance;
 
+    [HideInInspector]
     public ReactiveProperty<int> scoreReactiveProperty;
 
+    [HideInInspector]
     public bool useCinemachine;
 
-    [Header("E‚Á‚½•Ší‚Ì“o˜^—pƒŠƒXƒg")]
+    [Header("Š‚µ‚Ä‚¢‚é•Ší‚Ì“o˜^—pƒŠƒXƒg")]
     public List<WeaponData> weaponDatasList = new List<WeaponData>();
+
+    public int chooseStageNo;
+
+    public List<int> clearStageNoList = new List<int>();
 
 
     void Awake() {
@@ -36,5 +42,10 @@ public class GameData : MonoBehaviour
         weaponDatasList.Add(weaponData);
 
         Debug.Log("•Ší’Ç‰Á : " + weaponData.weaponName);
+    }
+
+
+    public void AddClearStageNoList(int stageNo) {
+        clearStageNoList.Add(stageNo);
     }
 }
