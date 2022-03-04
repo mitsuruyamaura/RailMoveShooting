@@ -7,19 +7,18 @@ using UniRx;
 public class UIManager : MonoBehaviour
 {
     [SerializeField]
-    private Text txtDebugMessage;
-
-
-    //mi
+    private Transform lifeTran;
 
     [SerializeField]
-    private Button btnStopMotion;
+    private GameObject lifePrefab;
 
     [SerializeField]
-    private FieldAutoScroller autoScroller;
+    private List<GameObject> lifesList = new List<GameObject>();
 
     [SerializeField]
-    private Text txtStopMotionCount;
+    private GameObject playerInfoSet;
+
+    //private int maxLifeIcon;
 
     [SerializeField]
     private SubmitBranchButton submitBranchButtonPrefab;
@@ -39,8 +38,31 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private bool isSubmitBranch;
 
+    private int submitBranchNo;　　　//　RootData 用の古い変数
+
+    private BranchDirectionType chooseBranchDirectionType;
+
     [SerializeField]
-    private int submitBranchNo;
+    private GameObject canvasObj;
+
+
+    //mi
+
+    [SerializeField]
+    private Button btnWeaponChange;
+
+
+    [SerializeField]
+    private Text txtDebugMessage;
+
+    [SerializeField]
+    private Button btnStopMotion;
+
+    [SerializeField]
+    private FieldAutoScroller autoScroller;
+
+    [SerializeField]
+    private Text txtStopMotionCount;
 
     [SerializeField]
     private Text txtARIntroduction;
@@ -49,28 +71,123 @@ public class UIManager : MonoBehaviour
     private GameObject targetIcon;
 
     [SerializeField]
-    private Transform lifeTran;
-
-    [SerializeField]
-    private GameObject lifePrefab;
-
-    [SerializeField]
-    private List<GameObject> lifesList = new List<GameObject>();
-
-    [SerializeField]
     private Text txtBulletCount;
 
-    [SerializeField]
-    private GameObject playerInfoSet;
-
-    private int maxLifeIcon;
     private int maxBulletCount;
 
     [SerializeField]
     private Text txtScore;
 
-    [SerializeField]
-    private GameObject canvasObj;
+
+    /// <summary>
+    /// ライフ用アイコンの最大値と弾数の最大値を設定
+    /// </summary>
+    /// <param name="maxHp"></param>
+    public void SetPlayerInfo(int maxHp, int maxBulletCount) {  // TODO 第2引数はまだ
+
+        StartCoroutine(GenerateLife(maxHp));
+
+        //this.maxBulletCount = maxBulletCount;
+        //UpdateDisplayBulletCount(this.maxBulletCount);
+    }
+
+    /// <summary>
+    /// ライフ用のアイコン(パーティクル)を生成
+    /// </summary>
+    /// <param name="lifeCount"></param>
+    /// <returns></returns>
+    public IEnumerator GenerateLife(int lifeCount) {
+
+        for (int i = 0; i < lifeCount; i++) {
+            yield return new WaitForSeconds(0.25f);
+
+            lifesList.Add(Instantiate(lifePrefab, lifeTran, false));
+
+        }
+    }
+
+    /// <summary>
+    /// ライフの再表示
+    /// </summary>
+    /// <param name="amout"></param>
+    public void UpdateDisplayLife(int amout) {
+
+        for (int i = 0; i < lifesList.Count; i++) {
+
+            if (i < amout) {
+                lifesList[i].SetActive(true);
+            } else {
+                lifesList[i].SetActive(false);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 分岐ボタンの生成
+    /// </summary>
+    /// <param name="branchDirectionTypes"></param>
+    public void GenerateBranchButtons(BranchDirectionType[] branchDirectionTypes) {
+        isSubmitBranch = false;
+        Debug.Log("分岐のボタン作成");
+
+        // 分岐の数だけボタンを生成
+        for (int i = 0; i < branchDirectionTypes.Length; i++) {
+
+            // ボタンの生成位置を設定
+            Transform branchTran = BranchDirectionType.Right == branchDirectionTypes[i] ? rightBranchTran : BranchDirectionType.Left == branchDirectionTypes[i] ? leftBranchTran : centerBranchTran;
+
+            // ボタン生成
+            SubmitBranchButton submitBranchButton = Instantiate(submitBranchButtonPrefab, branchTran, false);
+
+            // ボタン設定
+            submitBranchButton.SetUpSubmitBranchButton(branchDirectionTypes[i], this);
+
+            // List に追加
+            submitBranchButtonsList.Add(submitBranchButton);
+        }
+    }
+
+    /// <summary>
+    /// 分岐先の決定
+    /// </summary>
+    /// <param name="branchDirectionType"></param>
+    public void SubmitBranch(BranchDirectionType branchDirectionType) {
+        for (int i = 0; i < submitBranchButtonsList.Count; i++) {
+            // 分岐のボタンを非活性化して重複タップを防止
+            submitBranchButtonsList[i].InactivateSubmitButton();
+            Destroy(submitBranchButtonsList[i].gameObject);
+        }
+        submitBranchButtonsList.Clear();
+
+        chooseBranchDirectionType = branchDirectionType;
+        isSubmitBranch = true;
+    }
+
+    /// <summary>
+    /// 分岐情報の取得
+    /// </summary>
+    /// <returns></returns>
+    public (bool, BranchDirectionType) GetSubmitBranch() {
+        return (isSubmitBranch, chooseBranchDirectionType);
+    }
+
+    /// <summary>
+    /// キャンバスの表示オンオフ切り替え
+    /// </summary>
+    public void SwitchActivateCanvas(bool isSwitch) {
+        canvasObj.SetActive(isSwitch);
+    }
+
+
+    // mi
+
+    /// <summary>
+    /// 武器交換ボタンの取得
+    /// </summary>
+    /// <returns></returns>
+    public Button GetWeaponChnageButton() {
+        return btnWeaponChange;
+    }
 
 
     /// <summary>
@@ -89,7 +206,6 @@ public class UIManager : MonoBehaviour
         playerInfoSet.SetActive(isSwitch);
     }
 
-    // mi
 
     // 本来は使う。いまはデバッグのため未使用
 
@@ -119,7 +235,33 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 分岐のボタン作成
+    /// AR 導入部分のメッセージ表示
+    /// </summary>
+    public void DisplayARIntroduction(string message) {
+        txtARIntroduction.text = message;
+    }
+
+    /// <summary>
+    /// AR 導入用のメッセージ表示のオン/オフ切り替え
+    /// </summary>
+    /// <param name="isSwicth"></param>
+    public void InactiveARIntroductionText(bool isSwicth) {
+        txtARIntroduction.transform.parent.parent.gameObject.SetActive(isSwicth);
+    }
+
+    /// <summary>
+    /// 弾数表示の更新
+    /// </summary>
+    /// <param name="currentBulletCount"></param>
+    public void UpdateDisplayBulletCount(int currentBulletCount) {
+        txtBulletCount.text = currentBulletCount.ToString() + " / " + maxBulletCount.ToString();
+    }
+
+
+    // 未
+
+    /// <summary>
+    /// 分岐のボタン作成(RootData を使う、古い方式)
     /// </summary>
     public IEnumerator GenerateBranchButtons(int[] branchNums, BranchDirectionType[] branchDirectionTypes) {
 
@@ -131,7 +273,7 @@ public class UIManager : MonoBehaviour
 
             // ボタンの生成位置を設定
             Transform branchTran = BranchDirectionType.Right == branchDirectionTypes[i] ? rightBranchTran : BranchDirectionType.Left == branchDirectionTypes[i] ? leftBranchTran : centerBranchTran;
-            
+
             // ボタン生成
             SubmitBranchButton submitBranchButton = Instantiate(submitBranchButtonPrefab, branchTran, false);
 
@@ -164,80 +306,7 @@ public class UIManager : MonoBehaviour
     /// 分岐情報の取得
     /// </summary>
     /// <returns></returns>
-    public (bool, int) GetSubmitBranch() {
+    public (bool, int) GetSubmitBranchNo() {
         return (isSubmitBranch, submitBranchNo);
     }
-
-    /// <summary>
-    /// AR 導入部分のメッセージ表示
-    /// </summary>
-    public void DisplayARIntroduction(string message) {
-        txtARIntroduction.text = message;
-    }
-
-    /// <summary>
-    /// AR 導入用のメッセージ表示のオン/オフ切り替え
-    /// </summary>
-    /// <param name="isSwicth"></param>
-    public void InactiveARIntroductionText(bool isSwicth) {
-        txtARIntroduction.transform.parent.parent.gameObject.SetActive(isSwicth);
-    }
-
-
-    /// <summary>
-    /// ライフ用のアイコン(パーティクル)を生成
-    /// </summary>
-    public IEnumerator GenerateLife(int amount) {
-        
-        for (int i = 0; i < amount; i++) {
-            lifesList.Add(Instantiate(lifePrefab, lifeTran, false));
-            yield return new WaitForSeconds(0.25f);
-
-            if (lifesList.Count == maxLifeIcon) {
-                break;
-            }
-        }
-    }
-
-    /// <summary>
-    /// ライフの再表示
-    /// </summary>
-    /// <param name="amout"></param>
-    public void UpdateDisplayLife(int amout) {
-
-        for (int i = 0; i < maxLifeIcon; i++) {
-
-            if (i < amout) {
-                lifesList[i].SetActive(true);
-            } else {
-                lifesList[i].SetActive(false);
-            }
-        }
-    }
-
-    /// <summary>
-    /// ライフ用アイコンの最大値と弾数の最大値を設定
-    /// </summary>
-    /// <param name="maxHp"></param>
-    public void SetPlayerInfo(int maxHp, int maxBulletCount) {
-        maxLifeIcon = maxHp;
-        this.maxBulletCount = maxBulletCount;
-        UpdateDisplayBulletCount(this.maxBulletCount);
-    }
-
-    /// <summary>
-    /// 弾数表示の更新
-    /// </summary>
-    /// <param name="currentBulletCount"></param>
-    public void UpdateDisplayBulletCount(int currentBulletCount) {
-        txtBulletCount.text = currentBulletCount.ToString() + " / " + maxBulletCount.ToString();
-    }
-
-    /// <summary>
-    /// キャンバスの表示オンオフ切り替え
-    /// </summary>
-    public void SwitchActivateCanvas(bool isSwitch) {
-        canvasObj.SetActive(isSwitch);
-    }
 }
-
