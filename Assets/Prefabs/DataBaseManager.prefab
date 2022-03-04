@@ -52,3 +52,4 @@ MonoBehaviour:
   weaponDataSO: {fileID: 11400000, guid: 4c475c8311d8b08488588204bc5ca41f, type: 2}
   stagePathDataSO: {fileID: 11400000, guid: eab1913d05ce1ee45bd95f50f8dc9324, type: 2}
   videoDataSO: {fileID: 11400000, guid: 0ab662f366048f8478ff71d4816408b0, type: 2}
+  stageSO: {fileID: 11400000, guid: 4b9b0917c98ba4d449269c38843ec04b, type: 2}

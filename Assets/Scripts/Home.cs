@@ -21,14 +21,14 @@ public class Home : MonoBehaviour
     {
         //TransitionManager.instance.FadeNextScene(1.0f, SceneName.MainGame);
 
+        // デバッグ用。クリアしたステージ番号の登録
         if (debugStageNos.Length > 0) {
             for (int i = 0; i < debugStageNos.Length; i++) {
                 GameData.instance.AddClearStageNoList(debugStageNos[i]);
             }
-        } else {
-            GameData.instance.AddClearStageNoList(0);
         }
 
+        // ステージボタンの作成
         GenerateStageButtons();
     }
 
@@ -36,9 +36,16 @@ public class Home : MonoBehaviour
     /// クリアしているステージと次のステージの分のステージ選択ボタンの作成
     /// </summary>
     private void GenerateStageButtons() {
+
+        // １ステージ
+        StageButton stageButton = Instantiate(stageButtonPrefab, stageButtonTran, false);
+        stageButton.SetUpStageButton(0);
+        stageButtonList.Add(stageButton);
+
+        // 2ステージ以降
         for (int i = 0; i < GameData.instance.clearStageNoList.Count; i++) {
-            StageButton stageButton = Instantiate(stageButtonPrefab, stageButtonTran, false);
-            stageButton.SetUpStageButton(GameData.instance.clearStageNoList[i]);
+            stageButton = Instantiate(stageButtonPrefab, stageButtonTran, false);
+            stageButton.SetUpStageButton(GameData.instance.clearStageNoList[i] + 1);
             stageButtonList.Add(stageButton);
         }
     }

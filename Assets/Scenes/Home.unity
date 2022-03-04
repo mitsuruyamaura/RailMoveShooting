@@ -156,7 +156,7 @@ MonoBehaviour:
     type: 3}
   stageButtonTran: {fileID: 1377423530}
   stageButtonList: []
-  debugStageNos: 0000000001000000
+  debugStageNos: 00000000
 --- !u!4 &772003784
 Transform:
   m_ObjectHideFlags: 0
