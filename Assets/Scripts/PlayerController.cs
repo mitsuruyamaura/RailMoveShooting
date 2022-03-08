@@ -72,8 +72,6 @@ public class PlayerController : MonoBehaviour
     //HP も同じようにプロパティ化できる
 
 
-    // mi
-
     private bool isShootPermission;
 
     /// <summary>
@@ -87,9 +85,6 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private GameObject playerObj;
-
-    [SerializeField]
-    private GameObject weaponObj;
 
 
     void Start() {
@@ -111,10 +106,7 @@ public class PlayerController : MonoBehaviour
         // 他の設定も初期値判定を作った方が安心
         uiManagaer.SetPlayerInfo(maxHp, BulletCount);
 
-
-        // mi
-        IsShootPerimission = true;
-         
+        IsShootPerimission = true;         
     }
 
     /// <summary>
@@ -234,9 +226,11 @@ public class PlayerController : MonoBehaviour
     /// ゲームクリア時の演出の準備
     /// </summary>
     public void PrepareClearSettings() {
+
+        // 発射許可を取り消し
+        IsShootPerimission = false;
+
         // プレイヤーのゲームオブジェクトとの親子関係の解消
         playerObj.transform.SetParent(null);
-        // 武器を非表示
-        weaponObj.SetActive(false);
     }
 }
