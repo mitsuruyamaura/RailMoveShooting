@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
+using UniRx.Triggers;
 
 public class Home : MonoBehaviour
 {
@@ -16,6 +18,9 @@ public class Home : MonoBehaviour
     [SerializeField]
     private int[] debugStageNos;
 
+    [SerializeField]
+    private bool isLoadData;
+
     
     void Start()
     {
@@ -28,8 +33,27 @@ public class Home : MonoBehaviour
             }
         }
 
+        // クリアしたステージの番号の List をロード
+        if (isLoadData) {
+            // クリアしたリストの情報がある場合
+            if (PlayerPrefsHelper.ExistsData(GameData.CLEAR_STAGES_KEY)) {
+                // ロ―ド
+                GameData.instance.LoadClearStageList();
+            }
+        }
+
         // ステージボタンの作成
         GenerateStageButtons();
+
+        // デバッグ
+        this.UpdateAsObservable()
+            .Subscribe(_ => {
+                if (Input.GetKeyDown(KeyCode.A)) GameData.instance.SaveClearStageList();
+
+                if (Input.GetKeyDown(KeyCode.B)) GameData.instance.SetSaveData();
+                if (Input.GetKeyDown(KeyCode.C)) GameData.instance.GetSaveData();
+            })
+            .AddTo(gameObject);        
     }
 
     /// <summary>

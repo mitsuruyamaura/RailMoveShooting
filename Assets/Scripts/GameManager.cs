@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     private CameraController cameraController;
 
-
+    private int currentStageNo;
 
     //private int clearMissionCount;
 
@@ -90,13 +90,14 @@ public class GameManager : MonoBehaviour {
 
         currentGameState = GameState.Wait;
 
-        //if (PlayerPrefsHelper.ExistsData("rail3")) {
-        //    Debug.Log("セーブデータあり");
-        //    pathDataDetail = PlayerPrefsHelper.LoadGetObjectData<RailPathData.PathDataDetail>("rail3");
-        //} else {
-        //    Debug.Log("セーブデータなし");
-        //    originRailPathData = DataBaseManager.instance.GetRailPathDatasFromBranchNo(0, BranchDirectionType.NoBranch);
-        //}
+        if (PlayerPrefsHelper.ExistsData("rail3")) {
+            Debug.Log("セーブデータあり");
+            originRailPathData = PlayerPrefsHelper.LoadGetObjectData<RailPathData>("rail3");
+        } else {
+            Debug.Log("セーブデータなし");
+            originRailPathData = DataBaseManager.instance.GetRailPathDatasFromBranchNo(0, BranchDirectionType.NoBranch);
+            currentStageNo = 0;
+        }
 
         // TODO 取得する先でステージ番号を使うように変更
         originRailPathData = DataBaseManager.instance.GetRailPathDatasFromBranchNo(0, BranchDirectionType.NoBranch);
@@ -602,6 +603,12 @@ public class GameManager : MonoBehaviour {
         if (currentRailCount >= rootDatasList.Count) {
             // TODO クリア判定
             Debug.Log("クリア");
+
+            // クリアしたステージの番号を List に追加
+            GameData.instance.AddClearStageNoList(currentStageNo);
+
+            // セーブ
+            GameData.instance.SetSaveData();
 
             yield break;
         }

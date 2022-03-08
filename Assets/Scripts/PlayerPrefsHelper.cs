@@ -26,6 +26,8 @@ public static class PlayerPrefsHelper {
         // オブジェクトのデータを Json 形式に変換
         string json = JsonUtility.ToJson(obj);
 
+        Debug.Log(json);
+
         // セット
         PlayerPrefs.SetString(key, json);
 
@@ -43,6 +45,8 @@ public static class PlayerPrefsHelper {
 
         // セーブされているデータをロード
         string json = PlayerPrefs.GetString(key);
+
+        Debug.Log(json);
 
         // 読み込む型を指定して変換して取得
         return JsonUtility.FromJson<T>(json);

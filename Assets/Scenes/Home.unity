@@ -156,7 +156,8 @@ MonoBehaviour:
     type: 3}
   stageButtonTran: {fileID: 1377423530}
   stageButtonList: []
-  debugStageNos: 00000000
+  debugStageNos: 
+  isLoadData: 0
 --- !u!4 &772003784
 Transform:
   m_ObjectHideFlags: 0
@@ -301,6 +302,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8504809058466120666, guid: f3079edf7e3b38c4994c8e0d141b46d7,
+        type: 3}
+      propertyPath: clearStageNoList.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8504809058466120666, guid: f3079edf7e3b38c4994c8e0d141b46d7,
+        type: 3}
+      propertyPath: clearStageNoList.Array.data[1]
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8504809058466120667, guid: f3079edf7e3b38c4994c8e0d141b46d7,
         type: 3}
