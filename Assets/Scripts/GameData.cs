@@ -44,8 +44,20 @@ public class GameData : MonoBehaviour
         Debug.Log("武器追加 : " + weaponData.weaponName);
     }
 
-
+    /// <summary>
+    /// クリアしたステージの番号を追加
+    /// </summary>
+    /// <param name="stageNo"></param>
     public void AddClearStageNoList(int stageNo) {
-        clearStageNoList.Add(stageNo);
+
+        // クリアしたステージの番号がまだリストにない場合
+        if (!clearStageNoList.Contains(stageNo)) {
+
+            // List に追加
+            clearStageNoList.Add(stageNo);
+
+            // セーブ
+            PlayerPrefsHelper.SaveSetObjectData("ClearStageNoList", clearStageNoList);
+        }
     }
 }
