@@ -33,24 +33,27 @@ public class Home : MonoBehaviour
             }
         }
 
-        // クリアしたステージの番号をロード
+        // クリアしたステージの番号の List をロード
         if (isLoadData) {
             // クリアしたリストの情報がある場合
-            if (PlayerPrefsHelper.ExistsData("ClearStageNoList")) {
-
-                GameData.instance.clearStageNoList = new List<int>(PlayerPrefsHelper.LoadGetObjectData<List<int>>("ClearStageNoList"));
-                Debug.Log("Load");
+            if (PlayerPrefsHelper.ExistsData(GameData.CLEAR_STAGES_KEY)) {
+                // ロ―ド
+                GameData.instance.LoadClearStageList();
             }
         }
 
         // ステージボタンの作成
         GenerateStageButtons();
 
+        // デバッグ
         this.UpdateAsObservable()
             .Subscribe(_ => {
-                if (Input.GetKeyDown(KeyCode.A)) PlayerPrefsHelper.SaveSetObjectData("ClearStageNoList", GameData.instance.clearStageNoList);
+                if (Input.GetKeyDown(KeyCode.A)) GameData.instance.SaveClearStageList();
+
+                if (Input.GetKeyDown(KeyCode.B)) GameData.instance.SetSaveData();
+                if (Input.GetKeyDown(KeyCode.C)) GameData.instance.GetSaveData();
             })
-            .AddTo(gameObject);
+            .AddTo(gameObject);        
     }
 
     /// <summary>
