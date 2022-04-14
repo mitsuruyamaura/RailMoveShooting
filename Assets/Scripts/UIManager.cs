@@ -45,12 +45,11 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject canvasObj;
 
-
-    //mi
-
     [SerializeField]
     private Button btnWeaponChange;
 
+
+    //mi
 
     [SerializeField]
     private Text txtDebugMessage;
@@ -77,6 +76,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private Text txtScore;
+
 
 
     /// <summary>
@@ -178,17 +178,16 @@ public class UIManager : MonoBehaviour
         canvasObj.SetActive(isSwitch);
     }
 
-
-    // mi
-
     /// <summary>
     /// 武器交換ボタンの取得
     /// </summary>
     /// <returns></returns>
-    public Button GetWeaponChnageButton() {
+    public Button GetWeaponChangeButton() {
         return btnWeaponChange;
     }
 
+
+    // mi
 
     /// <summary>
     /// デバッグ内容を画面表示
@@ -308,5 +307,20 @@ public class UIManager : MonoBehaviour
     /// <returns></returns>
     public (bool, int) GetSubmitBranchNo() {
         return (isSubmitBranch, submitBranchNo);
+    }
+
+
+    void Update() {
+
+        //var screenPoint = Camera.main.WorldToScreenPoint(targetIcon.transform.position); // ワールド座標からスクリーン座標へ
+        //Ray ray = Camera.main.ScreenPointToRay(screenPoint);
+
+        // カメラの位置から正面に向かって Ray を投射
+
+        // クリックした位置用
+        //Vector3 pos = Camera.main.WorldToScreenPoint(Input.mousePosition);
+
+        // マウスの位置にターゲットマーカーを移動
+        targetIcon.transform.position = Input.mousePosition;
     }
 }
