@@ -46,7 +46,11 @@ public class TransitionManager : MonoBehaviour {
         Debug.Log("FadeOut_Start");
     }
 
-
+    /// <summary>
+    /// フェードインの後に次のシーンの読み込み
+    /// </summary>
+    /// <param name="duration"></param>
+    /// <param name="nextSceneName"></param>
     public void FadeNextScene(float duration, SceneName nextSceneName) {
         fade.FadeIn(duration, () => {
             // フェードイン後に次のシーンの読み込み

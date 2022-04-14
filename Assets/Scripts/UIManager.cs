@@ -89,6 +89,8 @@ public class UIManager : MonoBehaviour
 
         //this.maxBulletCount = maxBulletCount;
         //UpdateDisplayBulletCount(this.maxBulletCount);
+
+        SwitchActivateTargetIcon(GameData.instance.isTargetMarker);
     }
 
     /// <summary>
@@ -197,6 +199,10 @@ public class UIManager : MonoBehaviour
         txtDebugMessage.text = message;
     }
 
+    /// <summary>
+    /// ターゲットマーカーのオンオフ切り替え
+    /// </summary>
+    /// <param name="isSwitch"></param>
     public void SwitchActivateTargetIcon(bool isSwitch) {
         targetIcon.SetActive(isSwitch);
     }
@@ -312,15 +318,9 @@ public class UIManager : MonoBehaviour
 
     void Update() {
 
-        //var screenPoint = Camera.main.WorldToScreenPoint(targetIcon.transform.position); // ワールド座標からスクリーン座標へ
-        //Ray ray = Camera.main.ScreenPointToRay(screenPoint);
-
-        // カメラの位置から正面に向かって Ray を投射
-
-        // クリックした位置用
-        //Vector3 pos = Camera.main.WorldToScreenPoint(Input.mousePosition);
-
-        // マウスの位置にターゲットマーカーを移動
-        targetIcon.transform.position = Input.mousePosition;
+        if (targetIcon != null && targetIcon.activeSelf) {
+            // マウスの位置にターゲットマーカーを移動
+            targetIcon.transform.position = Input.mousePosition;
+        }
     }
 }
