@@ -35,6 +35,7 @@ public class GameData : MonoBehaviour
     public const string CLEAR_STAGES_KEY = "ClearStageNosList";
     public const string SAVE_KEY = "SaveData";        // SaveData ƒNƒ‰ƒX—p‚Ì Key
 
+    public bool isTargetMarker;
 
 
     void Awake() {

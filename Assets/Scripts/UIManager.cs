@@ -45,12 +45,11 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject canvasObj;
 
-
-    //mi
-
     [SerializeField]
     private Button btnWeaponChange;
 
+
+    //mi
 
     [SerializeField]
     private Text txtDebugMessage;
@@ -79,6 +78,7 @@ public class UIManager : MonoBehaviour
     private Text txtScore;
 
 
+
     /// <summary>
     /// ライフ用アイコンの最大値と弾数の最大値を設定
     /// </summary>
@@ -89,6 +89,8 @@ public class UIManager : MonoBehaviour
 
         //this.maxBulletCount = maxBulletCount;
         //UpdateDisplayBulletCount(this.maxBulletCount);
+
+        SwitchActivateTargetIcon(GameData.instance.isTargetMarker);
     }
 
     /// <summary>
@@ -178,17 +180,16 @@ public class UIManager : MonoBehaviour
         canvasObj.SetActive(isSwitch);
     }
 
-
-    // mi
-
     /// <summary>
     /// 武器交換ボタンの取得
     /// </summary>
     /// <returns></returns>
-    public Button GetWeaponChnageButton() {
+    public Button GetWeaponChangeButton() {
         return btnWeaponChange;
     }
 
+
+    // mi
 
     /// <summary>
     /// デバッグ内容を画面表示
@@ -198,6 +199,10 @@ public class UIManager : MonoBehaviour
         txtDebugMessage.text = message;
     }
 
+    /// <summary>
+    /// ターゲットマーカーのオンオフ切り替え
+    /// </summary>
+    /// <param name="isSwitch"></param>
     public void SwitchActivateTargetIcon(bool isSwitch) {
         targetIcon.SetActive(isSwitch);
     }
@@ -308,5 +313,14 @@ public class UIManager : MonoBehaviour
     /// <returns></returns>
     public (bool, int) GetSubmitBranchNo() {
         return (isSubmitBranch, submitBranchNo);
+    }
+
+
+    void Update() {
+
+        if (targetIcon != null && targetIcon.activeSelf) {
+            // マウスの位置にターゲットマーカーを移動
+            targetIcon.transform.position = Input.mousePosition;
+        }
     }
 }
