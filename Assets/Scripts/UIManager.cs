@@ -48,6 +48,9 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Button btnWeaponChange;
 
+    [SerializeField]
+    private GameObject targetIcon;
+
 
     //mi
 
@@ -65,9 +68,6 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private Text txtARIntroduction;
-
-    [SerializeField]
-    private GameObject targetIcon;
 
     [SerializeField]
     private Text txtBulletCount;
@@ -207,6 +207,15 @@ public class UIManager : MonoBehaviour
         targetIcon.SetActive(isSwitch);
     }
 
+    void Update() {
+
+        if (targetIcon != null && targetIcon.activeSelf) {
+            // マウスの位置にターゲットマーカーを移動
+            targetIcon.transform.position = Input.mousePosition;
+        }
+    }
+
+
     public void SwitchActivatePlayerInfoSet(bool isSwitch) {
         playerInfoSet.SetActive(isSwitch);
     }
@@ -313,14 +322,5 @@ public class UIManager : MonoBehaviour
     /// <returns></returns>
     public (bool, int) GetSubmitBranchNo() {
         return (isSubmitBranch, submitBranchNo);
-    }
-
-
-    void Update() {
-
-        if (targetIcon != null && targetIcon.activeSelf) {
-            // マウスの位置にターゲットマーカーを移動
-            targetIcon.transform.position = Input.mousePosition;
-        }
     }
 }
