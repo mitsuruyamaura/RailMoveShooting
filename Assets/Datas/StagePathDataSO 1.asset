@@ -18,6 +18,9 @@ MonoBehaviour:
       railPathData: {fileID: 5006531821375082778, guid: 7370f2b440d9dbd4b80943df009d08c2,
         type: 3}
   - branchDatasList:
-    - branchDirectionType: 0
+    - branchDirectionType: 1
       railPathData: {fileID: 6572080289317892610, guid: 75d3b74badc2b9342b049af135f549a0,
+        type: 3}
+    - branchDirectionType: 2
+      railPathData: {fileID: 6572080289317892610, guid: 8e1e7ada8234e684f860ca1572ee204c,
         type: 3}

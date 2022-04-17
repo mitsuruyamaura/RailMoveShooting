@@ -194,16 +194,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pathDataDetails:
-  - railMoveDuration: 0
+  - railMoveDuration: 3
     pathTran: {fileID: 570193093635140365}
     isMissionTrigger: 0
     missionEventDetail: {fileID: 0}
-  - railMoveDuration: 0
+    isMoviePlay: 0
+  - railMoveDuration: 3
     pathTran: {fileID: 1809611501726687593}
     isMissionTrigger: 0
     missionEventDetail: {fileID: 0}
-  - railMoveDuration: 0
+    isMoviePlay: 0
+  - railMoveDuration: 3
     pathTran: {fileID: 4498685088563767508}
     isMissionTrigger: 0
     missionEventDetail: {fileID: 0}
+    isMoviePlay: 0
   smoothPath: {fileID: 2691927921452758599}
