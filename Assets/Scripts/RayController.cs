@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
@@ -41,11 +42,19 @@ public class RayController : MonoBehaviour
     [SerializeField, HideInInspector]
     private ARManager arManager;
 
+    [SerializeField]
+    private List<EnemyController> targetList = new List<EnemyController>();
+
+    [SerializeField]
+    private List<TargetMarker> markerList = new List<TargetMarker>();
+
+    private List<RaycastHit> hitList = new List<RaycastHit>();
+
+    [SerializeField]
+    private TargetMarker targetMarkerPrefab;
 
 
-
-    void Start()
-    {
+    void Start() {
         layerMasksStr = new string[layerMasks.Length];
         for (int i = 0; i < layerMasks.Length; i++) {
             layerMasksStr[i] = LayerMask.LayerToName(layerMasks[i]);
@@ -54,9 +63,59 @@ public class RayController : MonoBehaviour
         this.UpdateAsObservable()
             .TakeUntilDestroy(this)
             .Where(_ => playerController.IsShootPerimission)
-            .Where(_ => playerController.BulletCount > 0 && !playerController.isReloading && Input.GetMouseButton(0))
+            .Where(_ => playerController.BulletCount > 0 && !playerController.isReloading)
             .ThrottleFirst(TimeSpan.FromSeconds(playerController.shootInterval))
-            .Subscribe(_ => { StartCoroutine(ShootTimer()); });
+            .Subscribe(_ => {
+
+                // ロックオン
+                if (Input.GetButton("Fire2")) {
+                    LockOnTargets();
+                    //Debug.Log("Lock on");                    
+                }
+
+                if (Input.GetMouseButton(0)) {
+                    StartCoroutine(ShootTimer());
+                }
+            });
+    }
+
+    /// <summary>
+    /// ロックオン
+    /// </summary>
+    private void LockOnTargets() {
+
+        // 弾数以上はロックオンできない
+        if (playerController.BulletCount <= targetList.Count) {
+            return;
+        }
+
+        // カメラの位置から正面に向かって Ray を投射
+        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+
+        // クリックした位置用
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //Debug.DrawRay(ray.origin, ray.direction, Color.green, 3.0f);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, playerController.shootRange, LayerMask.GetMask(layerMasksStr))) {
+
+            //Debug.Log(hit.collider.gameObject.name);
+
+            // TODO EnemyController から EventBase に変更する
+            // Ray の Hit した対象が Event であり、かつ、ターゲットのリストに登録されていない場合
+            if (hit.collider.TryGetComponent(out EnemyController eventBase) && !targetList.Contains(eventBase)) {
+
+                // クラスを継承して使うようにして、TryGetComponent の処理を Base を取得して統一する
+                targetList.Add(eventBase);
+
+                // 対象に照準マーカーを付与
+                TargetMarker targetMarker = Instantiate(targetMarkerPrefab, hit.collider.gameObject.transform);
+                targetMarker.SetUpTargetMarker(playerController.transform);
+                markerList.Add(targetMarker);
+
+                // ヒットした地点の登録
+                hitList.Add(hit);
+            }
+        }
     }
 
     void Update()
@@ -84,11 +143,12 @@ public class RayController : MonoBehaviour
             return;
         }
 
-
         // リロード判定(弾数 0 でリロード機能ありの場合)
         if (playerController.BulletCount == 0 && playerController.isReloadModeOn && Input.GetMouseButtonDown(0)) {
             StartCoroutine(playerController.ReloadBullet());
         }
+
+
 
         // 発射判定(弾数が残っており、リロード実行中でない場合)　押しっぱなしで発射できる
         //if (playerController.BulletCount > 0  && !playerController.isReloading && Input.GetMouseButton(0)) {
