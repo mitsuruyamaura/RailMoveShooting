@@ -118,6 +118,52 @@ public class RayController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// ロックオンした対象に順番に発射
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator ShootLockOnTargets() {
+
+        for (int i = 0; i < targetList.Count; i++) {
+
+            // 発射エフェクトの表示。初回のみ生成し、２回目はオンオフで切り替える
+            if (muzzleFlashObj == null) {
+                // 発射口の位置に RayController ゲームオブジェクトを配置する
+                muzzleFlashObj = Instantiate(EffectManager.instance.muzzleFlashPrefab, transform.position, transform.rotation);
+                muzzleFlashObj.transform.SetParent(gameObject.transform);
+                muzzleFlashObj.transform.localScale = muzzleFlashScale;
+
+            } else {
+                muzzleFlashObj.SetActive(true);
+            }
+
+            // ダメージ処理(デバッグ用。教材用)
+            targetList[i].TriggerEvent(playerController.bulletPower);
+
+            // 演出
+            PlayHitEffect(hitList[i].point, hitList[i].normal);
+
+            // マーカー削除
+            Destroy(markerList[i].gameObject);
+
+            // SE
+            SoundManager.instance.PlaySE(SoundManager.SE_Type.Gun_1);
+
+            playerController.CalcBulletCount(-1);
+
+            yield return new WaitForSeconds(playerController.shootInterval);
+
+            muzzleFlashObj.SetActive(false);
+
+            if (hitEffectObj != null) {
+                hitEffectObj.SetActive(false);
+            }
+        }
+        targetList.Clear();
+        markerList.Clear();
+        hitList.Clear();
+    }
+
     void Update()
     {
         // ゲーム状態がプレイ中でない場合には処理を行わない制御をする
@@ -148,7 +194,11 @@ public class RayController : MonoBehaviour
             StartCoroutine(playerController.ReloadBullet());
         }
 
-
+        // ロックオン対象がいる場合には各ロックオン対象に自動発射
+        if (Input.GetButtonUp("Fire2") && targetList.Count > 0) {
+            StartCoroutine(ShootLockOnTargets());
+            Debug.Log("Lock on Fire");
+        }
 
         // 発射判定(弾数が残っており、リロード実行中でない場合)　押しっぱなしで発射できる
         //if (playerController.BulletCount > 0  && !playerController.isReloading && Input.GetMouseButton(0)) {
