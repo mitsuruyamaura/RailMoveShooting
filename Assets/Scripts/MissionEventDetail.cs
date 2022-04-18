@@ -10,20 +10,23 @@ public class MissionEventDetail : MonoBehaviour {
     [Header("ミッションクリアのための敵の残数/残り時間")]
     public int missionDuration;
 
-    [Header("発生するイベントの種類"), HideInInspector]
-    public EventType[] eventTypes;
-
-    [Header("発生するイベントの番号"), HideInInspector]
-    public int[] eventNos;
-
-    [Tooltip("イベントの生成地点")]
-    public Transform[] eventTrans;
-
     [Header("イベントのプレファブ"), HideInInspector]
     public EventBase[] eventPrefabs;
 
     [Header("敵のプレファブ")]
     public EnemyController[] enemyPrefabs;
+
+    [Header("発生するイベントの種類")]
+    public EventType[] eventTypes;
+
+    [Header("発生するイベントの番号")]
+    public int[] eventNos;
+
+
+    //mi
+
+    [Tooltip("イベントの生成地点")]
+    public Transform[] eventTrans;
 
     [Header("ムービーのデータ")]
     public VideoClip videoClip;
