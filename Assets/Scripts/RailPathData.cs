@@ -25,7 +25,6 @@ public class RailPathData : MonoBehaviour
         [Tooltip("ミッションで発生するイベント群の情報。isMissionTrigger がオンの時に登録する")]
         public MissionEventDetail missionEventDetail;
 
-        // 未
         [Tooltip("ムービーの再生有無。オンで再生")]
         public bool isMoviePlay;
     }

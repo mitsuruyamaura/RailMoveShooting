@@ -101,6 +101,7 @@ public class GameManager : MonoBehaviour {
 
         // TODO 取得する先でステージ番号を使うように変更
         originRailPathData = DataBaseManager.instance.GetRailPathDatasFromBranchNo(0, BranchDirectionType.NoBranch);
+        
 
         //PlayerPrefsHelper.SaveSetObjectData("rail3", originRailPathData.pathDataDetails[0]);
 
@@ -121,7 +122,7 @@ public class GameManager : MonoBehaviour {
         weaponChanger.InitWeaponModel();
 
         // 追加
-        uiManager.GetWeaponChnageButton().onClick.AddListener(weaponChanger.ChangeWeapon);
+        uiManager.GetWeaponChangeButton().onClick.AddListener(weaponChanger.ChangeWeapon);
 
         // RailMoveController の初期設定
         railMoveController.SetUpRailMoveController(this);
@@ -382,6 +383,7 @@ public class GameManager : MonoBehaviour {
     /// <param name="nextStagePathDataNo"></param>
     /// <returns></returns>
     private IEnumerator CheckNextBranch(int nextStagePathDataNo) {
+        Debug.Log(nextStagePathDataNo);
         if (nextStagePathDataNo >= DataBaseManager.instance.GetStagePathDetasListCount()) {
             // 終了
             Debug.Log("ゲーム終了");
@@ -394,6 +396,12 @@ public class GameManager : MonoBehaviour {
 
             // カメラの演出
             cameraController.ClearCameraRoll(playerController.transform.position + new Vector3(0, 0, 10), new Vector3(0, 180, 0), new float[2] { 1.5f, 2.0f});
+
+            // クリアしたステージの番号を List に追加
+            GameData.instance.AddClearStageNoList(currentStageNo);
+
+            // セーブ
+            GameData.instance.SetSaveData();
 
             yield break;
         }
@@ -603,12 +611,6 @@ public class GameManager : MonoBehaviour {
         if (currentRailCount >= rootDatasList.Count) {
             // TODO クリア判定
             Debug.Log("クリア");
-
-            // クリアしたステージの番号を List に追加
-            GameData.instance.AddClearStageNoList(currentStageNo);
-
-            // セーブ
-            GameData.instance.SetSaveData();
 
             yield break;
         }

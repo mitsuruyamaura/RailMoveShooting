@@ -9,12 +9,14 @@ public class SubmitBranchButton : MonoBehaviour
     [SerializeField]
     private Button btnSubmit;
 
-    public int rootNo;
+    private int rootNo;
+
+    private BranchDirectionType branchDirectionType;
 
     private UIManager uiManager;
 
     /// <summary>
-    /// 分岐ボタンの設定
+    /// 分岐ボタンの設定(RootData を使う古い方式) 
     /// </summary>
     /// <param name="rootNo"></param>
     /// <param name="uiManager"></param>
@@ -26,13 +28,27 @@ public class SubmitBranchButton : MonoBehaviour
     }
 
     /// <summary>
+    /// 分岐ボタンの設定
+    /// </summary>
+    /// <param name="branchDirectionType"></param>
+    /// <param name="uiManager"></param>
+    public void SetUpSubmitBranchButton(BranchDirectionType branchDirectionType, UIManager uiManager) {
+        this.branchDirectionType = branchDirectionType;
+        this.uiManager = uiManager;
+
+        btnSubmit.onClick.AddListener(OnClickSubmitBranch);
+    }
+
+    /// <summary>
     /// 分岐ボタンをタップした際の処理
     /// </summary>
     private void OnClickSubmitBranch() {
-        // TODO アニメ演出
+        // アニメ演出
+        transform.DOPunchScale(Vector3.one * 0.3f, 0.25f).SetEase(Ease.InQuart);
 
-        // 分岐の番号を決定
-        uiManager.SubmitBranch(rootNo);
+        // 分岐の種類を決定
+        //uiManager.SubmitBranch(rootNo);
+        uiManager.SubmitBranch(branchDirectionType);
     }
 
     /// <summary>

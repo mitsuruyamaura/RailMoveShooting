@@ -27,6 +27,8 @@ public class SceneStateManager : MonoBehaviour {
     private IEnumerator ChangeScene(SceneName nextSceneName) {
 
         yield return SceneManager.LoadSceneAsync(nextSceneName.ToString());
+
+        //yield return new WaitForSeconds(2.0f);
         TransitionManager.instance.FadeOut(2.0f);
     }
 }

@@ -12,7 +12,7 @@ public class StagePathDataSO : ScriptableObject
 
         [System.Serializable]
         public class BranchData {
-            public BranchDirectionType branchDirectionType;
+            public BranchDirectionType branchDirectionType;   // ‘I‘ðŽˆ—p‚Ì–îˆó‚Ì•ûŒü
             public RailPathData railPathData;
 
             // ‘¼‚É‚à‚ ‚ê‚Î’Ç‰Á‚·‚é

@@ -12,6 +12,20 @@ public class RailMoveController : MonoBehaviour
     [SerializeField]
     private RailPathData currentRailPathData;
 
+    private Tween tweenMove;
+    private Tween tweenRotation;
+
+    // 以下の３つはパスごとの移動時に利用する
+    private Vector3[] paths;
+    private float[] moveDurations;
+    private int pathCount;
+
+    private GameManager gameManager;
+    private int moveCount;
+
+    
+    // mi
+
     [SerializeField, Header("カメラの移動タイプ(Linear か Catmull Rom を設定)")]
     private PathType pathType;
 
@@ -20,18 +34,6 @@ public class RailMoveController : MonoBehaviour
 
     [SerializeField]
     private CameraSwitcher cameraSwitcher;
-
-    private Tween tweenMove;
-    private Tween tweenRotation;
-
-    private GameManager gameManager;
-
-    private int moveCount;
-
-    // 以下の３つはパスごとの移動時に利用する
-    private Vector3[] paths;
-    private float[] moveDurations;
-    private int pathCount;
 
 
     //void Start() {
@@ -86,7 +88,17 @@ public class RailMoveController : MonoBehaviour
         pathCount = 0;
 
         // 移動先のパスの情報から Position の情報だけを抽出して配列を作成
-        //Vector3[] paths = currentRailPathData.GetPathTrans().Select(x => x.position).ToArray();
+        //paths = new Vector3[currentRailPathData.GetPathTrans().Length];
+
+        //float totalTime = 0;
+
+        // 移動する位置情報と時間を順番に配列に取得
+        //for (int i = 0; i < currentRailPathData.GetPathTrans().Length; i++) {
+        //    paths[i] = currentRailPathData.GetPathTrans()[i].position;
+        //    totalTime += currentRailPathData.GetRailMoveDurations()[i];
+        //}
+
+        // 上記処理のリファクタリング後
         paths = currentRailPathData.GetPathTrans().Select(x => x.position).ToArray();
 
         // 移動先のパスの移動時間を合計
@@ -112,6 +124,26 @@ public class RailMoveController : MonoBehaviour
         ResumeMove();
 
         Debug.Log("移動開始");
+    }
+
+    /// <summary>
+    /// レール移動の一時停止
+    /// </summary>
+    public void PauseMove() {
+        // 一時停止
+        //transform.DOPause();
+        tweenMove.Pause();
+        tweenRotation.Pause();
+    }
+
+    /// <summary>
+    /// レール移動の再開
+    /// </summary>
+    public void ResumeMove() {
+        // 移動再開
+        //transform.DOPlay();
+        tweenMove.Play();
+        tweenRotation.Play();
     }
 
     /// <summary>
@@ -167,26 +199,6 @@ public class RailMoveController : MonoBehaviour
     }
 
     /// <summary>
-    /// レール移動の一時停止
-    /// </summary>
-    public void PauseMove() {
-        // 一時停止
-        //transform.DOPause();
-        tweenMove.Pause();
-        tweenRotation.Pause();
-    }
-
-    /// <summary>
-    /// レール移動の再開
-    /// </summary>
-    public void ResumeMove() {
-        // 移動再開
-        //transform.DOPlay();
-        tweenMove.Play();
-        tweenRotation.Play();
-    }
-
-    /// <summary>
     /// パスの目標地点に到着するたびに実行される
     /// </summary>
     /// <param name="waypointIndex"></param>
@@ -208,6 +220,9 @@ public class RailMoveController : MonoBehaviour
 
         // パスごとの移動のデバッグ用
         //CountUp();
+
+
+        // movie 使う場合
 
         // DOTween を停止
         tweenMove.Kill();
