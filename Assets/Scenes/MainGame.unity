@@ -3620,7 +3620,7 @@ PrefabInstance:
     - target: {fileID: 8094862561351484611, guid: ae9ea0112eb35434095ae5ac4393adef,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.16
+      value: -0.16
       objectReference: {fileID: 0}
     - target: {fileID: 8094862561351484611, guid: ae9ea0112eb35434095ae5ac4393adef,
         type: 3}
@@ -3630,12 +3630,12 @@ PrefabInstance:
     - target: {fileID: 8094862561351484611, guid: ae9ea0112eb35434095ae5ac4393adef,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 26.44
+      value: 7.66
       objectReference: {fileID: 0}
     - target: {fileID: 8094862561351484611, guid: ae9ea0112eb35434095ae5ac4393adef,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8094862561351484611, guid: ae9ea0112eb35434095ae5ac4393adef,
         type: 3}
@@ -3645,7 +3645,7 @@ PrefabInstance:
     - target: {fileID: 8094862561351484611, guid: ae9ea0112eb35434095ae5ac4393adef,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8094862561351484611, guid: ae9ea0112eb35434095ae5ac4393adef,
         type: 3}
@@ -3660,7 +3660,7 @@ PrefabInstance:
     - target: {fileID: 8094862561351484611, guid: ae9ea0112eb35434095ae5ac4393adef,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 8094862561351484611, guid: ae9ea0112eb35434095ae5ac4393adef,
         type: 3}
@@ -8637,11 +8637,11 @@ MonoBehaviour:
   layerMasks: 06000000
   layerMasksStr: []
   playerController: {fileID: 454872043}
-  arManager: {fileID: 0}
   targetList: []
   markerList: []
   targetMarkerPrefab: {fileID: 3936477952231821727, guid: bec2385a45a92354482412dde41561f3,
     type: 3}
+  arManager: {fileID: 0}
 --- !u!4 &8264416041433775745
 Transform:
   m_ObjectHideFlags: 0

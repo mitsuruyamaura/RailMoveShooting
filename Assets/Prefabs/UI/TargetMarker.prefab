@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4114067992890253330}
   - component: {fileID: 3936477952231821727}
   m_Layer: 0
-  m_Name: "TargetMarker \u2014Pngtree\u2014aiming circle shooting aiming picture_5466287"
+  m_Name: TargetMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

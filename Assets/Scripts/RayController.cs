@@ -36,14 +36,11 @@ public class RayController : MonoBehaviour
     //[SerializeField, HideInInspector]
     //private BodyRegionPartsController parts;
 
-
-    // mi
-
-    [SerializeField, HideInInspector]
-    private ARManager arManager;
-
     [SerializeField]
     private List<EnemyController> targetList = new List<EnemyController>();
+
+    [SerializeField]
+    private List<EventBase> lockonEventList = new List<EventBase>();
 
     [SerializeField]
     private List<TargetMarker> markerList = new List<TargetMarker>();
@@ -52,6 +49,12 @@ public class RayController : MonoBehaviour
 
     [SerializeField]
     private TargetMarker targetMarkerPrefab;
+
+
+    // mi
+
+    [SerializeField, HideInInspector]
+    private ARManager arManager;
 
 
     void Start() {
@@ -100,21 +103,23 @@ public class RayController : MonoBehaviour
 
             //Debug.Log(hit.collider.gameObject.name);
 
-            // TODO EnemyController から EventBase に変更する
             // Ray の Hit した対象が Event であり、かつ、ターゲットのリストに登録されていない場合
-            if (hit.collider.TryGetComponent(out EnemyController eventBase) && !targetList.Contains(eventBase)) {
+            if (hit.collider.TryGetComponent(out EventBase eventBase) && !lockonEventList.Contains(eventBase)) {
+                lockonEventList.Add(eventBase);
 
-                // クラスを継承して使うようにして、TryGetComponent の処理を Base を取得して統一する
-                targetList.Add(eventBase);
-
-                // 対象に照準マーカーを付与
-                TargetMarker targetMarker = Instantiate(targetMarkerPrefab, hit.collider.gameObject.transform);
-                targetMarker.SetUpTargetMarker(playerController.transform);
-                markerList.Add(targetMarker);
-
-                // ヒットした地点の登録
-                hitList.Add(hit);
             }
+            else if (hit.collider.TryGetComponent(out EnemyController enemy) && !targetList.Contains(enemy)) {
+
+                targetList.Add(enemy);
+            }
+            
+            // 対象に照準マーカーを付与
+            TargetMarker targetMarker = Instantiate(targetMarkerPrefab, hit.collider.gameObject.transform);
+            targetMarker.SetUpTargetMarker(playerController.transform);
+            markerList.Add(targetMarker);
+
+            // ヒットした地点の登録
+            hitList.Add(hit);
         }
     }
 
