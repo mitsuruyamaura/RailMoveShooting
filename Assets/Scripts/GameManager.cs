@@ -395,13 +395,17 @@ public class GameManager : MonoBehaviour {
             weaponChanger.InactiveWeapons();
 
             // カメラの演出
-            cameraController.ClearCameraRoll(playerController.transform.position + new Vector3(0, 0, 10), new Vector3(0, 180, 0), new float[2] { 1.5f, 2.0f});
+            cameraController.ClearCameraRoll(playerController.transform.position + new Vector3(0, 0, 10), new Vector3(0, 180, 0), new float[2] { 1.5f, 2.0f });
 
             // クリアしたステージの番号を List に追加
             GameData.instance.AddClearStageNoList(currentStageNo);
 
             // セーブ
             GameData.instance.SetSaveData();
+
+            // ResultCanvas 生成
+            uiManager.GenerateResultCanvas(0, 0);
+
 
             yield break;
         }

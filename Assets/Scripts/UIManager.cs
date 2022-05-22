@@ -77,6 +77,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text txtScore;
 
+    [SerializeField]
+    private ResultCanvas resultCanvas;
 
 
     /// <summary>
@@ -322,5 +324,10 @@ public class UIManager : MonoBehaviour
     /// <returns></returns>
     public (bool, int) GetSubmitBranchNo() {
         return (isSubmitBranch, submitBranchNo);
+    }
+
+
+    public void GenerateResultCanvas(int score, int secretPoint) {
+        Instantiate(resultCanvas).SetUpResultCanvas(score, secretPoint);
     }
 }
