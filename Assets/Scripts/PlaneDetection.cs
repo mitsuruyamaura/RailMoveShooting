@@ -44,6 +44,7 @@ public class PlaneDetection : MonoBehaviour {
 #if UNITY_ANDROID || UNITY_IOS
         if (isSwitch == false) {
             //uiManager.InactiveARIntroductionText(isSwitch);
+        }
 #endif
     }
 }
