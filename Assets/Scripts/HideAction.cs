@@ -26,7 +26,9 @@ public class HideAction : MonoBehaviour
     private Vector3 originCameraPos;
     private Tween tween;
 
-    private bool isHide;
+    private bool isHide;  // true で隠れている状態
+    public bool IsHide { get => isHide; }
+
 
     /// <summary>
     /// デバッグ用
@@ -35,7 +37,6 @@ public class HideAction : MonoBehaviour
         SetOriginCameraTran(cameraTran.position);
     }
 
-    // Update is called once per frame
     void Update()
     {
         // ミッション以外は操作できない
@@ -64,8 +65,7 @@ public class HideAction : MonoBehaviour
             tween = chooseHideType == HideActionType.Left ? cameraTran.DOMove(leftHide, actionTime) : cameraTran.DOMove(rightHide, actionTime);
         } else {
             tween = cameraTran.DOMove(originCameraPos, actionTime);
-        }
-         
+        }     
         isHide = !isHide;
     }
 
@@ -82,5 +82,4 @@ public class HideAction : MonoBehaviour
     private void ResetOriginCameraTran() {
         originCameraPos = Vector3.zero;
     }
-
 }

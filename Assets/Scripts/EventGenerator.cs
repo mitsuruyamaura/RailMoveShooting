@@ -96,7 +96,7 @@ public class EventGenerator : MonoBehaviour
 
         for (int i = 0; i < eventDatas.Length; i++) {
 
-            GenerateEvent(eventDatas[i], eventTrans[i]);
+            GenerateEnemy(eventDatas[i], eventTrans[i]);
         }
      }
 
@@ -106,7 +106,7 @@ public class EventGenerator : MonoBehaviour
     /// </summary>
     /// <param name="eventPrefab"></param>
     /// <param name="eventTran"></param>
-    private void GenerateEvent(EnemyController eventPrefab, Transform eventTran) {
+    private void GenerateEnemy(EnemyController eventPrefab, Transform eventTran) {
         EnemyController enemy = Instantiate(eventPrefab, eventTran.position, eventPrefab.transform.rotation);
         enemy.SetUpEnemy(playerController, gameManager);
 

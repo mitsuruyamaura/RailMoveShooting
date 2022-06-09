@@ -86,6 +86,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject playerObj;
 
+    [SerializeField]
+    private HideAction hideAction;
+    public HideAction HideAction { get => hideAction; }
+
 
     void Start() {
         // Debug —p

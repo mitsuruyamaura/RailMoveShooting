@@ -1032,6 +1032,7 @@ GameObject:
   - component: {fileID: 454872043}
   - component: {fileID: 454872045}
   - component: {fileID: 454872046}
+  - component: {fileID: 454872047}
   m_Layer: 0
   m_Name: Main Camera_Player
   m_TagString: MainCamera
@@ -1135,6 +1136,7 @@ MonoBehaviour:
   currentWeaponNo: 0
   bulletCountDatasList: []
   playerObj: {fileID: 8264416041433775774}
+  hideAction: {fileID: 0}
 --- !u!54 &454872044
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1199,6 +1201,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1550902661}
   cameraTran: {fileID: 454872042}
+--- !u!114 &454872047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 454872039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ad283b0d643e824993f0cf9cb39c235, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameTime: 60
+  gameManager: {fileID: 0}
 --- !u!1 &560543691
 GameObject:
   m_ObjectHideFlags: 0
