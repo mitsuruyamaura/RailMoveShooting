@@ -184,12 +184,18 @@ public class EnemyBase : EventBase
     protected IEnumerator Attack(PlayerController player = null) {
         isAttack = true;
 
-        player.CalcHp(-attackPower);
+        // プレイヤーが隠れていない場合
+        if (!player.HideAction.IsHide) {
 
-        if (anim) {
-            anim.SetTrigger("Attack");
+            // プレイヤーにダメージを与える
+            player.CalcHp(-attackPower);
+
+            if (anim) {
+                anim.SetTrigger("Attack");
+            }
         }
 
+        // プレイヤーの状態にかかわらず攻撃後には待機
         yield return new WaitForSeconds(attackInterval);
 
         isAttack = false;
@@ -220,6 +226,8 @@ public class EnemyBase : EventBase
     /// <param name="damage"></param>
     /// <param name="hitParts"></param>
     protected virtual void CalcDamage(int damage, BodyRegionType hitParts) {
+
+        // エネミーが倒されている場合
         if (isDead) {
             return;
         }
