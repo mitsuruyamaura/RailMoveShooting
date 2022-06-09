@@ -260,6 +260,11 @@ public class EnemyBase : EventBase
 
             // スコア加算
 
+            // このイベントに TimeEffect がアタッチされており、かつ、Player に GameTimeManager がアタッチされている場合
+            if (TryGetComponent(out TimeEffect timeEffect) && player.TryGetComponent(out GameTimeManager gameTimeManager)) {
+                // 時間の計算(黄色いエネミーは加算、一般人などの破壊してはダメなものは減算)
+                gameTimeManager.CalcGameTime(timeEffect.timeValue);
+            }
 
             Destroy(gameObject, 1.5f);
         } else {
