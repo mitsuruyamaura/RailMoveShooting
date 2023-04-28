@@ -4,13 +4,24 @@ using UnityEngine;
 
 public class GameTimeManager : MonoBehaviour
 {
+    public static GameTimeManager instance;
+
     public int gameTime;
 
     [SerializeField]
     private GameManager gameManager;
 
 
-    private void Start() {
+    void Awake() {
+        if (instance == null) {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        } else {
+            Destroy(gameObject);
+        }   
+    }
+
+    void Start() {
         StartCoroutine(ObserveGameTime());
     }
 
@@ -23,12 +34,14 @@ public class GameTimeManager : MonoBehaviour
         while (true) {
             // GameUp になったら監視終了
             if (gameManager.currentGameState == GameState.GameUp) {
+                Debug.Log("ゲーム終了");
                 break;
             }
 
             // ミッションが開始されたらカウントダウン開始
             if (gameManager.currentGameState == GameState.Play_Mission) {
                 CountDown();
+                Debug.Log("ミッション開始にあわせてゲーム時間のカウントダウン開始");
             }
             yield return null;
         }

@@ -234,6 +234,8 @@ public class GameManager : MonoBehaviour {
     /// <returns></returns>
     private IEnumerator StartMission(ClearConditionsType clearConditionsType) {
 
+        currentGameState = GameState.Play_Mission;
+
         // ミッションの監視
         yield return StartCoroutine(ObservateMission(clearConditionsType));
 
@@ -287,6 +289,8 @@ public class GameManager : MonoBehaviour {
         }
 
         ClearEventList();
+
+        currentGameState = GameState.Play_Move;
 
         // 移動再開(使わない)
         //railMoveController.ResumeMove();
