@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ƒGƒlƒ~[‚ÌŠîŠ²ƒNƒ‰ƒX
+/// ã‚¨ãƒãƒŸãƒ¼ã®åŸºå¹¹ã‚¯ãƒ©ã‚¹
 /// </summary>
 public class EnemyBase : EventBase    
 {
@@ -40,19 +40,19 @@ public class EnemyBase : EventBase
 
     public EnemyMoveType enemyMoveType;
 
-    [SerializeField, Header("•”ˆÊ‚Ìî•ñ‚ğ“o˜^‚·‚éƒŠƒXƒg")]
+    [SerializeField, Header("éƒ¨ä½ã®æƒ…å ±ã‚’ç™»éŒ²ã™ã‚‹ãƒªã‚¹ãƒˆ")]
     protected List<BodyRegionPartsController> partsControllersList = new List<BodyRegionPartsController>();
 
-    // TODO “G‚Ìƒf[ƒ^‚ÌƒNƒ‰ƒX‚ğ‚½‚¹‚é
+    // TODO æ•µã®ãƒ‡ãƒ¼ã‚¿ã®ã‚¯ãƒ©ã‚¹ã‚’æŒãŸã›ã‚‹
 
 
     protected virtual void Start() {
-        // ƒfƒoƒbƒO—p
+        // ãƒ‡ãƒãƒƒã‚°ç”¨
         //SetUpEnemy(lookTarget);
     }
 
     /// <summary>
-    /// ƒGƒlƒ~[‚Ì‰Šúİ’è
+    /// ã‚¨ãƒãƒŸãƒ¼ã®åˆæœŸè¨­å®š
     /// </summary>
     /// <param name="playerController"></param>
     /// <param name="gameManager"></param>
@@ -60,22 +60,22 @@ public class EnemyBase : EventBase
         lookTarget = playerController.gameObject;
         this.gameManager = gameManager;
 
-        // “G‚Ìƒf[ƒ^‚ğ“G‚Ì”Ô†‚©‚çŒŸõ‚µ‚ÄƒZƒbƒg
+        // æ•µã®ãƒ‡ãƒ¼ã‚¿ã‚’æ•µã®ç•ªå·ã‹ã‚‰æ¤œç´¢ã—ã¦ã‚»ãƒƒãƒˆ
         GetEnemyData();
 
         TryGetComponent(out anim);
 
-        //// •”ˆÊ‚²‚Æ‚Ìî•ñ‚ª‚ ‚é‚©Šm”F
+        //// éƒ¨ä½ã”ã¨ã®æƒ…å ±ãŒã‚ã‚‹ã‹ç¢ºèª
         //if (partsControllersList.Count > 0) {
-        //    // •”ˆÊ‚Ìî•ñ‚ğİ’è
+        //    // éƒ¨ä½ã®æƒ…å ±ã‚’è¨­å®š
         //    SetBodyParts();
         //}
 
-        Debug.Log("ƒGƒlƒ~[‚Ìİ’èŠ®—¹");
+        Debug.Log("ã‚¨ãƒãƒŸãƒ¼ã®è¨­å®šå®Œäº†");
     }
 
     ///// <summary>
-    ///// ƒGƒlƒ~[‚Ìİ’èBŠO•”ƒNƒ‰ƒX‚©‚çŒÄ‚Ño‚·İŒv(SetUpEvent ‚ğg‚¤‚æ‚¤‚É‚µ‚½‚Ì‚ÅA‚±‚¿‚ç‚Íg‚í‚È‚¢)
+    ///// ã‚¨ãƒãƒŸãƒ¼ã®è¨­å®šã€‚å¤–éƒ¨ã‚¯ãƒ©ã‚¹ã‹ã‚‰å‘¼ã³å‡ºã™è¨­è¨ˆ(SetUpEvent ã‚’ä½¿ã†ã‚ˆã†ã«ã—ãŸã®ã§ã€ã“ã¡ã‚‰ã¯ä½¿ã‚ãªã„)
     ///// </summary>
     ///// <param name="playerObj"></param>
     ///// <param name="gameManager"></param>
@@ -84,24 +84,24 @@ public class EnemyBase : EventBase
     //    lookTarget = playerObj;
     //    this.gameManager = gameManager;
 
-    //    // “G‚Ìƒf[ƒ^‚ğ“G‚Ì”Ô†‚©‚çŒŸõ‚µ‚ÄƒZƒbƒg
+    //    // æ•µã®ãƒ‡ãƒ¼ã‚¿ã‚’æ•µã®ç•ªå·ã‹ã‚‰æ¤œç´¢ã—ã¦ã‚»ãƒƒãƒˆ
     //    GetEnemyData();
 
     //    TryGetComponent(out anim);
 
-    //    //// •”ˆÊ‚²‚Æ‚Ìî•ñ‚ª‚ ‚é‚©Šm”F
+    //    //// éƒ¨ä½ã”ã¨ã®æƒ…å ±ãŒã‚ã‚‹ã‹ç¢ºèª
     //    //if (partsControllersList.Count > 0) {
-    //    //    // •”ˆÊ‚Ìî•ñ‚ğİ’è
+    //    //    // éƒ¨ä½ã®æƒ…å ±ã‚’è¨­å®š
     //    //    SetBodyParts();
     //    //}
     //}
 
     /// <summary>
-    /// “G‚Ìî•ñ‚ğƒf[ƒ^ƒx[ƒX‚æ‚èæ“¾‚µ‚Äİ’è
+    /// æ•µã®æƒ…å ±ã‚’ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã‚ˆã‚Šå–å¾—ã—ã¦è¨­å®š
     /// </summary>
     protected virtual void GetEnemyData() {
 
-        // ƒf[ƒ^ƒx[ƒX‚©‚çƒf[ƒ^‚ğæ“¾‚µ‚ÄƒZƒbƒg
+        // ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã‹ã‚‰ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã—ã¦ã‚»ãƒƒãƒˆ
         //enemyData = DataBaseManager.instance.GetEnemyData(enemyNo);
 
         //hp = enemyData.hp;
@@ -114,7 +114,7 @@ public class EnemyBase : EventBase
 
     protected virtual void Update() {
 
-        // ƒGƒlƒ~[‚ğ‘ÎÛ(ƒJƒƒ‰)‚Ì•ûŒü‚ğŒü‚¯‚é
+        // ã‚¨ãƒãƒŸãƒ¼ã‚’å¯¾è±¡(ã‚«ãƒ¡ãƒ©)ã®æ–¹å‘ã‚’å‘ã‘ã‚‹
         if (lookTarget) {
             Vector3 direction = lookTarget.transform.position - transform.position;
             direction.y = 0;
@@ -129,65 +129,65 @@ public class EnemyBase : EventBase
             return;
         }
 
-        // ƒvƒŒƒCƒ„[‚Ìî•ñ‚ğ•Û‚µ‚Ä‚¨‚èAUŒ‚’†‚Å‚È‚¢‚È‚ç
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æƒ…å ±ã‚’ä¿æŒã—ã¦ãŠã‚Šã€æ”»æ’ƒä¸­ã§ãªã„ãªã‚‰
         if (player != null) {
 
-            // UŒ‚—p‚Ìƒƒ\ƒbƒh‚ğ“o˜^
+            // æ”»æ’ƒç”¨ã®ãƒ¡ã‚½ãƒƒãƒ‰ã‚’ç™»éŒ²
             SetAttackCoroutine();
 
-            Debug.Log("ƒvƒŒƒCƒ„[@Š´’mÏ");
+            Debug.Log("ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã€€æ„ŸçŸ¥æ¸ˆ");
 
-        // ƒvƒŒƒCƒ„[‚Ìî•ñ‚ª‚È‚¢‚È‚ç
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æƒ…å ±ãŒãªã„ãªã‚‰
         } else {
             if (other.transform.parent.TryGetComponent(out player)) {
 
-                // UŒ‚—p‚Ìƒƒ\ƒbƒh‚ğ“o˜^
+                // æ”»æ’ƒç”¨ã®ãƒ¡ã‚½ãƒƒãƒ‰ã‚’ç™»éŒ²
                 SetAttackCoroutine();
 
-                Debug.Log("UŒ‚”ÍˆÍ“à‚ÉƒvƒŒƒCƒ„[ ‰Š´’m");
+                Debug.Log("æ”»æ’ƒç¯„å›²å†…ã«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ åˆæ„ŸçŸ¥");
             }
         }
 
-        // ƒ[ƒJƒ‹ŠÖ”‚ğ’è‹`
+        // ãƒ­ãƒ¼ã‚«ãƒ«é–¢æ•°ã‚’å®šç¾©
         void SetAttackCoroutine() {
-            // UŒ‚—p‚Ìƒƒ\ƒbƒh‚ğ‘ã“ü‚µ‚Ä“o˜^
+            // æ”»æ’ƒç”¨ã®ãƒ¡ã‚½ãƒƒãƒ‰ã‚’ä»£å…¥ã—ã¦ç™»éŒ²
             attackCoroutine = Attack(player);
 
-            // “o˜^‚µ‚½ƒƒ\ƒbƒh‚ğÀs
+            // ç™»éŒ²ã—ãŸãƒ¡ã‚½ãƒƒãƒ‰ã‚’å®Ÿè¡Œ
             StartCoroutine(attackCoroutine);
 
-            Debug.Log("UŒ‚ŠJn");
+            Debug.Log("æ”»æ’ƒé–‹å§‹");
 
         }
     }
 
     protected virtual void OnTriggerExit(Collider other) {
 
-        // ƒvƒŒƒCƒ„[‚ğŠ´’mÏ‚İ‚Ì‚Æ‚«‚ÉAUŒ‚”ÍˆÍ“à‚ÉƒvƒŒƒCƒ„[‚ª‚¢‚È‚­‚È‚Á‚½‚ç
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’æ„ŸçŸ¥æ¸ˆã¿ã®ã¨ãã«ã€æ”»æ’ƒç¯„å›²å†…ã«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒã„ãªããªã£ãŸã‚‰
         if (player != null) {
 
-            // ‰Šú‰»
+            // åˆæœŸåŒ–
             player = null;
 
-            // UŒ‚ˆ—‚ğ~‚ß‚é
+            // æ”»æ’ƒå‡¦ç†ã‚’æ­¢ã‚ã‚‹
             isAttack = false;
             StopCoroutine(attackCoroutine);
 
-            Debug.Log("UŒ‚”ÍˆÍŠO");
+            Debug.Log("æ”»æ’ƒç¯„å›²å¤–");
         }
     }
 
     /// <summary>
-    /// UŒ‚
+    /// æ”»æ’ƒ
     /// </summary>
     /// <returns></returns>
     protected IEnumerator Attack(PlayerController player = null) {
         isAttack = true;
 
-        // ƒvƒŒƒCƒ„[‚ª‰B‚ê‚Ä‚¢‚È‚¢ê‡
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒéš ã‚Œã¦ã„ãªã„å ´åˆ
         if (!player.HideAction.IsHide) {
 
-            // ƒvƒŒƒCƒ„[‚Éƒ_ƒ[ƒW‚ğ—^‚¦‚é
+            // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’ä¸ãˆã‚‹
             player.CalcHp(-attackPower);
 
             if (anim) {
@@ -195,14 +195,14 @@ public class EnemyBase : EventBase
             }
         }
 
-        // ƒvƒŒƒCƒ„[‚Ìó‘Ô‚É‚©‚©‚í‚ç‚¸UŒ‚Œã‚É‚Í‘Ò‹@
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®çŠ¶æ…‹ã«ã‹ã‹ã‚ã‚‰ãšæ”»æ’ƒå¾Œã«ã¯å¾…æ©Ÿ
         yield return new WaitForSeconds(attackInterval);
 
         isAttack = false;
     }
 
     /// <summary>
-    /// UŒ‚—Íæ“¾—p
+    /// æ”»æ’ƒåŠ›å–å¾—ç”¨
     /// </summary>
     /// <returns></returns>
     public int GetAttackPower() {
@@ -210,24 +210,24 @@ public class EnemyBase : EventBase
     }
 
     /// <summary>
-    /// ’ŠÛƒNƒ‰ƒX‚Ìƒƒ\ƒbƒh‚ğÀ‘•
+    /// æŠ½è±¡ã‚¯ãƒ©ã‚¹ã®ãƒ¡ã‚½ãƒƒãƒ‰ã‚’å®Ÿè£…
     /// </summary>
     /// <param name="value"></param>
     /// <param name="hitBodyRegionType"></param>
     public override void TriggerEvent(int value, BodyRegionType hitBodyRegionType) {
 
-        // ƒ_ƒ[ƒWŒvZ
+        // ãƒ€ãƒ¡ãƒ¼ã‚¸è¨ˆç®—
         CalcDamage(value, hitBodyRegionType);     
     }
 
     /// <summary>
-    /// ƒ_ƒ[ƒWŒvZ
+    /// ãƒ€ãƒ¡ãƒ¼ã‚¸è¨ˆç®—
     /// </summary>
     /// <param name="damage"></param>
     /// <param name="hitParts"></param>
     protected virtual void CalcDamage(int damage, BodyRegionType hitParts) {
 
-        // ƒGƒlƒ~[‚ª“|‚³‚ê‚Ä‚¢‚éê‡
+        // ã‚¨ãƒãƒŸãƒ¼ãŒå€’ã•ã‚Œã¦ã„ã‚‹å ´åˆ
         if (isDead) {
             return;
         }
@@ -244,26 +244,26 @@ public class EnemyBase : EventBase
                 anim.SetBool("Down", true);
             }
 
-            // TODO ƒGƒlƒ~[‚Ìî•ñ‚ğŠO•”ƒNƒ‰ƒX‚Ì List ‚ÅŠÇ—‚µ‚Ä‚¢‚éê‡‚É‚ÍAList ‚©‚çíœ
+            // TODO ã‚¨ãƒãƒŸãƒ¼ã®æƒ…å ±ã‚’å¤–éƒ¨ã‚¯ãƒ©ã‚¹ã® List ã§ç®¡ç†ã—ã¦ã„ã‚‹å ´åˆã«ã¯ã€List ã‹ã‚‰å‰Šé™¤
             //gameManager.RemoveEnemyList(this);
 
-            // •”ˆÊ‚É‚æ‚é”»’è‚ª‚ ‚èA‚©‚ÂA“ª‚ğ‘Å‚Á‚Ä“|‚µ‚½ê‡
+            // éƒ¨ä½ã«ã‚ˆã‚‹åˆ¤å®šãŒã‚ã‚Šã€ã‹ã¤ã€é ­ã‚’æ‰“ã£ã¦å€’ã—ãŸå ´åˆ
             if (hitParts == BodyRegionType.Head) {
 
-                // “ª‚ğÁ‚·
+                // é ­ã‚’æ¶ˆã™
                 BodyRegionPartsController parts = partsControllersList.Find(x => x.GetBodyPartType() == hitParts);
                 parts.gameObject.SetActive(false);
 
-                // ƒXƒRƒA‚Éƒ{[ƒiƒX(”CˆÓ)
+                // ã‚¹ã‚³ã‚¢ã«ãƒœãƒ¼ãƒŠã‚¹(ä»»æ„)
                 point *= 3;
             }
 
-            // ƒXƒRƒA‰ÁZ
+            // ã‚¹ã‚³ã‚¢åŠ ç®—
 
-            // ‚±‚ÌƒCƒxƒ“ƒg‚É TimeEffect ‚ªƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¨‚èA‚©‚ÂAPlayer ‚É GameTimeManager ‚ªƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚éê‡
-            if (TryGetComponent(out TimeEffect timeEffect) && player.TryGetComponent(out GameTimeManager gameTimeManager)) {
-                // ŠÔ‚ÌŒvZ(‰©F‚¢ƒGƒlƒ~[‚Í‰ÁZAˆê”Êl‚È‚Ç‚Ì”j‰ó‚µ‚Ä‚Íƒ_ƒ‚È‚à‚Ì‚ÍŒ¸Z)
-                gameTimeManager.CalcGameTime(timeEffect.timeValue);
+            // ã“ã®ã‚¤ãƒ™ãƒ³ãƒˆã« TimeEffect ãŒã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ãŠã‚Šã€ã‹ã¤ã€Player ã« GameTimeManager ãŒã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ã‚‹å ´åˆ
+            if (TryGetComponent(out TimeDetail timeDetail) && player.TryGetComponent(out GameTimeManager gameTimeManager)) {
+                // æ™‚é–“ã®è¨ˆç®—(é»„è‰²ã„ã‚¨ãƒãƒŸãƒ¼ã¯åŠ ç®—ã€ä¸€èˆ¬äººãªã©ã®ç ´å£Šã—ã¦ã¯ãƒ€ãƒ¡ãªã‚‚ã®ã¯æ¸›ç®—)
+                gameTimeManager.CalcGameTime(timeDetail.timeValue);
             }
 
             Destroy(gameObject, 1.5f);
@@ -273,21 +273,21 @@ public class EnemyBase : EventBase
     }
 
     /// <summary>
-    /// ˆÚ“®‚ğˆê’â~
+    /// ç§»å‹•ã‚’ä¸€æ™‚åœæ­¢
     /// </summary>
     public virtual void PauseMove() {
         
     }
 
     /// <summary>
-    /// ˆÚ“®‚ğÄŠJ
+    /// ç§»å‹•ã‚’å†é–‹
     /// </summary>
     public virtual void ResumeMove() {
         
     }
 
     ///// <summary>
-    ///// •”ˆÊ‚²‚Æ‚Ìî•ñ‚ğİ’è
+    ///// éƒ¨ä½ã”ã¨ã®æƒ…å ±ã‚’è¨­å®š
     ///// </summary>
     //protected void SetBodyParts() {
     //    for (int i = 0; i < partsControllersList.Count; i++) {
